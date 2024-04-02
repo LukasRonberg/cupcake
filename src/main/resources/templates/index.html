@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>BookingBois</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../public/css/bookiBois.css" th:href="@{/css/bookiBois.css}" rel="stylesheet"/>
+</head>
+
+<body>
+
+<div class="page">
+    <header>
+        <a href="../index.html" th:href="@{/public}">
+            <img alt="logo" src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}"/>
+        </a>
+    </header>
+
+    <div class="topnav">
+
+        <a href="#" class="basket">
+            <img src="../public/images/shopping-bag.png" th:src="@{/images/shopping-bag.png}" alt="Shopping Bag" />
+        </a>
+
+    </div>
+
+    <form id="myForm" action="" method="post">
+        <h1>Velkommen ombord</h1>
+        <h2>Øens bedste cupcakes. Vælg og bestil her:</h2>
+
+        <div class="dropdown-container">
+            <select name="bund" id="bund" required>
+                <option th:text="${bund}" th:value="${bund}">Vælg bund</option>
+                <option value="Chocolate">Chocolate</option>
+                <option value="Vanilla">Vanilla</option>
+                <option value="Nutmeg">Nutmeg</option>
+                <option value="Pistacio">Pistacio</option>
+                <option value="Almond">Almond</option>
+            </select>
+            <select name="topping" id="topping">
+                <option th:text="${topping}" th:value="${topping}">Vælg topping</option>
+                <option value="Chocolate">Chocolate</option>
+                <option value="Blueberry">Blueberry</option>
+                <option value="Rasberry">Rasberry</option>
+                <option value="Crispy">Crispy</option>
+                <option value="Strawberry">Strawberry</option>
+                <option value="Rum/Raisin">Rum/Raisin</option>
+                <option value="Orange">Orange</option>
+                <option value="Lemon">Lemon</option>
+                <option value="Blue cheese">Blue cheese</option>
+            </select>
+            <select name="antal" id="antal" required>
+                <option th:text="${antal}" th:value="${antal}">Vælg antal</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+        </div>
+
+        <div class="button-container">
+            <input type="submit" value="Læg i kurv" formaction="/createorder">
+        </div>
+
+        <div id="hiddenDiv" class="modal" th:if="${booked}">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <p id="messageText" th:text="${message}"></p>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script th:inline="javascript">
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var booked = [[${booked}]];
+        if (booked) {
+            // Hvis noget er booket, vis det skjulte div-element
+            var hiddenDiv = document.getElementById("hiddenDiv");
+            hiddenDiv.style.display = "block";
+            showMessage([[${message}]]);
+        }
+    });
+</script>
+
+
+<script>
+    var today = new Date();
+    var dd = today.getDate() + 1;
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+
+    today = yyyy + '-' + mm + '-' + dd;
+    var dateInput = document.getElementById('dato');
+
+    dateInput.setAttribute("min", today);
+
+    // Get reference to the date input field
+
+    var form = document.getElementById('myForm');
+
+    // Add event listener for change event
+    dateInput.addEventListener('change', function () {
+        // Set the form action dynamically
+        form.action = "/gettimeslots";
+        // Submit the form
+        form.submit();
+    });
+
+</script>
+<script>
+    // Funktion for at vise meddelelsen
+    function showMessage(message) {
+        var modal = document.getElementById("hiddenDiv");
+        var messageText = document.getElementById("messageText");
+        messageText.textContent = message; // Sæt meddelelsesindholdet
+        modal.style.display = "block"; // Vis modalen
+    }
+
+    // Funktion for at lukke modalen
+    function closeModal() {
+        var modal = document.getElementById("hiddenDiv");
+        modal.style.display = "none"; // Skjul modalen
+    }
+
+
+</script>
+
+
+</body>
+
+</html>
