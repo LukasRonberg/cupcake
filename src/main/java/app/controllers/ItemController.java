@@ -13,14 +13,12 @@ public class ItemController {
             app.post("showTopping", ctx -> showTopping(ctx, connectionPool));
         }
 
-    private static void showBottom(Context ctx, ConnectionPool connectionPool)
-    {
+    private static void showBottom(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         ItemMapper.showBottoms(connectionPool);
         ctx.render("???.html");
     }
 
-    private static void showTopping(Context ctx, ConnectionPool connectionPool)
-    {
+    private static void showTopping(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         ItemMapper.showToppings(connectionPool);
         ctx.render("???.html");
     }

@@ -14,10 +14,29 @@ import java.util.List;
 public class ItemMapper {
 
 
+    public static List<Topping> showToppings(ConnectionPool connectionPool) throws DatabaseException {
+        List<Topping> toppingList = new ArrayList<>();
+        String sql = "select * from topping";
 
-
-    public void showTopping(){
-
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        )
+        {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next())
+            {
+                int topping_id = rs.getInt("bottom_id");
+                String topping = rs.getString("name");
+                int price = rs.getInt("done");
+                toppingList.add(new Topping(topping_id, topping, price));
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new DatabaseException("Fejl!!!!", e.getMessage());
+        }
+        return toppingList;
     }
 
     public static List<Bottom> showBottoms(ConnectionPool connectionPool) throws DatabaseException
@@ -30,7 +49,6 @@ public class ItemMapper {
                 PreparedStatement ps = connection.prepareStatement(sql)
         )
         {
-            ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
             while (rs.next())
             {
