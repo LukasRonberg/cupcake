@@ -26,9 +26,9 @@ public class ItemMapper {
             ResultSet rs = ps.executeQuery();
             while (rs.next())
             {
-                int topping_id = rs.getInt("bottom_id");
-                String topping = rs.getString("name");
-                int price = rs.getInt("done");
+                int topping_id = rs.getInt("topping_id");
+                String topping = rs.getString("topping");
+                int price = rs.getInt("price");
                 toppingList.add(new Topping(topping_id, topping, price));
             }
         }
@@ -53,8 +53,8 @@ public class ItemMapper {
             while (rs.next())
             {
                 int bottom_id = rs.getInt("bottom_id");
-                String bottom = rs.getString("name");
-                int price = rs.getInt("done");
+                String bottom = rs.getString("bottom");
+                int price = rs.getInt("price");
                 bottomList.add(new Bottom(bottom_id, bottom, price));
             }
         }
