@@ -46,15 +46,16 @@
         input[type="submit"]:hover {
             background-color: #45a049;
         }
-        input[type="text"].enter-amount {
+        input[type="text"].enter-amount, input[type="text"].enter-username {
             padding: 12px 20px;
             border: 2px solid #4CAF50; /* Green border */
             border-radius: 25px;
             margin: 10px;
             font-size: 16px;
             transition: border-color 0.3s;
+            width: 200px; /* Adjust width */
         }
-        input[type="text"].enter-amount:focus {
+        input[type="text"].enter-amount:focus, input[type="text"].enter-username:focus {
             border-color: #45a049; /* Green on focus */
             outline: none; /* Remove outline */
         }
@@ -91,7 +92,7 @@
 
     <!-- Form to search for a customer by username -->
     <form method="post">
-        <input type="text" name="username_input" placeholder="Enter username"/>
+        <input type="text" name="username_input" placeholder="Enter username" class="enter-username" required/>
         <input type="submit" formaction="/showCustomer" value="Show Customer"/>
         <input type="submit" formaction="/showCustomerOrders" value="Show Customer Orders"/><br><br>
     </form>
@@ -119,7 +120,7 @@
                 <tr th:each="customer : ${customer}">
                     <td th:id="email" th:text="${customer.email}">Email</td>
                     <td th:text="${customer.name}">Name</td>
-                    <td th:text="${customer.mobile}">Mobile</td>
+                    <td th:text="'+45 ' + ${customer.mobile}">Mobile</td>
                     <td th:text="${customer.balance}">Balance</td>
                     <td>
                         <input type="hidden" name="email" th:value="${customer.email}"/>
@@ -145,19 +146,19 @@
                 <th>Topping</th>
                 <th>Bottom</th>
                 <th>Quantity</th>
-                <th class="truncate-text">Total Price</th> <!-- Apply truncation here -->
+                <th class="truncate-text">Orderline Price</th> <!-- Apply truncation here -->
             </tr>
             </thead>
             <tbody>
             <tr th:each="order : ${customerOrders}">
                 <td th:text="${order.email}">Email</td>
                 <td th:text="${order.name}">Name</td>
-                <td th:text="${order.mobile}">Mobile</td>
+                <td th:text="'+45 ' + ${order.mobile}">Mobile</td>
                 <!--td th:text="${order.balance}">Balance</td-->
                 <td th:text="${order.topping}">Topping</td>
                 <td th:text="${order.bottom}">Bottom</td>
                 <td th:text="${order.quantity}">Quantity</td>
-                <td th:text="${order.orderlinePrice}" class="truncate-text">Total Price</td> <!-- Apply truncation here -->
+                <td th:text="${order.orderlinePrice}" class="truncate-text">Orderline Price</td> <!-- Apply truncation here -->
             </tr>
             </tbody>
         </table>
