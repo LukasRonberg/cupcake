@@ -19,7 +19,14 @@ public class ItemController {
                showBottom(ctx, ConnectionPool.getInstance());
                ctx.render("index.html");
             });
+            app.post("/createorder", ctx -> {
+                createOrder();
+            });
         }
+
+    private static void createOrder() {
+
+    }
 
 
     public static void showBottom(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
