@@ -5,6 +5,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cupcake Store Admin Panel</title>
     <style>
+        header {
+            background-color: blueviolet;
+        }
+
+        header a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: blueviolet;
+        }
+
+        header a img {
+            width: 70%;
+            background-color: blueviolet;
+        }
+
+        /* Style the top navigation bar */
+        .topnav {
+            width: 100%;
+            background-color: #f9f9f9;
+        }
+
+        /* Style the topnav links */
+        .topnav a {
+            float: left;
+            display: flex;
+            color: grey;
+            text-align: center;
+            font-size: 20px;
+            padding: 14px 16px;
+            text-decoration: none;
+            background-color: #f9f9f9;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .topnav a.right {
+            float: right;
+            align-items: center;
+            padding-top: 17px;
+
+        }
+
+        .topnav a.left {
+
+            padding-top: 17px;
+        }
+
+        /* Change color on hover */
+        .topnav a:hover {
+
+            color: black;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+        }
+
+        .topnav a.basket {
+            float: right;
+            background-color: #f9f9f9;
+            width: 60px; /* Fast bredde på billedet */
+            height: auto; /* Automatisk højde, så billedet bevare sin proportion */
+        }
+
+        .topnav img {
+            background-color: #f9f9f9;
+
+
+        }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
@@ -85,8 +151,21 @@
     </style>
 </head>
 <body>
-
 <div class="container">
+<header>
+    <a href="../index.html" th:href="@{/public}">
+        <img alt="logo" src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}"/>
+    </a>
+</header>
+
+<div class="topnav">
+    <a th:if="${session.currentUser == null}" href="login.html" class="right" th:href="@{/login/}">Login</a>
+    <a th:if="${session.currentUser != null}" href="index.html" class="right" th:href="@{/logout/}">Logout</a>
+    <a th:if="${session.currentUser != null}" class="right" th:text="${session.currentUser.email}"></a>
+</div>
+
+
+    <br><br><br>
 
     <h1>Cupcake Store Admin Panel</h1>
 
