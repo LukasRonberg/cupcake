@@ -36,18 +36,21 @@
 
         <div class="dropdown-container">
             <select name="bund" id="bund" required>
+                <option value="" disabled selected>Vælg bund</option>
                 <option th:each="bottom : ${bottomList}" th:value="${bottom.bottomId}" th:text="${bottom.bottom} + ' - ' + ${bottom.price} + '$'">
 
                 </option>
             </select>
-            <select name="topping" id="topping">
+            <select name="topping" id="topping" required>
+                <option value="" disabled selected>Vælg topping</option>
                 <option th:each="topping : ${toppingList}" th:value="${topping.toppingId}" th:text="${topping.topping} + ' - ' + ${topping.price} + '$'">
 
                 </option>
 
             </select>
             <select name="antal" id="antal" required>
-                <option th:text="${antal}" th:value="${antal}">Vælg antal</option>
+                <!-- <option th:text="${antal}" th:value="${antal}">Vælg antal</option> -->
+                <option value="" disabled selected>Vælg antal</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
