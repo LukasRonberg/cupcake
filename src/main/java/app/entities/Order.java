@@ -3,14 +3,14 @@ package app.entities;
 public class Order {
     private String email;
     private String name;
-    private int mobile;
+    private String mobile;
     private int balance;
     private String topping;
     private String bottom;
     private int quantity;
     private int orderlinePrice;
 
-    public Order(String email, String name, int mobile, int balance, String topping, String bottom, int quantity, int orderlinePrice) {
+    public Order(String email, String name, String mobile, int balance, String topping, String bottom, int quantity, int orderlinePrice) {
         this.email = email;
         this.name = name;
         this.mobile = mobile;
@@ -29,7 +29,7 @@ public class Order {
         return name;
     }
 
-    public int getMobile() {
+    public String getMobile() {
         return mobile;
     }
 

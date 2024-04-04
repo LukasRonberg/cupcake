@@ -3,7 +3,7 @@ package app.entities;
 public class User {
     private String email;
     private String name;
-    private int mobile;
+    private String mobile;
     private int balance;
 
     public String getEmail() {
@@ -14,7 +14,7 @@ public class User {
         return name;
     }
 
-    public int getMobile() {
+    public String getMobile() {
         return mobile;
     }
 
@@ -22,7 +22,7 @@ public class User {
         return balance;
     }
 
-    public User(String email, String name, int mobile, int balance) {
+    public User(String email, String name, String mobile, int balance) {
         this.email = email;
         this.name = name;
         this.mobile = mobile;

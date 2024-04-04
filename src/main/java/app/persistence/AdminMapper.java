@@ -27,7 +27,7 @@ public class AdminMapper {
             if (rs.next()) {
                 String email = rs.getString("email");
                 String user_Name = rs.getString("name");
-                int user_Mobile = rs.getInt("mobile");
+                String user_Mobile = rs.getString("mobile");
                 int user_Balance = rs.getInt("balance");
                 User newUser = new User(email,user_Name,user_Mobile,user_Balance);
                 customerInfo.add(newUser);
@@ -61,7 +61,7 @@ public class AdminMapper {
                 // Retrieve data from each row
                 String email = resultSet.getString("email");
                 String name = resultSet.getString("name");
-                int mobile = resultSet.getInt("mobile");
+                String mobile = resultSet.getString("mobile");
                 int balance = resultSet.getInt("balance");
                 String topping = resultSet.getString("topping");
                 String bottom = resultSet.getString("bottom");
@@ -108,7 +108,7 @@ public class AdminMapper {
                 // Retrieve data from each row
                 String email = resultSet.getString("email");
                 String name = resultSet.getString("name");
-                int mobile = resultSet.getInt("mobile");
+                String mobile = resultSet.getString("mobile");
                 int balance = resultSet.getInt("balance");
                 String topping = resultSet.getString("topping");
                 String bottom = resultSet.getString("bottom");
