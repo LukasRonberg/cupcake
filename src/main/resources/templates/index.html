@@ -24,6 +24,7 @@
             <img src="../public/images/shopping-bag.png" th:src="@{/images/shopping-bag.png}" alt="Shopping Bag" />
         </a>
         <a th:if="${session.currentUser == null}" href="login.html" class="right" th:href="@{/login/}">Login</a>
+        <a th:if="${session.currentUser != null}" href="index.html" class="right" th:href="@{/logout/}">Logout</a>
         <a th:if="${session.currentUser != null}" class="right" th:text="${session.currentUser.email}"></a>
 
 
