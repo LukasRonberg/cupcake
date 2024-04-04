@@ -9,13 +9,13 @@ import io.javalin.http.Context;
 
 public class UserController
 {
-    public static void addRoutes(Javalin app, ConnectionPool connectionPool)
+    public static void addRoutes(Javalin app)
     {
-        app.post("login", ctx -> login(ctx, connectionPool));
+        app.post("login", ctx -> login(ctx, ConnectionPool.getInstance()));
         app.get("login", ctx -> ctx.render("login.html"));
         app.get("index.html", ctx -> ctx.render("index.html"));
         app.get("logout", ctx -> logout(ctx));
-        app.post("createuser", ctx -> createUser(ctx, connectionPool));
+        app.post("createuser", ctx -> createUser(ctx, ConnectionPool.getInstance()));
         app.get("createuser", ctx -> ctx.render("createuser.html"));
     }
 
