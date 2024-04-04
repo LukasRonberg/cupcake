@@ -11,13 +11,12 @@ public class UserController
 {
     public static void addRoutes(Javalin app, ConnectionPool connectionPool)
     {
-        app.post("login", ctx -> login(ctx, connectionPool));
+        app.post("login", ctx -> login(ctx, connectionPool))
         app.get("login", ctx -> ctx.render("login.html"));
         app.get("index.html", ctx -> ctx.render("index.html"));
         app.get("logout", ctx -> logout(ctx));
         app.post("createuser", ctx -> createUser(ctx, connectionPool));
         app.get("createuser", ctx -> ctx.render("createuser.html"));
-
     }
 
     private static void createUser(Context ctx, ConnectionPool connectionPool)
@@ -51,7 +50,6 @@ public class UserController
             ctx.attribute("message", "Dine to passwords matcher ikke! Prøv igen");
             ctx.render("createuser.html");
         }
-
     }
 
     private static void logout(Context ctx)
@@ -59,7 +57,6 @@ public class UserController
         ctx.req().getSession().invalidate();
         ctx.redirect("/");
     }
-
 
     public static void login(Context ctx, ConnectionPool connectionPool)
     {
@@ -82,6 +79,5 @@ public class UserController
             ctx.attribute("message", e.getMessage() );
             ctx.render("index.html");
         }
-
     }
 }
