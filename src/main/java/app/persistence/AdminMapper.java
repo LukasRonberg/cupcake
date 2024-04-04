@@ -33,7 +33,7 @@ public class AdminMapper {
                 User newUser = new User(user_ID,email,"",false,user_Name,user_Mobile,user_Balance);
                 customerInfo.add(newUser);
             } else {
-                throw new DatabaseException("Fejl i login. Prøv igen");
+                //throw new DatabaseException("Fejl i login. Prøv igen");
             }
         } catch (SQLException e) {
             throw new DatabaseException("DB fejl", e.getMessage());
@@ -92,7 +92,6 @@ public class AdminMapper {
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(query)
         ) {
-
             ResultSet resultSet = ps.executeQuery();
             // Process the result set
             while (resultSet.next()) {
