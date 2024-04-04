@@ -72,16 +72,6 @@ public class AdminMapper {
                 Order newOrder = new Order(email, name, mobile, balance, topping, bottom, quantity, orderlinePrice);
 
                 orderList.add(newOrder);
-                // Print or process the retrieved data as needed
-                System.out.println("Email: " + email);
-                System.out.println("Name: " + name);
-                System.out.println("Mobile: " + mobile);
-                System.out.println("Balance: " + balance);
-                System.out.println("Topping: " + topping);
-                System.out.println("Bottom: " + bottom);
-                System.out.println("Quantity: " + quantity);
-                System.out.println("Orderline Price: " + orderlinePrice);
-                System.out.println();
             }
             return orderList;
         } catch (SQLException e) {
@@ -117,16 +107,7 @@ public class AdminMapper {
                 int orderlinePrice = resultSet.getInt("orderline_price");
 
                 Order newOrder = new Order(email, name, mobile, balance, topping, bottom, quantity, orderlinePrice);
-                // Print or process the retrieved data as needed
-                System.out.println("Email: " + email);
-                System.out.println("Name: " + name);
-                System.out.println("Mobile: " + mobile);
-                System.out.println("Balance: " + balance);
-                System.out.println("Topping: " + topping);
-                System.out.println("Bottom: " + bottom);
-                System.out.println("Quantity: " + quantity);
-                System.out.println("Orderline Price: " + orderlinePrice);
-                System.out.println();
+
                 orderList.add(newOrder);
             }
             return orderList;
