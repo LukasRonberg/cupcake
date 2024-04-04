@@ -2,11 +2,12 @@ package app;
 
 
 import app.config.ThymeleafConfig;
-import app.controllers.ItemController;
+import app.controllers.AdminController;
 import app.controllers.UserController;
+import app.persistence.AdminMapper;
+import app.persistence.ConnectionPool;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
-
 
 public class Main
 {
@@ -19,14 +20,11 @@ public class Main
             config.fileRenderer(new JavalinThymeleaf(ThymeleafConfig.templateEngine()));
         }).start(7070);
 
-
         //Routing
 
         ItemController.addRoutes(app);
-
         UserController.addRoutes(app);
-
-
+        AdminController.addRoutes(app);
     }
 }
 
