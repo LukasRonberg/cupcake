@@ -83,7 +83,11 @@ public class UserController
             ctx.sessionAttribute("currentUser", user);
             // Hvis ja, send videre til forsiden med login besked
             ctx.attribute("message", "Du er nu logget ind");
+            if(user.isAdmin()){
+                ctx.render("adminSite.html");
+            } else {
             ctx.render("index.html");
+            }
         }
         catch (DatabaseException e)
         {
