@@ -19,21 +19,17 @@ public class ItemController {
                showBottom(ctx, ConnectionPool.getInstance());
                ctx.render("index.html");
             });
-            //app.get("showBottom", ctx -> showBottom(ctx, ConnectionPool.getInstance()));
-            //app.get("showTopping", ctx -> showTopping(ctx, ConnectionPool.getInstance()));
         }
 
 
-    private static void showBottom(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+    public static void showBottom(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         List<Bottom> bottomList = ItemMapper.showBottoms(connectionPool);
         ctx.attribute("bottomList",bottomList);
-        //ctx.render(".html");
     }
 
-    private static void showTopping(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+    public static void showTopping(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         List<Topping> toppingList = ItemMapper.showToppings(connectionPool);
         ctx.attribute("toppingList",toppingList);
-        //ctx.render("index.html");
     }
 
 }

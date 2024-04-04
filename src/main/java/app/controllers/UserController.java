@@ -11,9 +11,21 @@ public class UserController
 {
     public static void addRoutes(Javalin app)
     {
-        app.post("login", ctx -> login(ctx, ConnectionPool.getInstance()));
-        app.get("login", ctx -> ctx.render("login.html"));
-        app.get("index.html", ctx -> ctx.render("index.html"));
+        app.post("login", ctx -> {
+            ItemController.showBottom(ctx,ConnectionPool.getInstance());
+            ItemController.showTopping(ctx,ConnectionPool.getInstance());
+            login(ctx, ConnectionPool.getInstance());
+        });
+        app.get("login", ctx -> {
+            ItemController.showBottom(ctx,ConnectionPool.getInstance());
+            ItemController.showTopping(ctx,ConnectionPool.getInstance());
+            ctx.render("login.html");
+        });
+        app.get("index.html", ctx -> {
+            ItemController.showBottom(ctx,ConnectionPool.getInstance());
+            ItemController.showTopping(ctx,ConnectionPool.getInstance());
+            ctx.render("index.html");
+        });
         app.get("logout", ctx -> logout(ctx));
         app.post("createuser", ctx -> createUser(ctx, ConnectionPool.getInstance()));
         app.get("createuser", ctx -> ctx.render("createuser.html"));
