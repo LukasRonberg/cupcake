@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<title>Cupcake</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="../public/css/login.css" th:href="@{/css/login.css}" rel="stylesheet"/>
+</head>
+
+<body>
+<div class="login-page">
+    <header>
+        <a href="index.html" th:href="@{/}">
+            <img src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}"/>
+        </a>
+    </header>
+    <div class="page">
+        <form class="generic-form" method="post">
+            <input type="text" name="email" placeholder="Enter your email"/>
+            <input type="password" name="password" placeholder="Enter your password"/>
+            <button type="submit" formaction="/login">Login</button>
+        </form>
+
+        <div class="generic-form-createuser">
+            <a href="createuser.html" th:href="@{/createuser}">Create user</a></br>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    // Funktion for at vise meddelelsen
+    function showMessage(message) {
+        var modal = document.getElementById("hiddenDiv");
+        var messageText = document.getElementById("messageText");
+        messageText.textContent = message; // Sæt meddelelsesindholdet
+        modal.style.display = "block"; // Vis modalen
+    }
+    // Funktion for at lukke modalen
+    function closeModal() {
+        var modal = document.getElementById("hiddenDiv");
+        modal.style.display = "none"; // Skjul modalen
+        window.location.href = "index.html";
+    }
+</script>
+
+</body>
+</html>

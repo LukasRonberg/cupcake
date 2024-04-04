@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<title>Cupcake</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="../public/css/login.css" th:href="@{/css/login.css}" rel="stylesheet"/>
+</head>
+
+<body>
+<div class="login-page">
+    <header>
+        <a href="index.html" th:href="@{/}">
+            <img src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}"/>
+        </a>
+    </header>
+    <div class="page">
+        <form class="generic-form" method="post">
+            <input type="text" name="email" placeholder="Enter your email"/>
+            <input type="text" name="name" placeholder="Enter your name"/>
+            <input type="text" name="mobile" placeholder="Enter your mobilenumber"/>
+            <input type="password" name="password1" placeholder="Enter your password"/>
+            <input type="password" name="password2" placeholder="Enter your password again"/>
+            <button type="submit" formaction="/createuser">Create User</button>
+
+            <div id="hiddenDiv" class="modal" th:if="${created}" >
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal()">&times;</span>
+                    <p id="messageText" th:text="${message}"></p>
+                </div>
+            </div>
+
+
+        </form>
+
+    </div>
+</div>
+
+<script th:inline="javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        var created = [[${created}]];
+        if (created) {
+            // Hvis noget er booket, vis det skjulte div-element
+            var hiddenDiv = document.getElementById("hiddenDiv");
+            hiddenDiv.style.display = "block";
+            showMessage([[${message}]]);
+        }
+    });
+
+    // Funktion for at vise meddelelsen
+    function showMessage(message) {
+        var modal = document.getElementById("hiddenDiv");
+        var messageText = document.getElementById("messageText");
+        messageText.textContent = message; // Sæt meddelelsesindholdet
+        modal.style.display = "block"; // Vis modalen
+    }
+
+    // Funktion for at lukke modalen og omdirigere til index.html
+    function closeModal() {
+        var modal = document.getElementById("hiddenDiv");
+        modal.style.display = "none"; // Skjul modalen
+        window.location.href = "./index.html"; // Omdiriger til index.html
+    }
+</script>
+
+
+</body>
+</html>
