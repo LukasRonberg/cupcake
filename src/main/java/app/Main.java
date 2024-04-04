@@ -3,9 +3,8 @@ package app;
 
 import app.config.ThymeleafConfig;
 import app.controllers.AdminController;
+import app.controllers.ItemController;
 import app.controllers.UserController;
-import app.persistence.AdminMapper;
-import app.persistence.ConnectionPool;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
 
