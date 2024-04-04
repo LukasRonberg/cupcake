@@ -27,8 +27,12 @@ public class UserMapper
             if (rs.next())
             {
                 int id = rs.getInt("user_id");
-                String is_admin = rs.getString("is_admin");
-                return new User(id, email, password, is_admin);
+                boolean isAdmin = rs.getBoolean("is_admin");
+                String name = rs.getString("name");
+                String mobile = rs.getString("mobile");
+                int balance = rs.getInt("balance");
+                return new User(id, email, password, isAdmin, name, mobile, balance);
+
             } else
             {
                 throw new DatabaseException("Fejl i login. Prøv igen");
@@ -40,21 +44,23 @@ public class UserMapper
         }
     }
 
-    public static void createuser(String name, String email, String password, int mobile, ConnectionPool connectionPool) throws DatabaseException
+
+    public static void createuser(String email, String password, String name, String mobile, ConnectionPool connectionPool) throws DatabaseException
     {
-        String sql = "insert into users (name, email, password, balance) values (?,?,?,?)";
+        String sql = "insert into users (email, password, is_admin, name, mobile, balance) values (?,?,?,?,?,?)";
 
         try (
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql)
         )
         {
-            int balance = 200;
-            ps.setString(1, name);
-            ps.setString(2, email);
-            ps.setString(3, password);
-            ps.setInt(4, mobile);
-            ps.setInt(5, balance);
+            int balance = 0;
+            ps.setString(1, email);
+            ps.setString(2, password);
+            ps.setBoolean(3, false);
+            ps.setString(4, name);
+            ps.setString(5, mobile);
+            ps.setInt(6, balance);
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected != 1)
@@ -67,7 +73,9 @@ public class UserMapper
             String msg = "Der er sket en fejl. Prøv igen";
             if (e.getMessage().startsWith("ERROR: duplicate key value "))
             {
-                msg = "Din e-email findes allerede. Vælg et andet";
+                
+                msg = "Din e-email findes allerede. Vælg en andet";
+
             }
             throw new DatabaseException(msg, e.getMessage());
         }
