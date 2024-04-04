@@ -181,6 +181,34 @@
         <input type="submit" value="Show All Customer Orders"/><br><br>
     </form>
 
+<table>
+    <thead>
+    <tr>
+        <th>Bunde</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr id="bund" th:each="bottom : ${bottomList}">
+        <td  th:value="${bottom.bottomId}" th:text="${bottom.bottom} + ' - ' + ${bottom.price} + '$'"></td>
+        <td><input type="submit" value="Delete item"></td>
+    </tr>
+    </tbody>
+</table>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Toppings</th>
+        </tr>
+        </thead>
+        <tbody>
+    <tr id="topping" th:each="topping : ${toppingList}">
+        <td  th:value="${topping.toppingId}" th:text="${topping.topping} + ' - ' + ${topping.price} + '$'"></td>
+        <td><input type="submit" value="Delete item"></td>
+    </tr>
+        <tbody>
+    </table>
+//todo: tilføj mulighed for at tilføje nye varer
     <!-- Form to add balance to a customer's account -->
     <form th:action="@{/addToBalance}" th:method="POST">
         <div th:if="${customer}">
