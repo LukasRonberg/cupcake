@@ -13,15 +13,15 @@ import java.util.ArrayList;
 public class AdminController
 {
 
-    public static void addRoutes(Javalin app, ConnectionPool connectionPool)
+    public static void addRoutes(Javalin app)
     {
         app.get("/adminSite", ctx -> index(ctx));
 
-        app.post("/getAllOrders", ctx -> getAllOrders(ctx, connectionPool));
-        app.post("/showCustomer", ctx -> showCustomer(ctx, connectionPool));
-        app.post("/showCustomerOrders", ctx -> showCustomerOrders(ctx, connectionPool));
+        app.post("/getAllOrders", ctx -> getAllOrders(ctx, ConnectionPool.getInstance()));
+        app.post("/showCustomer", ctx -> showCustomer(ctx, ConnectionPool.getInstance()));
+        app.post("/showCustomerOrders", ctx -> showCustomerOrders(ctx, ConnectionPool.getInstance()));
 
-        app.post("/addToBalance", ctx -> addMoneyToCustomerBalance(ctx, connectionPool));
+        app.post("/addToBalance", ctx -> addMoneyToCustomerBalance(ctx, ConnectionPool.getInstance()));
     }
 
     private static void index(Context ctx)

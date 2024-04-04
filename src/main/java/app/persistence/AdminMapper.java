@@ -25,11 +25,12 @@ public class AdminMapper {
 
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
+                int user_ID = rs.getInt("user_id");
                 String email = rs.getString("email");
                 String user_Name = rs.getString("name");
                 String user_Mobile = rs.getString("mobile");
                 int user_Balance = rs.getInt("balance");
-                User newUser = new User(email,user_Name,user_Mobile,user_Balance);
+                User newUser = new User(user_ID,email,"",false,user_Name,user_Mobile,user_Balance);
                 customerInfo.add(newUser);
             } else {
                 throw new DatabaseException("Fejl i login. Prøv igen");
