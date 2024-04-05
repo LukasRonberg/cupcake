@@ -42,17 +42,18 @@ header a img {
     width: 70%;
     background-color: blueviolet;
 }
-
 /* Style the top navigation bar */
 .topnav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
     width: 100%;
     background-color: #f9f9f9;
 }
 
 /* Style the topnav links */
 .topnav a {
-    float: left;
-    display: flex;
     color: grey;
     text-align: center;
     font-size: 20px;
@@ -63,36 +64,42 @@ header a img {
 }
 
 .topnav a.right {
-    float: right;
-    align-items: center;
-    padding-top: 17px;
+    margin-left: 10px;
+}
 
+.basket {
+    float: right;
+    background: none;
+    padding-right: 20px;
+    margin: 0;
+    width: 50px;
+    height: 50px;
+    border: none;
 }
 
 .topnav a.left {
-
-    padding-top: 17px;
+    float: left;
+    margin-right: 10px;
+    padding-left: 20px;
 }
 
 /* Change color on hover */
 .topnav a:hover {
-
     color: black;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
 }
 
-.topnav button.basket {
-    float: right;
+.topnav form {
+    margin: 0; /* Fjern ydre margin */
+    padding: 0; /* Fjern indvendig polstring */
     background-color: #f9f9f9;
-    width: 60px; /* Fast bredde på billedet */
-    height: auto; /* Automatisk højde, så billedet bevare sin proportion */
 }
+
 
 .topnav img {
     background-color: #f9f9f9;
-
-
 }
+
 
 form {
     margin-top: 10px;
