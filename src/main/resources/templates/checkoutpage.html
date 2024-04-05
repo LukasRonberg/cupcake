@@ -53,6 +53,9 @@
                         <td th:text="${order.quantity}">quantity</td>
                         <td th:text="${order.orderlinePrice}">orderlinePrice</td>
                     </tr>
+                    <tr>
+                        <td>Samlet beløb: <span th:text="${session.totalAmount}"></span></td>
+                    </tr>
                     </tbody>
                 </table>
             </div>

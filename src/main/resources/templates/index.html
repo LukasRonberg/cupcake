@@ -70,7 +70,7 @@
             <input type="submit" value="Læg i kurv" formaction="/createorder">
         </div>
 
-        <div id="hiddenDiv" class="modal" th:if="${booked}">
+        <div id="hiddenDiv" class="modal" th:if="${ordercreated}">
             <div class="modal-content">
                 <span class="close" onclick="closeModal()">&times;</span>
                 <p id="messageText" th:text="${message}"></p>
@@ -82,8 +82,8 @@
 <script th:inline="javascript">
 
     document.addEventListener("DOMContentLoaded", function () {
-        var booked = [[${booked}]];
-        if (booked) {
+        var ordercreated = [[${ordercreated}]];
+        if (ordercreated) {
             // Hvis noget er booket, vis det skjulte div-element
             var hiddenDiv = document.getElementById("hiddenDiv");
             hiddenDiv.style.display = "block";

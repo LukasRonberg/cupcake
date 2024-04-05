@@ -96,7 +96,7 @@ public class UserController
             if(user.isAdmin()){
                 ctx.render("adminSite.html");
             } else {
-                ctx.render("login.html");
+                ctx.render("index.html");
             }
         }
         catch (DatabaseException e)
