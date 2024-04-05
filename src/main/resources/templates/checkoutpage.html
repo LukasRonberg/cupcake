@@ -37,21 +37,22 @@
                 <table>
                     <thead>
                     <tr>
-                        <th>topping</th>
-                        <th>bottom</th>
-                        <th>quantity</th>
-                        <th>orderlinePrice</th>
+                        <th class="table-left">Topping</th>
+                        <th class="table-left">Bottom</th>
+                        <th class="table-left">Quantity</th>
+                        <th class="table-left">OrderlinePrice</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="order : ${session.orders}">
-                        <td th:text="${order.topping}">topping</td>
-                        <td th:text="${order.bottom}">bottom</td>
-                        <td th:text="${order.quantity}">quantity</td>
-                        <td th:text="${order.orderlinePrice}">orderlinePrice</td>
+                        <td class="table-left" th:text="${order.topping}">topping</td>
+                        <td class="table-left" th:text="${order.bottom}">bottom</td>
+                        <td class="table-left" th:text="${order.quantity}">quantity</td>
+                        <td class="table-right"><span th:text="${order.orderlinePrice}"></span> kr.</td>
                     </tr>
                     <tr>
-                        <td>Samlet beløb: <span th:text="${session.totalAmount}"></span></td>
+                        <td colspan="3" class="table-left bold-text">Samlet pris</td>
+                        <td class="table-right"><span th:text="${session.totalAmount}"></span> kr.</td>
                     </tr>
                     </tbody>
                 </table>

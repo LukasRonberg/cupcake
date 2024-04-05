@@ -86,7 +86,7 @@ header a img {
 /* Change color on hover */
 .topnav a:hover {
     color: black;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+
 }
 
 .topnav form {
@@ -95,11 +95,9 @@ header a img {
     background-color: #f9f9f9;
 }
 
-
 .topnav img {
     background-color: #f9f9f9;
 }
-
 
 form {
     margin-top: 10px;
@@ -256,6 +254,46 @@ div {
 img {
     max-width: 95%;
 }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center; /* Centrer tekstindholdet for alle celler */
+}
+
+th {
+    background-color: #f2f2f2;
+    font-size: 18px; /* Ændrer størrelsen af tabeloverskrifterne til 18px */
+}
+
+.table-right {
+    text-align: right;
+    padding-right: 40px;
+}
+
+.table-left {
+    text-align: left;
+    padding-left: 35px;
+}
+
+.bold-text {
+    font-weight: bold; /* Gør teksten fed */
+    font-size: 18px; /* Ændrer størrelsen af tabeloverskrifterne til 18px */
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f2f2f2;
+}
+
 
 
 /* Responsive styles */

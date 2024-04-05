@@ -67,12 +67,12 @@ public class ItemController {
 
         ctx.sessionAttribute("orders", orderLine);
 
-        double totalAmount = 0; // Her skal du erstatte calculateTotalAmount med din egen logik til at beregne det samlede beløb
+        int totalAmount = 0;
         for(Order orderline: orderLine) {
             totalAmount += orderline.getOrderlinePrice();
         }
 
-        ctx.sessionAttribute("totalAmount", totalAmount); // Send det samlede beløb som en attribut til HTML-skabelonen
+        ctx.sessionAttribute("totalAmount", totalAmount); // Sender det samlede beløb som en attribut til HTML-skabelonen
 
         System.out.println("Successfully added order: " + order);
 
@@ -120,10 +120,14 @@ public class ItemController {
             }
 
             ItemMapper.payForOrder(generatedOrderId, toppingId, bottomId, order.getQuantity(), order.getOrderlinePrice(), connectionPool);
-            ctx.attribute("message", "Tak for din ordre. Din ordre har fået ordrenummer "+generatedOrderId+". Du hører fra os når din ordre er færdig!");
-            ctx.attribute("ordercreated", true);
-            ctx.render("index.html");
+
         }
+        tempOrderLine.clear();
+        ctx.attribute("message", "Tak for din ordre. Din ordre har fået ordrenummer "+generatedOrderId+". Du hører fra os når din ordre er parat til afhentning!");
+        ctx.attribute("ordercreated", true);
+        showTopping(ctx,ConnectionPool.getInstance());
+        showBottom(ctx, ConnectionPool.getInstance());
+        ctx.render("index.html");
     }
 
 }
