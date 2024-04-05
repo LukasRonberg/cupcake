@@ -18,11 +18,12 @@
     </header>
 
     <div class="topnav">
-        <a th:if="${session.currentUser != null and session.currentUser.isAdmin}" href="#" class="left" >Order</a>
-        <a th:if="${session.currentUser != null and session.currentUser.isAdmin}" href="#" class="left" >Kunder</a>
-        <a href="#" class="basket">
+        <form method="get">
+        <button type="submit" class="basket" formaction="/showcupcakes">
             <img src="../public/images/shopping-bag.png" th:src="@{/images/shopping-bag.png}" alt="Shopping Bag" />
-        </a>
+        </button>
+        </form>
+
         <a th:if="${session.currentUser == null}" href="login.html" class="right" th:href="@{/login/}">Login</a>
         <a th:if="${session.currentUser != null}" href="index.html" class="right" th:href="@{/logout/}">Logout</a>
         <a th:if="${session.currentUser != null}" class="right" th:text="${session.currentUser.email}"></a>
