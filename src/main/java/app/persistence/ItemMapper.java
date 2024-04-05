@@ -64,4 +64,51 @@ public class ItemMapper {
         }
         return bottomList;
     }
+
+    public static Bottom getBottomById(int bottomId, ConnectionPool connectionPool) throws DatabaseException {
+        Bottom bottom = null;
+
+        String sql = "SELECT * FROM bottom WHERE bottom_id = ?";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setInt(1, bottomId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int id = rs.getInt("bottom_id");
+                String name = rs.getString("bottom");
+                int price = rs.getInt("price");
+                bottom = new Bottom(id, name, price);
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Error retrieving bottom with id = " + bottomId, e.getMessage());
+        }
+        return bottom;
+    }
+
+    public static Topping getToppingById(int toppingId, ConnectionPool connectionPool) throws DatabaseException {
+        Topping topping = null;
+
+        String sql = "SELECT * FROM topping WHERE topping_id = ?";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setInt(1, toppingId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int id = rs.getInt("topping_id");
+                String name = rs.getString("topping");
+                int price = rs.getInt("price");
+                topping = new Topping(id, name, price);
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Error retrieving topping with id = " + toppingId, e.getMessage());
+        }
+        return topping;
+    }
+
 }
