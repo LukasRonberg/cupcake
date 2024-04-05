@@ -31,8 +31,8 @@ public class UserController
         app.get("createuser", ctx -> ctx.render("createuser.html"));
     }
 
-    private static void createUser(Context ctx, ConnectionPool connectionPool)
-    {
+    private static void createUser(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+
         // Hent form parametre
         String email = ctx.formParam("email");
         String password1 = ctx.formParam("password1");
@@ -40,27 +40,33 @@ public class UserController
         String name = ctx.formParam("name");
         String mobile = ctx.formParam("mobile");
 
-        ctx.attribute("created", true);
+        boolean userexist = UserMapper.userexist(email, connectionPool);
+        ctx.attribute("createuser", true);
+        ctx.attribute("usercreated", false);
 
-        if (password1.equals(password2))
-        {
-            try
-            {
-                UserMapper.createuser(email, password1, name, mobile, connectionPool);
-                ctx.attribute("message", "Du er hermed oprettet med brugernavn: " + email +
-                        ". Nu kan du logge på.");
-                ctx.render("createuser.html");
-            }
-
-            catch (DatabaseException e)
-            {
-                ctx.attribute("message", "Dit brugernavn findes allerede. Prøv igen, eller log ind");
+        if(!userexist) {
+            if (password1.equals(password2)) {
+                try {
+                    UserMapper.createuser(email, password1, name, mobile, connectionPool);
+                    ctx.attribute("message", "Du er hermed oprettet med brugernavn: " + email +
+                            ". Nu kan du logge på.");
+                    ctx.attribute("login", true);
+                    ctx.render("login.html");
+                } catch (DatabaseException e) {
+                    ctx.attribute("message", "Dit brugernavn findes allerede. Prøv igen, eller log ind");
+                    ctx.attribute("login", true);
+                    ctx.render("login.html");
+                }
+            } else {
+                ctx.attribute("message", "Dine to passwords matcher ikke! Prøv igen");
+                ctx.attribute("createuser", true);
                 ctx.render("createuser.html");
             }
         } else
         {
-            ctx.attribute("message", "Dine to passwords matcher ikke! Prøv igen");
-            ctx.render("createuser.html");
+            ctx.attribute("message", "Dit brugernavn findes allerede. Prøv igen, eller log ind");
+            ctx.attribute("login", true);
+            ctx.render("login.html");
         }
     }
 
@@ -76,6 +82,9 @@ public class UserController
         String email = ctx.formParam("email");
         String password = ctx.formParam("password");
 
+        ctx.attribute("login", true);
+        ctx.attribute("loginsuccess", false);
+
         // Check om bruger findes i DB med de angivne username + password
         try
         {
@@ -83,17 +92,19 @@ public class UserController
             ctx.sessionAttribute("currentUser", user);
             // Hvis ja, send videre til forsiden med login besked
             ctx.attribute("message", "Du er nu logget ind");
+            ctx.attribute("loginsuccess", true);
             if(user.isAdmin()){
                 ctx.render("adminSite.html");
             } else {
-            ctx.render("index.html");
+                ctx.render("login.html");
             }
         }
         catch (DatabaseException e)
         {
             // Hvis nej, send tilbage til login side med fejl besked
-            ctx.attribute("message", e.getMessage() );
-            ctx.render("index.html");
+            ctx.attribute("message", "Forkert brugernavn eller password. Prøv igen eller opret brugeren!");
+
+            ctx.render("login.html");
         }
     }
 }
