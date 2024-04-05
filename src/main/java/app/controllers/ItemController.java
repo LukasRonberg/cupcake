@@ -12,8 +12,11 @@ import io.javalin.http.Context;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class ItemController {
+    static ArrayList<Order> orderLine = new ArrayList<>();
         public static void addRoutes(Javalin app)
         {
             app.get("/", ctx -> {
@@ -24,9 +27,18 @@ public class ItemController {
             app.post("/createorder", ctx -> {
                 createOrder(ctx,ConnectionPool.getInstance());
             });
+            app.get("/showcupcakes", ctx -> {
+                ctx.render("checkoutpage.html");
+            });
+
+            app.post("/payorder", ctx -> {
+                payForOrder(ctx,ConnectionPool.getInstance());
+                //ctx.render("checkoutpage.html");
+            });
         }
 
     private static void createOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+
         User currentUser = ctx.sessionAttribute("currentUser");
         if (currentUser == null) {
             ctx.render("login.html");
@@ -50,17 +62,25 @@ public class ItemController {
 
         int orderlinePrice = calculateOrderLinePrice(topping, bottom, quantity);
 
-        Order order = new Order(email, name, mobile, balance, topping.getTopping(), bottom.getBottom(), quantity, orderlinePrice);
+        Order order = new Order(currentUser.getUserId(),email, name, mobile, balance, topping.getTopping(), bottom.getBottom(), quantity, orderlinePrice);
+        orderLine.add(order);
 
-        List<Order> orders = ctx.sessionAttribute("orders");
-        if(orders == null){
-            orders = new ArrayList<>();
+        ctx.sessionAttribute("orders", orderLine);
+
+        double totalAmount = 0; // Her skal du erstatte calculateTotalAmount med din egen logik til at beregne det samlede beløb
+        for(Order orderline: orderLine) {
+            totalAmount += orderline.getOrderlinePrice();
         }
 
-        orders.add(order);
+        ctx.sessionAttribute("totalAmount", totalAmount); // Send det samlede beløb som en attribut til HTML-skabelonen
 
         System.out.println("Successfully added order: " + order);
-        ctx.render("index.html");
+
+
+            showTopping(ctx,ConnectionPool.getInstance());
+            showBottom(ctx, ConnectionPool.getInstance());
+            ctx.render("index.html");
+
     }
 
     private static int calculateOrderLinePrice(Topping topping, Bottom bottom, int quantity) {
@@ -78,6 +98,32 @@ public class ItemController {
     public static void showTopping(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         List<Topping> toppingList = ItemMapper.showToppings(connectionPool);
         ctx.attribute("toppingList",toppingList);
+    }
+
+
+
+    public static void payForOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        ArrayList<Order> tempOrderLine = ctx.sessionAttribute("orders");
+
+        int generatedOrderId = ItemMapper.insertOrder(tempOrderLine.get(0).getUserId(),connectionPool);
+        List<Topping> toppingList = ItemMapper.showToppings(connectionPool);
+        List<Bottom> bottomList = ItemMapper.showBottoms(connectionPool);
+
+        for (Order order:tempOrderLine) {
+            int toppingId = 0;
+            for (Topping topping: toppingList) {
+                if(order.getTopping().equals(topping.getTopping())) toppingId = topping.getToppingId();
+            }
+            int bottomId = 0;
+            for (Bottom bottom: bottomList) {
+                if(order.getBottom().equals(bottom.getBottom())) bottomId = bottom.getBottomId();
+            }
+
+            ItemMapper.payForOrder(generatedOrderId, toppingId, bottomId, order.getQuantity(), order.getOrderlinePrice(), connectionPool);
+            ctx.attribute("message", "Tak for din ordre. Din ordre har fået ordrenummer "+generatedOrderId+". Du hører fra os når din ordre er færdig!");
+            ctx.attribute("ordercreated", true);
+            ctx.render("index.html");
+        }
     }
 
 }

@@ -12,17 +12,19 @@
 
 <div class="page">
     <header>
-        <a href="../index.html" th:href="@{/public}">
-            <img alt="logo" src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}"/>
-        </a>
+        <form method="get">
+            <button type="submit" formaction="/">
+                <img alt="logo" src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}"/>
+            </button>
+        </form>
     </header>
 
     <div class="topnav">
-        <a th:if="${session.currentUser != null and session.currentUser.isAdmin}" href="#" class="left" >Order</a>
-        <a th:if="${session.currentUser != null and session.currentUser.isAdmin}" href="#" class="left" >Kunder</a>
-        <a href="#" class="basket">
-            <img src="../public/images/shopping-bag.png" th:src="@{/images/shopping-bag.png}" alt="Shopping Bag" />
-        </a>
+        <form method="get">
+            <button type="submit" class="basket" formaction="/showcupcakes">
+                <img src="../public/images/shopping-bag.png" th:src="@{/images/shopping-bag.png}" alt="Shopping Bag" />
+            </button>
+        </form>
         <a th:if="${session.currentUser == null}" href="login.html" class="right" th:href="@{/login/}">Login</a>
         <a th:if="${session.currentUser != null}" href="index.html" class="right" th:href="@{/logout/}">Logout</a>
         <a th:if="${session.currentUser != null}" class="right" th:text="${session.currentUser.email}"></a>
@@ -68,7 +70,7 @@
             <input type="submit" value="Læg i kurv" formaction="/createorder">
         </div>
 
-        <div id="hiddenDiv" class="modal" th:if="${booked}">
+        <div id="hiddenDiv" class="modal" th:if="${ordercreated}">
             <div class="modal-content">
                 <span class="close" onclick="closeModal()">&times;</span>
                 <p id="messageText" th:text="${message}"></p>
@@ -80,8 +82,8 @@
 <script th:inline="javascript">
 
     document.addEventListener("DOMContentLoaded", function () {
-        var booked = [[${booked}]];
-        if (booked) {
+        var ordercreated = [[${ordercreated}]];
+        if (ordercreated) {
             // Hvis noget er booket, vis det skjulte div-element
             var hiddenDiv = document.getElementById("hiddenDiv");
             hiddenDiv.style.display = "block";
