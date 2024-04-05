@@ -52,4 +52,18 @@ public class Order {
     public int getOrderlinePrice() {
         return orderlinePrice;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", balance=" + balance +
+                ", topping='" + topping + '\'' +
+                ", bottom='" + bottom + '\'' +
+                ", quantity=" + quantity +
+                ", orderlinePrice=" + orderlinePrice +
+                '}';
+    }
 }
