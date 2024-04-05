@@ -12,6 +12,8 @@ import io.javalin.http.Context;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class ItemController {
         public static void addRoutes(Javalin app)
@@ -57,9 +59,8 @@ public class ItemController {
         Order order = new Order(email, name, mobile, balance, topping.getTopping(), bottom.getBottom(), quantity, orderlinePrice);
         orderLine.add(order);
 
-        ctx.attribute("orders", orderLine);
+        ctx.sessionAttribute("orders", orderLine);
 
-        System.out.println(ctx.attribute("orders").toString());
         System.out.println("Successfully added order: " + order);
         ctx.render("index.html");
     }

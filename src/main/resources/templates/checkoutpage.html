@@ -11,10 +11,13 @@
 <body>
 
 <div class="page">
+
     <header>
-        <a href="../index.html" th:href="@{/public}">
+    <form method="get">
+        <button type="submit" formaction="/">
             <img alt="logo" src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}"/>
-        </a>
+        </button>
+    </form>
     </header>
 
     <div class="topnav">
@@ -44,10 +47,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="order : ${orders}">
+                    <tr th:each="order : ${session.orders}">
                         <td th:text="${order.topping}">topping</td>
                         <td th:text="${order.bottom}">bottom</td>
-                        <td th:text="'+45 ' + ${order.quantity}">quantity</td>
+                        <td th:text="${order.quantity}">quantity</td>
                         <td th:text="${order.orderlinePrice}">orderlinePrice</td>
                     </tr>
                     </tbody>
