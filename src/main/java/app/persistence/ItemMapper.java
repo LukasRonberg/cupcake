@@ -4,10 +4,7 @@ import app.entities.Bottom;
 import app.entities.Topping;
 import app.exceptions.DatabaseException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,6 +106,60 @@ public class ItemMapper {
             throw new DatabaseException("Error retrieving topping with id = " + toppingId, e.getMessage());
         }
         return topping;
+    }
+
+    public static int insertOrder(int userId, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "INSERT INTO orders (user_id) VALUES (?)";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+        ) {
+            ps.setInt(1, userId);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl ved insert af order");
+            }
+
+            // Retrieve the generated keys
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1); // Assuming the first column is the auto-generated ID
+                } else {
+                    throw new DatabaseException("No generated keys returned");
+                }
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException(e.getMessage());
+        }
+    }
+
+    public static void payForOrder(int orderId, int toppingId, int bottomId, int quantity,int price, ConnectionPool connectionPool) throws DatabaseException
+    {
+        String sql = "insert into orderline (order_id, topping_id, bottom_id, quantity, price) values (?,?,?,?,?)";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        )
+        {
+            ps.setInt(1, orderId);
+            ps.setInt(2, toppingId);
+            ps.setInt(3, bottomId);
+            ps.setInt(4, quantity);
+            ps.setInt(5, price);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1)
+            {
+                throw new DatabaseException("Fejl ved sendelse af betalling");
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
 }

@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class ItemController {
+    static ArrayList<Order> orderLine = new ArrayList<>();
         public static void addRoutes(Javalin app)
         {
             app.get("/", ctx -> {
@@ -29,10 +30,15 @@ public class ItemController {
             app.get("/showcupcakes", ctx -> {
                 ctx.render("checkoutpage.html");
             });
+
+            app.post("/payorder", ctx -> {
+                payForOrder(ctx,ConnectionPool.getInstance());
+                //ctx.render("checkoutpage.html");
+            });
         }
 
     private static void createOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-            ArrayList<Order> orderLine = new ArrayList<>();
+
         User currentUser = ctx.sessionAttribute("currentUser");
         if (currentUser == null) {
             ctx.render("login.html");
@@ -56,13 +62,18 @@ public class ItemController {
 
         int orderlinePrice = calculateOrderLinePrice(topping, bottom, quantity);
 
-        Order order = new Order(email, name, mobile, balance, topping.getTopping(), bottom.getBottom(), quantity, orderlinePrice);
+        Order order = new Order(currentUser.getUserId(),email, name, mobile, balance, topping.getTopping(), bottom.getBottom(), quantity, orderlinePrice);
         orderLine.add(order);
 
         ctx.sessionAttribute("orders", orderLine);
 
         System.out.println("Successfully added order: " + order);
-        ctx.render("index.html");
+
+
+            showTopping(ctx,ConnectionPool.getInstance());
+            showBottom(ctx, ConnectionPool.getInstance());
+            ctx.render("index.html");
+
     }
 
     private static int calculateOrderLinePrice(Topping topping, Bottom bottom, int quantity) {
@@ -80,6 +91,29 @@ public class ItemController {
     public static void showTopping(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         List<Topping> toppingList = ItemMapper.showToppings(connectionPool);
         ctx.attribute("toppingList",toppingList);
+    }
+
+
+
+    public static void payForOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        ArrayList<Order> tempOrderLine = ctx.sessionAttribute("orders");
+
+        int generatedOrderId = ItemMapper.insertOrder(tempOrderLine.get(0).getUserId(),connectionPool);
+        List<Topping> toppingList = ItemMapper.showToppings(connectionPool);
+        List<Bottom> bottomList = ItemMapper.showBottoms(connectionPool);
+
+        for (Order order:tempOrderLine) {
+            int toppingId = 0;
+            for (Topping topping: toppingList) {
+                if(order.getTopping().equals(topping.getTopping())) toppingId = topping.getToppingId();
+            }
+            int bottomId = 0;
+            for (Bottom bottom: bottomList) {
+                if(order.getBottom().equals(bottom.getBottom())) bottomId = bottom.getBottomId();
+            }
+
+            ItemMapper.payForOrder(generatedOrderId, toppingId, bottomId, order.getQuantity(), order.getOrderlinePrice(), connectionPool);
+        }
     }
 
 }
