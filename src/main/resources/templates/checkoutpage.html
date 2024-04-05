@@ -13,24 +13,21 @@
 <div class="page">
 
     <header>
-    <form method="get">
-        <button type="submit" formaction="/">
+        <a href="../index.html" th:href="@{/public}">
             <img alt="logo" src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}"/>
-        </button>
-    </form>
+        </a>
     </header>
 
     <div class="topnav">
+        <a th:if="${session.currentUser == null}" href="login.html" class="left" th:href="@{/login/}">Login</a>
+        <a th:if="${session.currentUser != null}" href="index.html" class="left" th:href="@{/logout/}">Logout</a>
+        <a th:if="${session.currentUser != null}" class="right" th:text="${session.currentUser.email}"></a>
+
         <form method="get">
             <button type="submit" class="basket" formaction="/showcupcakes">
                 <img src="../public/images/shopping-bag.png" th:src="@{/images/shopping-bag.png}" alt="Shopping Bag" />
             </button>
         </form>
-        <a th:if="${session.currentUser == null}" href="login.html" class="right" th:href="@{/login/}">Login</a>
-        <a th:if="${session.currentUser != null}" href="index.html" class="right" th:href="@{/logout/}">Logout</a>
-        <a th:if="${session.currentUser != null}" class="right" th:text="${session.currentUser.email}"></a>
-
-
     </div>
 
     <form id="myForm" action="" method="post">
