@@ -80,4 +80,32 @@ public class UserMapper
             throw new DatabaseException(msg, e.getMessage());
         }
     }
+
+    public static boolean userexist(String email, ConnectionPool connectionPool) throws DatabaseException
+    {
+        String sql = "select * from public.\"users\" where email=?";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        )
+        {
+            ps.setString(1, email);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next())
+            {
+              return true;
+            } else
+            {
+                throw new DatabaseException("Brugernavnet eksisterer i vores system. Prøv et andet");
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new DatabaseException("DB fejl", e.getMessage());
+
+        }
+
+    }
 }

@@ -38,9 +38,9 @@
 
 <script th:inline="javascript">
     document.addEventListener("DOMContentLoaded", function() {
-        var created = [[${created}]];
-        if (created) {
-            // Hvis noget er booket, vis det skjulte div-element
+        var createuser = [[${createuser}]];
+        if (createuser) {
+            // Hvis noget er created, vis det skjulte div-element
             var hiddenDiv = document.getElementById("hiddenDiv");
             hiddenDiv.style.display = "block";
             showMessage([[${message}]]);

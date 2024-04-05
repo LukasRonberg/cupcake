@@ -24,11 +24,27 @@
         <div class="generic-form-createuser">
             <a href="createuser.html" th:href="@{/createuser}">Create user</a></br>
         </div>
+
+        <div id="hiddenDiv" class="modal" th:if="${login}" >
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <p id="messageText" th:text="${message}"></p>
+            </div>
+        </div>
     </div>
 </div>
 
 
-<script>
+<script th:inline="javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        var login = [[${login}]];
+        if (login) {
+            // Hvis noget er created, vis det skjulte div-element
+            var hiddenDiv = document.getElementById("hiddenDiv");
+            hiddenDiv.style.display = "block";
+            showMessage([[${message}]]);
+        }
+    });
     // Funktion for at vise meddelelsen
     function showMessage(message) {
         var modal = document.getElementById("hiddenDiv");
@@ -40,7 +56,10 @@
     function closeModal() {
         var modal = document.getElementById("hiddenDiv");
         modal.style.display = "none"; // Skjul modalen
-        window.location.href = "index.html";
+        var loginsuccess = [[${loginsuccess}]];
+        if (loginsuccess) {
+            window.location.href = "index.html";
+        }
     }
 </script>
 
