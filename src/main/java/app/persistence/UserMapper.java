@@ -93,13 +93,7 @@ public class UserMapper
             ps.setString(1, email);
 
             ResultSet rs = ps.executeQuery();
-            if (rs.next())
-            {
-              return true;
-            } else
-            {
-                throw new DatabaseException("Brugernavnet eksisterer i vores system. Prøv et andet");
-            }
+            return rs.next();
         }
         catch (SQLException e)
         {

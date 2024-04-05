@@ -24,9 +24,13 @@ public class ItemController {
             app.post("/createorder", ctx -> {
                 createOrder(ctx,ConnectionPool.getInstance());
             });
+            app.get("/showcupcakes", ctx -> {
+                ctx.render("checkoutpage.html");
+            });
         }
 
     private static void createOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+            ArrayList<Order> orderLine = new ArrayList<>();
         User currentUser = ctx.sessionAttribute("currentUser");
         if (currentUser == null) {
             ctx.render("login.html");
@@ -51,14 +55,11 @@ public class ItemController {
         int orderlinePrice = calculateOrderLinePrice(topping, bottom, quantity);
 
         Order order = new Order(email, name, mobile, balance, topping.getTopping(), bottom.getBottom(), quantity, orderlinePrice);
+        orderLine.add(order);
 
-        List<Order> orders = ctx.sessionAttribute("orders");
-        if(orders == null){
-            orders = new ArrayList<>();
-        }
+        ctx.attribute("orders", orderLine);
 
-        orders.add(order);
-
+        System.out.println(ctx.attribute("orders").toString());
         System.out.println("Successfully added order: " + order);
         ctx.render("index.html");
     }

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>BookingBois</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../public/css/bookiBois.css" th:href="@{/css/bookiBois.css}" rel="stylesheet"/>
+</head>
+
+<body>
+
+<div class="page">
+    <header>
+        <a href="../index.html" th:href="@{/public}">
+            <img alt="logo" src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}"/>
+        </a>
+    </header>
+
+    <div class="topnav">
+        <form method="get">
+            <button type="submit" class="basket" formaction="/showcupcakes">
+                <img src="../public/images/shopping-bag.png" th:src="@{/images/shopping-bag.png}" alt="Shopping Bag" />
+            </button>
+        </form>
+        <a th:if="${session.currentUser == null}" href="login.html" class="right" th:href="@{/login/}">Login</a>
+        <a th:if="${session.currentUser != null}" href="index.html" class="right" th:href="@{/logout/}">Logout</a>
+        <a th:if="${session.currentUser != null}" class="right" th:text="${session.currentUser.email}"></a>
+
+
+    </div>
+
+    <form id="myForm" action="" method="post">
+        <!-- Form to add balance to a customer's account -->
+            <div>
+                <h2>Your Cupcakes:</h2>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>topping</th>
+                        <th>bottom</th>
+                        <th>quantity</th>
+                        <th>orderlinePrice</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="order : ${orders}">
+                        <td th:text="${order.topping}">topping</td>
+                        <td th:text="${order.bottom}">bottom</td>
+                        <td th:text="'+45 ' + ${order.quantity}">quantity</td>
+                        <td th:text="${order.orderlinePrice}">orderlinePrice</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        <div class="button-container">
+            <input type="submit" value="Betal" formaction="">
+        </div>
+
+        <div id="hiddenDiv" class="modal" th:if="${booked}">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <p id="messageText" th:text="${message}"></p>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script th:inline="javascript">
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var booked = [[${booked}]];
+        if (booked) {
+            // Hvis noget er booket, vis det skjulte div-element
+            var hiddenDiv = document.getElementById("hiddenDiv");
+            hiddenDiv.style.display = "block";
+            showMessage([[${message}]]);
+        }
+    });
+</script>
+<script>
+    // Funktion for at vise meddelelsen
+    function showMessage(message) {
+        var modal = document.getElementById("hiddenDiv");
+        var messageText = document.getElementById("messageText");
+        messageText.textContent = message; // Sæt meddelelsesindholdet
+        modal.style.display = "block"; // Vis modalen
+    }
+
+    // Funktion for at lukke modalen
+    function closeModal() {
+        var modal = document.getElementById("hiddenDiv");
+        modal.style.display = "none"; // Skjul modalen
+    }
+</script>
+
+
+</body>
+
+</html>
