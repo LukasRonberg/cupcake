@@ -135,6 +135,8 @@ public class ItemController {
     public static void payForOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         User currentUser = ctx.sessionAttribute("currentUser");
         int orderprice = ctx.sessionAttribute("totalAmount");
+        System.out.println("orderPrice: "+orderprice);
+        System.out.println("Balance: "+currentUser.getBalance());
         if(currentUser.getBalance() >= orderprice) {
             ArrayList<Order> tempOrderLine = ctx.sessionAttribute("orders");
 
@@ -153,10 +155,12 @@ public class ItemController {
                 }
 
                 ItemMapper.payForOrder(generatedOrderId, toppingId, bottomId, order.getQuantity(), order.getOrderlinePrice(), connectionPool);
-                int newBalance = currentUser.getBalance()-orderprice;
-                UserMapper.updateBalance(currentUser.getUserId(), newBalance, connectionPool);
+
             }
             tempOrderLine.clear();
+            int newBalance = currentUser.getBalance()-orderprice;
+            currentUser.setBalance(newBalance);
+            UserMapper.updateBalance(currentUser.getUserId(), newBalance, connectionPool);
             ctx.attribute("message", "Tak for din ordre. Din ordre har fået ordrenummer " + generatedOrderId + ". Du hører fra os når din ordre er parat til afhentning!");
             ctx.attribute("ordercreated", true);
             showTopping(ctx, ConnectionPool.getInstance());

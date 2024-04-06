@@ -33,14 +33,14 @@
     <form id="myForm" action="" method="post">
         <!-- Form to add balance to a customer's account -->
         <div>
-            <h2>Your Cupcakes:</h2>
+            <h2>Din Bestilling:</h2>
             <table>
                 <thead>
                 <tr>
                     <th class="table-left">Topping</th>
-                    <th class="table-left">Bottom</th>
-                    <th class="table-left">Quantity</th>
-                    <th class="table-left">OrderlinePrice</th>
+                    <th class="table-left">Bund</th>
+                    <th class="table-left">Antal</th>
+                    <th class="table-left">Pris</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -52,7 +52,7 @@
                     <td class="table-right"><span th:text="${order.orderlinePrice}"></span> kr.</td>
                     <td>
                         <button type="submit" name="orderId" th:value="${order.orderId}" formaction="deleteorderline"
-                                class="delete-button">Delete
+                                class="delete-button">Slet
                         </button>
                     </td>
                 </tr>

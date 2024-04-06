@@ -169,7 +169,7 @@ select {
 
 /* Styling for knapcontaineren */
 .button-container-checkout {
-    padding-right: 18px;
+    padding-right: 7px;
     text-align: right; /* Højrestil indholdet */
     margin-top: 20px; /* Tilføj lidt topmargin for at adskille knappen fra dropdown-menuerne */
 }
