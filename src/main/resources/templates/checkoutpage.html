@@ -41,6 +41,7 @@
                         <th class="table-left">Bottom</th>
                         <th class="table-left">Quantity</th>
                         <th class="table-left">OrderlinePrice</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -49,16 +50,20 @@
                         <td class="table-left" th:text="${order.bottom}">bottom</td>
                         <td class="table-left" th:text="${order.quantity}">quantity</td>
                         <td class="table-right"><span th:text="${order.orderlinePrice}"></span> kr.</td>
+                        <td>
+                            <button type="submit" name="orderId" th:value="${order.orderId}" formaction="deleteorderline" class="delete-button">Delete</button>
+                        </td>
                     </tr>
                     <tr>
                         <td colspan="3" class="table-left bold-text">Samlet pris</td>
                         <td class="table-right"><span th:text="${session.totalAmount}"></span> kr.</td>
+                        <td></td>
                     </tr>
                     </tbody>
                 </table>
             </div>
 
-        <div class="button-container">
+        <div class="button-container-checkout">
             <input type="submit" value="Betal" formaction="/payorder">
         </div>
 

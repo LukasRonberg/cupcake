@@ -35,9 +35,38 @@ public class ItemController {
                 payForOrder(ctx,ConnectionPool.getInstance());
                 //ctx.render("checkoutpage.html");
             });
+            app.post("deleteorderline", ctx -> deleteorderline(ctx, ConnectionPool.getInstance()));
         }
 
-    private static void createOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+    private static void deleteorderline(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        ArrayList<Order> orderlines = ctx.sessionAttribute("orders");
+        int orderId = Integer.parseInt(ctx.formParam("orderId"));
+
+        for (Order order : orderlines) {
+            if (order.getOrderId() == orderId) {
+                orderlines.remove(order);
+                break;
+            }
+        }
+
+        ctx.sessionAttribute("orders", orderlines);
+
+        int totalAmount = 0;
+        for(Order orderline: orderLine) {
+            totalAmount += orderline.getOrderlinePrice();
+        }
+
+        ctx.sessionAttribute("totalAmount", totalAmount);
+        if(orderlines.isEmpty()) {
+            showTopping(ctx,ConnectionPool.getInstance());
+            showBottom(ctx, ConnectionPool.getInstance());
+            ctx.render("index.html");
+        } else {
+            ctx.render("checkoutpage.html");
+        }
+    }
+
+        private static void createOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
         User currentUser = ctx.sessionAttribute("currentUser");
         if (currentUser == null) {

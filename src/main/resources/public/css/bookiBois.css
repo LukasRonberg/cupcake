@@ -80,7 +80,7 @@ header a img {
 .topnav a.left {
     float: left;
     margin-right: 10px;
-    padding-left: 20px;
+    padding-left: 40px;
 }
 
 /* Change color on hover */
@@ -90,7 +90,7 @@ header a img {
 }
 
 .topnav form {
-    margin: 0; /* Fjern ydre margin */
+    margin-right: 20px; /* Fjern ydre margin */
     padding: 0; /* Fjern indvendig polstring */
     background-color: #f9f9f9;
 }
@@ -131,8 +131,9 @@ h2 {
 
 .button-container {
     text-align: right;
-    padding-right: 30px;
+    padding-right: 35px;
     padding-bottom: 50px;
+    margin-top: 20px;
 }
 
 .book-button {
@@ -142,7 +143,7 @@ h2 {
     border: none;
     cursor: pointer;
     font-size: 20px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.4s ease;
 }
 
 .book-button:hover {
@@ -167,7 +168,8 @@ select {
 }
 
 /* Styling for knapcontaineren */
-.button-container {
+.button-container-checkout {
+    padding-right: 18px;
     text-align: right; /* Højrestil indholdet */
     margin-top: 20px; /* Tilføj lidt topmargin for at adskille knappen fra dropdown-menuerne */
 }
@@ -219,18 +221,21 @@ button.edit-buttons:hover {
 
 /* Style for submit button */
 input[type="submit"] {
-    background-color: #008CBA;
+    background-color: #007bff; /* Blå farve for linket */
     color: white;
-    padding: 10px 20px;
+    padding: 8px 25px 8px 25px;
     border: none;
-    border-radius: 8px;
+    border-radius: 5px;
     cursor: pointer;
-    font-size: 26px;
+    font-size: 22px;
+    cursor: pointer; /* Gør musemarkøren til en hånd, når der er hover */
+    transition: background-color 0.4s; /* Glat overgangseffekt for baggrundsfarven */
 }
 
 /* Hover effect for submit button */
 input[type="submit"]:hover {
-    background-color: #0077A3;
+    background-color: #0056b3; /* Mørkere blå farve ved hover */;
+    border-color: #0056b3; /* Mørkere blå farve ved hover */
 }
 
 /* Style for messages */
@@ -450,4 +455,18 @@ tr:hover {
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+button.delete-button {
+    background-color: #ff6347; /* Rød baggrundsfarve */
+    color: #fff; /* Hvid tekstfarve */
+    border: none; /* Fjern knapens kant */
+    padding: 8px 16px; /* Lidt polstring for at give knappen plads */
+    border-radius: 4px; /* Afrundede hjørner */
+    cursor: pointer; /* Gør musemarkøren til en hånd, når der er hover */
+    transition: background-color 0.3s, color 0.3s; /* Glat overgangseffekt for farveændringer */
+}
+
+button.delete-button:hover {
+    background-color: #dc143c; /* Mørkere rød baggrundsfarve ved hover */
 }

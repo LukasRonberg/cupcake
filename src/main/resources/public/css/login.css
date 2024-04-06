@@ -74,36 +74,41 @@ header a img {
 }
 
 .generic-form-createuser a {
-
+    background-color: #007bff; /* Blå farve for linket */
     padding: 12px 130px;
     border-radius: 5px;
     font-size: 1.2rem;
     font-family: Arial, sans-serif;
-    background-color: darkred;
     color: white;
     text-decoration: none;
     text-align: center;
+    border-color: #007bff;
+    cursor: pointer; /* Gør musemarkøren til en hånd, når der er hover */
+    transition: background-color 0.3s; /* Glat overgangseffekt for baggrundsfarven */
 }
 
 .generic-form-createuser a:hover {
-    background-color: lightgreen;
-    border-color: lightgreen;
+    background-color: #0056b3; /* Mørkere blå farve ved hover */;
+    border-color: #0056b3; /* Mørkere blå farve ved hover */
 }
 
 .generic-form button {
-    padding: 10px;
+    padding: 12px;
     margin-bottom: 15px;
     width: 50%;
     font-size: 1.2rem;
     font-family: Arial, sans-serif;
     border-radius: 5px;
-    background-color: darkgreen;
+    border: none;
+    background-color: #28a745; /* Grøn baggrundsfarve */
     color: white;
+    cursor: pointer; /* Gør musemarkøren til en hånd, når der er hover */
+    transition: background-color 0.3s; /* Glat overgangseffekt for baggrundsfarven */
 }
 
 .generic-form button:hover {
-    background-color: lightblue;
-    border-color: lightblue;
+    background-color: #218838; /* Mørkere grøn baggrundsfarve ved hover */
+    border-color: #218838; /* Mørkere grøn baggrundsfarve ved hover */
 
 }
 
@@ -180,20 +185,23 @@ header a img {
     }
 
     .generic-form-createuser a {
-
+        color: #007bff; /* Blå farve for linket */
         padding: 12px 90px;
         border-radius: 5px;
         font-size: 1.2rem;
         font-family: Arial, sans-serif;
-        background-color: darkred;
-        color: white;
+        background-color: #007bff; /* Blå farve for linket */
+
+
         text-decoration: none;
         text-align: center;
     }
 
     .generic-form-createuser a:hover {
-        background-color: lightgreen;
+        background-color: #0056b3; /* Mørkere blå farve ved hover */
+        color: #0056b3; /* Mørkere blå farve ved hover */
         border-color: lightgreen;
+
     }
 
     .generic-form button {
