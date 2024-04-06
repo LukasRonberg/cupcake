@@ -7,6 +7,7 @@ import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.ItemMapper;
+import app.persistence.UserMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
@@ -132,31 +133,39 @@ public class ItemController {
 
 
     public static void payForOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-        ArrayList<Order> tempOrderLine = ctx.sessionAttribute("orders");
+        User currentUser = ctx.sessionAttribute("currentUser");
+        int orderprice = ctx.sessionAttribute("totalAmount");
+        if(currentUser.getBalance() >= orderprice) {
+            ArrayList<Order> tempOrderLine = ctx.sessionAttribute("orders");
 
-        int generatedOrderId = ItemMapper.insertOrder(tempOrderLine.get(0).getUserId(),connectionPool);
-        List<Topping> toppingList = ItemMapper.showToppings(connectionPool);
-        List<Bottom> bottomList = ItemMapper.showBottoms(connectionPool);
+            int generatedOrderId = ItemMapper.insertOrder(tempOrderLine.get(0).getUserId(), connectionPool);
+            List<Topping> toppingList = ItemMapper.showToppings(connectionPool);
+            List<Bottom> bottomList = ItemMapper.showBottoms(connectionPool);
 
-        for (Order order:tempOrderLine) {
-            int toppingId = 0;
-            for (Topping topping: toppingList) {
-                if(order.getTopping().equals(topping.getTopping())) toppingId = topping.getToppingId();
+            for (Order order : tempOrderLine) {
+                int toppingId = 0;
+                for (Topping topping : toppingList) {
+                    if (order.getTopping().equals(topping.getTopping())) toppingId = topping.getToppingId();
+                }
+                int bottomId = 0;
+                for (Bottom bottom : bottomList) {
+                    if (order.getBottom().equals(bottom.getBottom())) bottomId = bottom.getBottomId();
+                }
+
+                ItemMapper.payForOrder(generatedOrderId, toppingId, bottomId, order.getQuantity(), order.getOrderlinePrice(), connectionPool);
+                int newBalance = currentUser.getBalance()-orderprice;
+                UserMapper.updateBalance(currentUser.getUserId(), newBalance, connectionPool);
             }
-            int bottomId = 0;
-            for (Bottom bottom: bottomList) {
-                if(order.getBottom().equals(bottom.getBottom())) bottomId = bottom.getBottomId();
-            }
-
-            ItemMapper.payForOrder(generatedOrderId, toppingId, bottomId, order.getQuantity(), order.getOrderlinePrice(), connectionPool);
-
+            tempOrderLine.clear();
+            ctx.attribute("message", "Tak for din ordre. Din ordre har fået ordrenummer " + generatedOrderId + ". Du hører fra os når din ordre er parat til afhentning!");
+            ctx.attribute("ordercreated", true);
+            showTopping(ctx, ConnectionPool.getInstance());
+            showBottom(ctx, ConnectionPool.getInstance());
+            ctx.render("index.html");
+        } else {
+            ctx.attribute("message", "Din saldo lyder på "+currentUser.getBalance()+" kr. hvilket ikke er nok til at betale for ordren! Fjern nogle varer fra din kurv eller indbetal penge på din konto!");
+            ctx.attribute("notenoughtmoney", true);
+            ctx.render("checkoutpage.html");
         }
-        tempOrderLine.clear();
-        ctx.attribute("message", "Tak for din ordre. Din ordre har fået ordrenummer "+generatedOrderId+". Du hører fra os når din ordre er parat til afhentning!");
-        ctx.attribute("ordercreated", true);
-        showTopping(ctx,ConnectionPool.getInstance());
-        showBottom(ctx, ConnectionPool.getInstance());
-        ctx.render("index.html");
     }
-
 }

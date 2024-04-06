@@ -25,49 +25,51 @@
 
         <form method="get">
             <button type="submit" class="basket" formaction="/showcupcakes">
-                <img src="../public/images/shopping-bag.png" th:src="@{/images/shopping-bag.png}" alt="Shopping Bag" />
+                <img src="../public/images/shopping-bag.png" th:src="@{/images/shopping-bag.png}" alt="Shopping Bag"/>
             </button>
         </form>
     </div>
 
     <form id="myForm" action="" method="post">
         <!-- Form to add balance to a customer's account -->
-            <div>
-                <h2>Your Cupcakes:</h2>
-                <table>
-                    <thead>
-                    <tr>
-                        <th class="table-left">Topping</th>
-                        <th class="table-left">Bottom</th>
-                        <th class="table-left">Quantity</th>
-                        <th class="table-left">OrderlinePrice</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="order : ${session.orders}">
-                        <td class="table-left" th:text="${order.topping}">topping</td>
-                        <td class="table-left" th:text="${order.bottom}">bottom</td>
-                        <td class="table-left" th:text="${order.quantity}">quantity</td>
-                        <td class="table-right"><span th:text="${order.orderlinePrice}"></span> kr.</td>
-                        <td>
-                            <button type="submit" name="orderId" th:value="${order.orderId}" formaction="deleteorderline" class="delete-button">Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="3" class="table-left bold-text">Samlet pris</td>
-                        <td class="table-right"><span th:text="${session.totalAmount}"></span> kr.</td>
-                        <td></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div>
+            <h2>Your Cupcakes:</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th class="table-left">Topping</th>
+                    <th class="table-left">Bottom</th>
+                    <th class="table-left">Quantity</th>
+                    <th class="table-left">OrderlinePrice</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="order : ${session.orders}">
+                    <td class="table-left" th:text="${order.topping}">topping</td>
+                    <td class="table-left" th:text="${order.bottom}">bottom</td>
+                    <td class="table-left" th:text="${order.quantity}">quantity</td>
+                    <td class="table-right"><span th:text="${order.orderlinePrice}"></span> kr.</td>
+                    <td>
+                        <button type="submit" name="orderId" th:value="${order.orderId}" formaction="deleteorderline"
+                                class="delete-button">Delete
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="table-left bold-text">Samlet pris</td>
+                    <td class="table-right"><span th:text="${session.totalAmount}"></span> kr.</td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
 
         <div class="button-container-checkout">
             <input type="submit" value="Betal" formaction="/payorder">
         </div>
 
-        <div id="hiddenDiv" class="modal" th:if="${booked}">
+        <div id="hiddenDiv" class="modal" th:if="${notenoughtmoney}">
             <div class="modal-content">
                 <span class="close" onclick="closeModal()">&times;</span>
                 <p id="messageText" th:text="${message}"></p>
@@ -79,9 +81,9 @@
 <script th:inline="javascript">
 
     document.addEventListener("DOMContentLoaded", function () {
-        var booked = [[${booked}]];
-        if (booked) {
-            // Hvis noget er booket, vis det skjulte div-element
+        var notenoughtmoney = [[${notenoughtmoney}]];
+        if (notenoughtmoney) {
+            // Hvis der ikke er nok penge på kundens konto så vis det skjulte div-element
             var hiddenDiv = document.getElementById("hiddenDiv");
             hiddenDiv.style.display = "block";
             showMessage([[${message}]]);
@@ -103,8 +105,5 @@
         modal.style.display = "none"; // Skjul modalen
     }
 </script>
-
-
 </body>
-
 </html>
