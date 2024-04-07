@@ -108,7 +108,6 @@ header a img {
     background-color: #f9f9f9;
     border-radius: 8px;
     text-align: left;
-
 }
 
 
@@ -126,6 +125,13 @@ h2 {
     color: black;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 30px;
+    background-color: #f9f9f9;
+}
+
+h3 {
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2.0rem; /* Smaller font size for smaller screens */
     background-color: #f9f9f9;
 }
 
@@ -377,6 +383,23 @@ button.delete-button:hover {
     /* Adjust the padding and text size for smaller screens like iPhones */
     .page {
         padding: 10px;
+        min-height: 400px;
+    }
+
+
+    .topnav a.right {
+        margin-left: 0px;
+    }
+
+    .topnav a.left {
+        margin-right: 0px;
+        padding-left: 20px;
+    }
+
+    .basket {
+        width: 30px;
+        height: 30px;
+        padding-right: 5px;
     }
 
     h1 {
@@ -387,14 +410,21 @@ button.delete-button:hover {
         font-size: 1.4rem; /* Smaller font size for smaller screens */
     }
 
+    h3 {
+        font-size: 1.3rem; /* Smaller font size for smaller screens */
+        padding-left: 3px;
+    }
+
     input[type="submit"] {
-        background-color: #008CBA;
+        background-color: #007bff; /* Blå farve for linket */
         color: white;
-        padding: 8px 16px;
+        padding: 8px 14px 8px 14px;
         border: none;
         border-radius: 8px;
         cursor: pointer;
-        font-size: 22px;
+        font-size: 16px;
+        cursor: pointer; /* Gør musemarkøren til en hånd, når der er hover */
+        transition: background-color 0.4s; /* Glat overgangseffekt for baggrundsfarven */
     }
 
     .button-container {
@@ -424,11 +454,72 @@ button.delete-button:hover {
     #antal {
         flex-basis: 100%; /* Gør den tredje dropdown-menu fuld bredde på mindre skærme */
     }
+
+    .form-table {
+        margin-top: 10px;
+        padding: 15px;
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+        max-height: 100%;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        text-align: left;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center; /* Centrer tekstindholdet for alle celler */
+        font-size: 13px;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        font-size: 15px; /* Ændrer størrelsen af tabeloverskrifterne til 16px */
+    }
+
+    .table-right {
+        text-align: center;
+        padding-right: 2px;
+    }
+
+    .table-left {
+        text-align: center;
+        padding-left: 2px;
+    }
+
+    .table-center {
+        text-align: center;
+
+    }
+
+    .bold-text {
+        font-weight: bold; /* Gør teksten fed */
+        font-size: 15px; /* Ændrer størrelsen af tabeloverskrifterne til 15px */
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    tr:hover {
+        background-color: #f2f2f2;
+    }
+
+
 }
 
 @media (max-width: 610px) {
     .page {
         padding: 10px;
+        min-height: 400px;
     }
 
     /* Further adjustments for very small screens like older iPhones */
@@ -450,6 +541,12 @@ button.delete-button:hover {
         text-decoration: none;
         background-color: #f9f9f9;
         transition: background-color 0.3s, color 0.3s;
+    }
+
+    .basket {
+        width: 25px;
+        height: 25px;
+        padding-right: 5px;
     }
 
     .button-container {
@@ -489,6 +586,7 @@ button.delete-button:hover {
 @media (max-width: 490px) {
     .page {
         padding: 10px;
+        min-height: 400px;
     }
 
     h1 {
@@ -544,36 +642,3 @@ button.delete-button:hover {
 
 }
 
-/* CSS til skærmstørrelser på 415px eller mindre */
-@media only screen and (max-width: 420px) {
-    /* Juster headeren */
-    header {
-        text-align: center;
-    }
-
-    /* Juster navigationen */
-    .topnav {
-
-        align-items: center;
-    }
-
-    /* Juster knapper og input-felter */
-    .basket {
-        margin: 10px auto;
-    }
-
-    .button-container-checkout {
-        text-align: center;
-    }
-
-    /* Juster tabellen */
-    .form-table {
-        width: 90%;
-        margin: 0 auto;
-    }
-
-    /* Juster modalen */
-    .modal-content {
-        width: 90%;
-    }
-}
