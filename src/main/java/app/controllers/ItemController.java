@@ -31,6 +31,12 @@ public class ItemController {
             app.get("/showcupcakes", ctx -> {
                 ctx.render("checkoutpage.html");
             });
+            app.get("/ordermore", ctx -> {
+                showTopping(ctx,ConnectionPool.getInstance());
+                showBottom(ctx, ConnectionPool.getInstance());
+                ctx.attribute("basketnotempty", true);
+                ctx.render("index.html");
+            });
 
             app.post("/payorder", ctx -> {
                 payForOrder(ctx,ConnectionPool.getInstance());
@@ -59,6 +65,7 @@ public class ItemController {
 
         ctx.sessionAttribute("totalAmount", totalAmount);
         if(orderlines.isEmpty()) {
+            ctx.sessionAttribute("basketnotempty", false);
             showTopping(ctx,ConnectionPool.getInstance());
             showBottom(ctx, ConnectionPool.getInstance());
             ctx.render("index.html");
@@ -74,7 +81,7 @@ public class ItemController {
             ctx.render("login.html");
             return;
         }
-
+        ctx.attribute("basketnotempty", true);
         String email = currentUser.getEmail();
         String name = currentUser.getName();
         String mobile = currentUser.getMobile();
@@ -163,6 +170,7 @@ public class ItemController {
             UserMapper.updateBalance(currentUser.getUserId(), newBalance, connectionPool);
             ctx.attribute("message", "Tak for din ordre. Din ordre har fået ordrenummer " + generatedOrderId + ". Du hører fra os når din ordre er parat til afhentning!");
             ctx.attribute("ordercreated", true);
+            ctx.attribute("totalAmount", 0);
             showTopping(ctx, ConnectionPool.getInstance());
             showBottom(ctx, ConnectionPool.getInstance());
             ctx.render("index.html");

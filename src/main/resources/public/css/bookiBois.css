@@ -305,116 +305,6 @@ tr:hover {
 }
 
 
-
-/* Responsive styles */
-@media (max-width: 830px) {
-    /* Adjust the padding and text size for smaller screens like iPhones */
-    .page {
-        /* padding: 10px; */
-    }
-
-    h1 {
-        font-size: 2.8rem; /* Smaller font size for smaller screens */
-    }
-
-    h2 {
-        font-size: 1.4rem; /* Smaller font size for smaller screens */
-    }
-
-    input[type="submit"] {
-        background-color: #008CBA;
-        color: white;
-        padding: 8px 16px;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 22px;
-    }
-
-    .button-container {
-        text-align: right;
-        padding-right: 15px;
-        padding-bottom: 50px;
-    }
-
-    .edit-button {
-        font-size: 20px; /* Smaller edit button for smaller screens */
-    }
-
-    /* Make sure images don't exceed the width of the screen */
-    img {
-        max-width: 95%;
-    }
-    .dropdown-container {
-        flex-direction: column; /* Skift til lodret layout på mindre skærme */
-    }
-
-    select {
-        flex: 1 1 100%; /* Fyld hele bredden af deres forælder på mindre skærme */
-        margin-right: 0; /* Fjern højremargin på mindre skærme */
-        margin-bottom: 10px; /* Tilføj lidt bottommargin for at adskille dropdown-menuerne på mindre skærme */
-    }
-
-    #antal {
-        flex-basis: 100%; /* Gør den tredje dropdown-menu fuld bredde på mindre skærme */
-    }
-
-
-}
-
-@media (max-width: 610px) {
-    /* Further adjustments for very small screens like older iPhones */
-    h1 {
-        font-size: 2.3rem;
-    }
-
-    h2 {
-        font-size: 1.0rem;
-    }
-
-    .topnav a {
-        float: left;
-        display: flex;
-        color: grey;
-        text-align: center;
-        font-size: 18px;
-        padding: 14px 16px;
-        text-decoration: none;
-        background-color: #f9f9f9;
-        transition: background-color 0.3s, color 0.3s;
-    }
-
-    .button-container {
-        text-align: right;
-        padding-right: 15px;
-        padding-bottom: 50px;
-    }
-
-    .book-button, .edit-button {
-        padding: 8px 16px;
-        font-size: 0.9rem;
-    }
-
-    .edit-button {
-        top: 5px; /* Position even closer on small screens */
-        right: 5px;
-        font-size: 18px;
-    }
-    .dropdown-container {
-        flex-direction: column; /* Skift til lodret layout på mindre skærme */
-    }
-
-    select {
-        flex: 1 1 100%; /* Fyld hele bredden af deres forælder på mindre skærme */
-        margin-right: 0; /* Fjern højremargin på mindre skærme */
-        margin-bottom: 10px; /* Tilføj lidt bottommargin for at adskille dropdown-menuerne på mindre skærme */
-    }
-
-    #antal {
-        flex-basis: 100%; /* Gør den tredje dropdown-menu fuld bredde på mindre skærme */
-    }
-}
-
 /* Style for the modal */
 .modal {
     display: none; /* Skjul modalen som standard */
@@ -478,4 +368,212 @@ button.delete-button {
 
 button.delete-button:hover {
     background-color: #dc143c; /* Mørkere rød baggrundsfarve ved hover */
+}
+
+
+
+/* Responsive styles */
+@media (max-width: 830px) {
+    /* Adjust the padding and text size for smaller screens like iPhones */
+    .page {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 2.8rem; /* Smaller font size for smaller screens */
+    }
+
+    h2 {
+        font-size: 1.4rem; /* Smaller font size for smaller screens */
+    }
+
+    input[type="submit"] {
+        background-color: #008CBA;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 22px;
+    }
+
+    .button-container {
+        text-align: right;
+        padding-right: 15px;
+        padding-bottom: 50px;
+    }
+
+    .edit-button {
+        font-size: 20px; /* Smaller edit button for smaller screens */
+    }
+
+    /* Make sure images don't exceed the width of the screen */
+    img {
+        max-width: 95%;
+    }
+    .dropdown-container {
+        flex-direction: column; /* Skift til lodret layout på mindre skærme */
+    }
+
+    select {
+        flex: 1 1 100%; /* Fyld hele bredden af deres forælder på mindre skærme */
+        margin-right: 0; /* Fjern højremargin på mindre skærme */
+        margin-bottom: 10px; /* Tilføj lidt bottommargin for at adskille dropdown-menuerne på mindre skærme */
+    }
+
+    #antal {
+        flex-basis: 100%; /* Gør den tredje dropdown-menu fuld bredde på mindre skærme */
+    }
+}
+
+@media (max-width: 610px) {
+    .page {
+        padding: 10px;
+    }
+
+    /* Further adjustments for very small screens like older iPhones */
+    h1 {
+        font-size: 2.3rem;
+    }
+
+    h2 {
+        font-size: 1.0rem;
+    }
+
+    .topnav a {
+        float: left;
+        display: flex;
+        color: grey;
+        text-align: center;
+        font-size: 18px;
+        padding: 14px 16px;
+        text-decoration: none;
+        background-color: #f9f9f9;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .button-container {
+        text-align: right;
+        padding-right: 15px;
+        padding-bottom: 50px;
+    }
+
+    .book-button, .edit-button {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+
+    .edit-button {
+        top: 5px; /* Position even closer on small screens */
+        right: 5px;
+        font-size: 18px;
+    }
+    .dropdown-container {
+        flex-direction: column; /* Skift til lodret layout på mindre skærme */
+    }
+
+    select {
+        flex: 1 1 100%; /* Fyld hele bredden af deres forælder på mindre skærme */
+        margin-right: 0; /* Fjern højremargin på mindre skærme */
+        margin-bottom: 10px; /* Tilføj lidt bottommargin for at adskille dropdown-menuerne på mindre skærme */
+    }
+
+    #antal {
+        flex-basis: 100%; /* Gør den tredje dropdown-menu fuld bredde på mindre skærme */
+    }
+
+
+}
+
+
+@media (max-width: 490px) {
+    .page {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 1.7rem;
+    }
+
+    h2 {
+        font-size: 0.78rem;
+    }
+
+    .topnav a {
+        float: left;
+        display: flex;
+        color: grey;
+        text-align: center;
+        font-size: 15px;
+        padding: 14px 16px;
+        text-decoration: none;
+        background-color: #f9f9f9;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .button-container {
+        text-align: right;
+        padding-right: 15px;
+        padding-bottom: 50px;
+    }
+
+    .book-button, .edit-button {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+
+    .edit-button {
+        top: 5px; /* Position even closer on small screens */
+        right: 5px;
+        font-size: 18px;
+    }
+    .dropdown-container {
+        flex-direction: column; /* Skift til lodret layout på mindre skærme */
+    }
+
+    select {
+        flex: 1 1 100%; /* Fyld hele bredden af deres forælder på mindre skærme */
+        margin-right: 0; /* Fjern højremargin på mindre skærme */
+        margin-bottom: 10px; /* Tilføj lidt bottommargin for at adskille dropdown-menuerne på mindre skærme */
+    }
+
+    #antal {
+        flex-basis: 100%; /* Gør den tredje dropdown-menu fuld bredde på mindre skærme */
+    }
+
+
+}
+
+/* CSS til skærmstørrelser på 415px eller mindre */
+@media only screen and (max-width: 420px) {
+    /* Juster headeren */
+    header {
+        text-align: center;
+    }
+
+    /* Juster navigationen */
+    .topnav {
+
+        align-items: center;
+    }
+
+    /* Juster knapper og input-felter */
+    .basket {
+        margin: 10px auto;
+    }
+
+    .button-container-checkout {
+        text-align: center;
+    }
+
+    /* Juster tabellen */
+    .form-table {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    /* Juster modalen */
+    .modal-content {
+        width: 90%;
+    }
 }
