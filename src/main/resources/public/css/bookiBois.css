@@ -50,44 +50,55 @@ header div {
 
 .topnav {
     margin-top: 10px;
-    display: flex;
-    justify-content: space-between;
     align-items: center;
     padding: 0;
     width: 100%;
     background-color: #f9f9f9;
+    font-size: 22px;
 }
 
 .topnav a {
     color: grey;
     text-align: center;
-    font-size: 20px;
-    padding: 14px 16px;
     text-decoration: none;
     background-color: #f9f9f9;
     transition: background-color 0.3s, color 0.3s;
 }
 
-.topnav a.right {
-    margin-left: 10px;
-    float: right;
-    margin-right: 20px;
+label {
+    background-color: #f9f9f9;
+    font-size: 16px;
+    font-weight: bold;
 }
 
-.basket {
+.topnav .right {
+    padding-top: 15px;
+    padding-bottom: 15px;
     float: right;
-    background: none;
-    padding-right: 20px;
-    margin: 0;
-    width: 50px;
-    height: 50px;
-    border: none;
+    margin-right: 30px;
 }
 
-.topnav a.left {
+.topnav .left {
     float: left;
     margin-right: 10px;
     padding-left: 40px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.basket {
+     float: right;
+     background: none;
+     padding-right: 20px;
+     margin: 0;
+     width: 50px;
+     height: 50px;
+     border: none;
+}
+
+.basket-right {
+    float: right;
+    margin-right: 10px;
 }
 
 .topnav a:hover {
@@ -102,6 +113,8 @@ header div {
 
 .topnav img {
     background-color: #f9f9f9;
+    align-items: center;
+
 }
 
 .form-table {
@@ -181,12 +194,7 @@ select {
     margin-top: 20px;
 }
 
-label {
-    font-size: 20px;
-    margin-bottom: 5px;
-    font-weight: bold;
-    background-color: #f9f9f9;
-}
+
 
 input[type="text"],
 input[type="date"],
@@ -388,27 +396,64 @@ button.delete-button:hover {
 
 @media (max-width: 830px) {
     .page {
-        padding: 10px;
+        padding: 15px;
         min-height: 400px;
     }
 
-    .topnav a.right {
-        margin-left: 0px;
+    .topnav {
+        font-size: 20px;
     }
 
-    .topnav a.left {
-        margin-right: 0px;
-        padding-left: 20px;
+    label {
+        background-color: #f9f9f9;
+        font-size: 16px;
+        font-weight: bold;
     }
 
-    .topnav a {
-        font-size: 18px;
+    .topnav .right {
+        padding-top: 15px;
+        padding-bottom: 15px;
+        float: right;
+        margin-right: 30px;
+    }
+
+    .topnav .left {
+        float: left;
+        margin-right: 10px;
+        padding-left: 30px;
+        padding-top: 15px;
+        padding-bottom: 15px;
     }
 
     .basket {
-        width: 30px;
-        height: 30px;
-        padding-right: 5px;
+        float: right;
+        background: none;
+        padding-right: 20px;
+        margin: 0;
+        width: 50px;
+        height: 50px;
+        border: none;
+    }
+
+    .basket-right {
+        float: right;
+        margin-right: 10px;
+    }
+
+    .topnav a:hover {
+        color: black;
+    }
+
+    .topnav form {
+        margin-right: 20px;
+        padding: 0;
+        background-color: #f9f9f9;
+    }
+
+    .topnav img {
+        background-color: #f9f9f9;
+        align-items: center;
+
     }
 
     h1 {
@@ -538,7 +583,7 @@ button.delete-button:hover {
 
 @media (max-width: 610px) {
     .page {
-        padding: 10px;
+        padding: 15px;
         min-height: 400px;
     }
 
@@ -550,22 +595,56 @@ button.delete-button:hover {
         font-size: 1.0rem;
     }
 
-    .topnav a {
-        float: left;
-        display: flex;
-        color: grey;
-        text-align: center;
+    .topnav {
         font-size: 18px;
-        padding: 14px 16px;
-        text-decoration: none;
-        background-color: #f9f9f9;
-        transition: background-color 0.4s, color 0.4s;
+    }
+
+    label {
+        font-size: 16px;
+    }
+
+    .topnav .right {
+        padding-top: 15px;
+        padding-bottom: 15px;
+        float: right;
+        margin-right: 30px;
+    }
+
+    .topnav .left {
+        float: left;
+        margin-right: 10px;
+        padding-left: 30px;
+        padding-top: 15px;
+        padding-bottom: 15px;
     }
 
     .basket {
-        width: 25px;
-        height: 25px;
-        padding-right: 5px;
+        float: right;
+        background: none;
+        padding-right: 20px;
+        margin: 0;
+        width: 50px;
+        height: 50px;
+        border: none;
+    }
+
+    .basket-right {
+        margin-right: 10px;
+    }
+
+    .topnav a:hover {
+        color: black;
+    }
+
+    .topnav form {
+        margin-right: 0px;
+        padding: 0;
+        background-color: #f9f9f9;
+    }
+
+    .topnav img {
+        background-color: #f9f9f9;
+        align-items: center;
     }
 
     th, td {
@@ -628,7 +707,7 @@ button.delete-button:hover {
 
 @media (max-width: 490px) {
     .page {
-        padding: 10px;
+        padding: 15px;
         min-height: 400px;
     }
 
@@ -640,16 +719,32 @@ button.delete-button:hover {
         font-size: 0.78rem;
     }
 
-    .topnav a {
-        float: left;
-        display: flex;
-        color: grey;
-        text-align: center;
-        font-size: 15px;
-        padding: 14px 16px;
-        text-decoration: none;
-        background-color: #f9f9f9;
-        transition: background-color 0.4s, color 0.4s;
+    .topnav {
+        font-size: 16px;
+    }
+
+    .topnav .right {
+        padding-top: 15px;
+        padding-bottom: 15px;
+        float: right;
+        margin-right: 15px;
+    }
+
+    label {
+        font-size: 14px;
+    }
+
+    .basket {
+        width: 45px;
+        height: 45px;
+    }
+
+    .basket-right {
+        margin-right: 0px;
+    }
+
+    .topnav form {
+        margin-right: 0px;
     }
 
     .button-container {

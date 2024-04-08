@@ -11,10 +11,11 @@
 <body>
 
 <div class="page">
-    <header >
+    <header>
         <div>
-            <a href="../index.html" th:href="@{/}" >
-                <img alt="logo" src="../public/images/olskersscupcakelogo.png" th:src="@{/images/olskersscupcakelogo.png}"/>
+            <a href="../index.html" th:href="@{/}">
+                <img alt="logo" src="../public/images/olskersscupcakelogo.png"
+                     th:src="@{/images/olskersscupcakelogo.png}"/>
             </a>
             <a href="../index.html" th:href="@{/}">
                 <img alt="logo" src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}"/>
@@ -23,16 +24,22 @@
     </header>
 
     <div class="topnav">
-        <a th:if="${session.currentUser == null}" href="login.html" class="left" th:href="@{/login/}">Login</a>
-        <a th:if="${session.currentUser != null}" href="index.html" class="left" th:href="@{/logout/}">Logout</a>
-        <a th:if="${session.currentUser != null}" class="right" th:text="${session.currentUser.email}"></a>
-
-        <form method="get">
-            <button type="submit" class="basket" formaction="/showcupcakes">
-                <img src="../public/images/shopping-bag.png" th:src="@{/images/shopping-bag.png}" alt="Shopping Bag" />
+        <div class="left">
+            <a th:if="${session.currentUser == null}" href="login.html" th:href="@{/login/}">Login</a>
+            <a th:if="${session.currentUser != null}" href="index.html" th:href="@{/logout/}">Logout</a>
+        </div>
+        <div class="basket-right">
+            <form method="get">
                 <label th:text="${session.orderCount}"></label>
-            </button>
-        </form>
+                <button type="submit" class="basket" formaction="/showcupcakes">
+                    <img src="../public/images/shopping-bag.png" th:src="@{/images/shopping-bag.png}"
+                         alt="Shopping Bag"/>
+                </button>
+            </form>
+        </div>
+        <div class="right">
+            <a th:if="${session.currentUser != null}" th:text="${session.currentUser.email}"></a>
+        </div>
     </div>
 
 
@@ -43,13 +50,15 @@
         <div class="dropdown-container">
             <select name="bund" id="bund" required>
                 <option value="" disabled selected>Vælg bund</option>
-                <option th:each="bottom : ${bottomList}" th:value="${bottom.bottomId}" th:text="${bottom.bottom} + ' - ' + ${bottom.price} + ' kr.'">
+                <option th:each="bottom : ${bottomList}" th:value="${bottom.bottomId}"
+                        th:text="${bottom.bottom} + ' - ' + ${bottom.price} + ' kr.'">
 
                 </option>
             </select>
             <select name="topping" id="topping" required>
                 <option value="" disabled selected>Vælg topping</option>
-                <option th:each="topping : ${toppingList}" th:value="${topping.toppingId}" th:text="${topping.topping} + ' - ' + ${topping.price} + ' kr.'">
+                <option th:each="topping : ${toppingList}" th:value="${topping.toppingId}"
+                        th:text="${topping.topping} + ' - ' + ${topping.price} + ' kr.'">
 
                 </option>
 

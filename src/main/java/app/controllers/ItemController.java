@@ -79,7 +79,6 @@ public class ItemController {
 
 
         if (orderLine.isEmpty()) {
-            ctx.sessionAttribute("basketnotempty", false);
             showTopping(ctx, ConnectionPool.getInstance());
             showBottom(ctx, ConnectionPool.getInstance());
             ctx.render("index.html");
@@ -89,13 +88,11 @@ public class ItemController {
     }
 
     private static void createOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-
         User currentUser = ctx.sessionAttribute("currentUser");
         if (currentUser == null) {
             ctx.render("login.html");
             return;
         }
-        ctx.attribute("basketnotempty", true);
         String email = currentUser.getEmail();
         String name = currentUser.getName();
         String mobile = currentUser.getMobile();
@@ -130,8 +127,6 @@ public class ItemController {
 
         ctx.sessionAttribute("totalAmount", totalAmount); // Sender det samlede beløb som en attribut til HTML-skabelonen
         ctx.sessionAttribute("orderCount", orderCount);
-        System.out.println("Successfully added order: " + order);
-
 
         showTopping(ctx, ConnectionPool.getInstance());
         showBottom(ctx, ConnectionPool.getInstance());
@@ -144,7 +139,6 @@ public class ItemController {
         return totalItemPrice * quantity;
     }
 
-
     public static void showBottom(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         List<Bottom> bottomList = ItemMapper.showBottoms(connectionPool);
         ctx.attribute("bottomList", bottomList);
@@ -155,12 +149,10 @@ public class ItemController {
         ctx.attribute("toppingList", toppingList);
     }
 
-
     public static void payForOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         User currentUser = ctx.sessionAttribute("currentUser");
         int orderprice = ctx.sessionAttribute("totalAmount");
-        System.out.println("orderPrice: " + orderprice);
-        System.out.println("Balance: " + currentUser.getBalance());
+
         if (currentUser.getBalance() >= orderprice) {
             ArrayList<Order> tempOrderLine = ctx.sessionAttribute("orders");
 

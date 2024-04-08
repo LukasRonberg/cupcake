@@ -94,7 +94,6 @@ public class UserController {
                 ctx.render("adminSite.html");
             } else {
                 int orderCount = 0;
-                //ArrayList<Order> orderList = ctx.sessionAttribute("orders");
 
                 if (ItemController.orderLine != null) {
 
