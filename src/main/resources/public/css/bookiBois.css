@@ -27,19 +27,19 @@ body {
 }
 
 header {
-    background-color: blueviolet;
+    background-color: #3C1460;
 }
 
 header a {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: blueviolet;
+    background-color: #3C1460;
 }
 
 header a img {
     width: 70%;
-    background-color: blueviolet;
+    background-color: #3C1460;
 }
 
 .topnav {
