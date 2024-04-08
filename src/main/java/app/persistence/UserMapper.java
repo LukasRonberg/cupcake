@@ -76,6 +76,7 @@ public class UserMapper
                 
                 msg = "Din e-email findes allerede. Vælg en andet";
 
+
             }
             throw new DatabaseException(msg, e.getMessage());
         }

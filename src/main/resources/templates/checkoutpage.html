@@ -23,11 +23,6 @@
         <a th:if="${session.currentUser != null}" href="index.html" class="left" th:href="@{/logout/}">Logout</a>
         <a th:if="${session.currentUser != null}" class="right" th:text="${session.currentUser.email}"></a>
 
-        <form method="get">
-            <button type="submit" class="basket" formaction="/ordermore">
-                <img src="../public/images/arrow-left.png" th:src="@{/images/arrow-left.png}" alt="Shopping Bag" />
-            </button>
-        </form>
     </div>
 
     <form class="form-table" id="myForm" action="" method="post">
@@ -66,8 +61,11 @@
 
 
         <div class="button-container-checkout">
-            <input type="submit" value="Betal" formaction="/payorder">
+            <input class="shopping" type="submit" value="Fortsæt shopping" formaction="/ordermore">
+            <input class="betal" type="submit" value="Betal" formaction="/payorder">
         </div>
+
+
 
         <div id="hiddenDiv" class="modal" th:if="${notenoughtmoney}">
             <div class="modal-content">
