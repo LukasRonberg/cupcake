@@ -19,37 +19,34 @@ import java.util.Objects;
 public class ItemController {
     static ArrayList<Order> orderLine = new ArrayList<>();
 
-    public static void addRoutes(Javalin app) {
-        app.get("/", ctx -> {
-            showTopping(ctx, ConnectionPool.getInstance());
-            showBottom(ctx, ConnectionPool.getInstance());
-            ctx.render("index.html");
-        });
-        app.post("/", ctx -> {
-            showTopping(ctx, ConnectionPool.getInstance());
-            showBottom(ctx, ConnectionPool.getInstance());
-            ctx.render("index.html");
-        });
-        app.post("/createorder", ctx -> {
-            createOrder(ctx, ConnectionPool.getInstance());
-        });
-        app.get("/showcupcakes", ctx -> {
-            showItemsInCheckout(ctx);
-            ctx.render("checkoutpage.html");
-        });
-        app.get("/ordermore", ctx -> {
-            showTopping(ctx, ConnectionPool.getInstance());
-            showBottom(ctx, ConnectionPool.getInstance());
-            ctx.attribute("basketnotempty", true);
-            ctx.render("index.html");
-        });
+        public static void addRoutes(Javalin app)
+        {
+            app.get("/", ctx -> {
+               showTopping(ctx,ConnectionPool.getInstance());
+               showBottom(ctx, ConnectionPool.getInstance());
+               ctx.render("index.html");
+            });
+            app.post("/createorder", ctx -> {
+                createOrder(ctx,ConnectionPool.getInstance());
+            });
+            app.get("/showcupcakes", ctx -> {
+                ctx.render("checkoutpage.html");
+            });
+            app.post("/ordermore", ctx -> {
+                showTopping(ctx,ConnectionPool.getInstance());
+                showBottom(ctx, ConnectionPool.getInstance());
+                ctx.render("index.html");
+            });
 
-        app.post("/payorder", ctx -> {
-            payForOrder(ctx, ConnectionPool.getInstance());
-            //ctx.render("checkoutpage.html");
-        });
-        app.post("deleteorderline", ctx -> deleteorderline(ctx, ConnectionPool.getInstance()));
-    }
+            app.post("/payorder", ctx -> {
+                payForOrder(ctx,ConnectionPool.getInstance());
+                //ctx.render("checkoutpage.html");
+            });
+            app.post("deleteorderline", ctx -> deleteorderline(ctx, ConnectionPool.getInstance()));
+        }
+
+
+   
 
     private static void showItemsInCheckout(Context ctx){
         ctx.sessionAttribute("orders", orderLine);

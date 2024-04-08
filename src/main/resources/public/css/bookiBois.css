@@ -70,6 +70,8 @@ header div {
 
 .topnav a.right {
     margin-left: 10px;
+    float: right;
+    margin-right: 20px;
 }
 
 .basket {
@@ -336,18 +338,18 @@ tr:hover {
     z-index: 1;
     background-color: #f9f9f9;
     margin: 15% auto;
-    padding: 35px 20px 20px 20px;
+    padding: 35px 35px 30px 35px;
     box-shadow: 5px 5px 5px 5px rgba(0.5, 0.5, 0.5, 0.5);
     border-radius: 10px;
-    width: 25%;
-    height: 25%;
+    width: 35%;
+    height: 18%;
 }
 
 #messageText {
     color: black;
     font-size: 20px;
     background-color: #f9f9f9;
-    text-align: center;
+    text-align: left;
 }
 
 .close {
@@ -372,9 +374,9 @@ button.delete-button {
     background-color: #ff6347;
     color: #fff;
     border: none;
-    padding: 8px 16px;
+    padding: 6px 14px;
     border-radius: 8px;
-    font-size: 18px;
+    font-size: 16px;
     cursor: pointer;
     transition: background-color 0.4s, color 0.4s;
 }
@@ -522,6 +524,16 @@ button.delete-button:hover {
         background-color: #f2f2f2;
     }
 
+    .modal-content {
+        margin: 25% auto;
+        width: 52%;
+        height: 15%;
+    }
+
+    #messageText {
+        font-size: 16px;
+    }
+
 }
 
 @media (max-width: 610px) {
@@ -602,6 +614,16 @@ button.delete-button:hover {
     #antal {
         flex-basis: 100%;
     }
+
+    .modal-content {
+        margin: 25% auto;
+        width: 52%;
+        height: 16%;
+    }
+
+    #messageText {
+        font-size: 15px;
+    }
 }
 
 @media (max-width: 490px) {
@@ -663,6 +685,16 @@ button.delete-button:hover {
 
     #antal {
         flex-basis: 100%;
+    }
+
+    .modal-content {
+        margin: 25% auto;
+        width: 52%;
+        height: 17%;
+    }
+
+    #messageText {
+        font-size: 14px;
     }
 
 }

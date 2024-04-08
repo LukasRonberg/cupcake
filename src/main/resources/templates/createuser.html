@@ -10,9 +10,14 @@
 <body>
 <div class="login-page">
     <header>
-        <a href="index.html" th:href="@{/}">
-            <img src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}"/>
-        </a>
+        <div>
+            <a href="../index.html" th:href="@{/public}" >
+                <img alt="logo" src="../public/images/olskersscupcakelogo.png" th:src="@{/images/olskersscupcakelogo.png}"/>
+            </a>
+            <a href="../index.html" th:href="@{/public}">
+                <img alt="logo" src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}"/>
+            </a>
+        </div>
     </header>
     <div class="page">
         <form class="generic-form" method="post">
