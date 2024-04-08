@@ -27,22 +27,33 @@ body {
 }
 
 header {
-    background-color: blueviolet;
+    background-color: #3C1460;
+    text-align: center;
 }
 
 header a {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: blueviolet;
+    background-color: #3C1460;
+    padding: 0px;
+    margin: 0px;
 }
 
 header a img {
-    width: 70%;
-    background-color: blueviolet;
+    width: 95%;
+    background-color: #3C1460;
+    margin: 0;
+    padding: 0;
+}
+
+header div {
+    display: flex;
+    justify-content: center;
 }
 
 .topnav {
+    margin-top: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -234,7 +245,6 @@ div p {
 }
 
 div {
-    margin-top: 10px;
     background-color: #f9f9f9;
 }
 
@@ -247,6 +257,7 @@ div {
 img {
     max-width: 95%;
 }
+
 table {
     width: 100%;
     border-collapse: collapse;
