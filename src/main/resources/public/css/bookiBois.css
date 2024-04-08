@@ -28,6 +28,7 @@ body {
 
 header {
     background-color: #3C1460;
+    text-align: center;
 }
 
 header a {
@@ -38,11 +39,17 @@ header a {
 }
 
 header a img {
-    width: 70%;
+    width: 95%;
     background-color: #3C1460;
 }
 
+header div {
+    display: flex;
+    justify-content: center;
+}
+
 .topnav {
+    margin-top: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -253,7 +260,6 @@ div p {
 }
 
 div {
-    margin-top: 10px;
     background-color: #f9f9f9;
 }
 
@@ -266,6 +272,7 @@ div {
 img {
     max-width: 95%;
 }
+
 table {
     width: 100%;
     border-collapse: collapse;

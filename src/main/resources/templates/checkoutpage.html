@@ -13,9 +13,14 @@
 <div class="page">
 
     <header>
-        <a href="../index.html" th:href="@{/public}">
-            <img alt="logo" src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}"/>
-        </a>
+        <div>
+            <a href="../index.html" th:href="@{/public}" >
+                <img alt="logo" src="../public/images/olskersscupcakelogo.png" th:src="@{/images/olskersscupcakelogo.png}"/>
+            </a>
+            <a href="../index.html" th:href="@{/public}">
+                <img alt="logo" src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}"/>
+            </a>
+        </div>
     </header>
 
     <div class="topnav">
@@ -23,6 +28,11 @@
         <a th:if="${session.currentUser != null}" href="index.html" class="left" th:href="@{/logout/}">Logout</a>
         <a th:if="${session.currentUser != null}" class="right" th:text="${session.currentUser.email}"></a>
 
+        <form method="get">
+            <button type="submit" class="basket" formaction="/showcupcakes">
+                <img src="../public/images/shopping-bag.png" th:src="@{/images/shopping-bag.png}" alt="Shopping Bag" />
+            </button>
+        </form>
     </div>
 
     <form class="form-table" id="myForm" action="" method="post">
