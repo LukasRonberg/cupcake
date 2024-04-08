@@ -15,15 +15,18 @@
         </a>
     </header>
     <div class="page">
-        <form class="generic-form" method="post">
-            <input type="text" name="email" placeholder="Enter your email"/>
-            <input type="password" name="password" placeholder="Enter your password"/>
-            <button type="submit" formaction="/login">Login</button>
-        </form>
+        <div class="form-container">
+            <form class="generic-form" method="post">
+                <input type="text" name="email" placeholder="Enter your email"/>
+                <input type="password" name="password" placeholder="Enter your password"/>
+                <button type="submit" formaction="/login">Login</button>
+            </form>
 
-        <div class="generic-form-createuser">
-            <a href="createuser.html" th:href="@{/createuser}">Create user</a></br>
+            <div class="generic-form-createuser">
+                <a href="createuser.html" th:href="@{/createuser}">Create user</a>
+            </div>
         </div>
+
 
         <div id="hiddenDiv" class="modal" th:if="${login}" >
             <div class="modal-content">

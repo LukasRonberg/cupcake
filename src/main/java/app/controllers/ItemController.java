@@ -7,6 +7,7 @@ import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.ItemMapper;
+import app.persistence.UserMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
@@ -30,21 +31,57 @@ public class ItemController {
             app.get("/showcupcakes", ctx -> {
                 ctx.render("checkoutpage.html");
             });
+            app.get("/ordermore", ctx -> {
+                showTopping(ctx,ConnectionPool.getInstance());
+                showBottom(ctx, ConnectionPool.getInstance());
+                ctx.attribute("basketnotempty", true);
+                ctx.render("index.html");
+            });
 
             app.post("/payorder", ctx -> {
                 payForOrder(ctx,ConnectionPool.getInstance());
                 //ctx.render("checkoutpage.html");
             });
+            app.post("deleteorderline", ctx -> deleteorderline(ctx, ConnectionPool.getInstance()));
         }
 
-    private static void createOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+    private static void deleteorderline(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        ArrayList<Order> orderlines = ctx.sessionAttribute("orders");
+        int orderId = Integer.parseInt(ctx.formParam("orderId"));
+
+        for (Order order : orderlines) {
+            if (order.getOrderId() == orderId) {
+                orderlines.remove(order);
+                break;
+            }
+        }
+
+        ctx.sessionAttribute("orders", orderlines);
+
+        int totalAmount = 0;
+        for(Order orderline: orderLine) {
+            totalAmount += orderline.getOrderlinePrice();
+        }
+
+        ctx.sessionAttribute("totalAmount", totalAmount);
+        if(orderlines.isEmpty()) {
+            ctx.sessionAttribute("basketnotempty", false);
+            showTopping(ctx,ConnectionPool.getInstance());
+            showBottom(ctx, ConnectionPool.getInstance());
+            ctx.render("index.html");
+        } else {
+            ctx.render("checkoutpage.html");
+        }
+    }
+
+        private static void createOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
         User currentUser = ctx.sessionAttribute("currentUser");
         if (currentUser == null) {
             ctx.render("login.html");
             return;
         }
-
+        ctx.attribute("basketnotempty", true);
         String email = currentUser.getEmail();
         String name = currentUser.getName();
         String mobile = currentUser.getMobile();
@@ -67,12 +104,12 @@ public class ItemController {
 
         ctx.sessionAttribute("orders", orderLine);
 
-        double totalAmount = 0; // Her skal du erstatte calculateTotalAmount med din egen logik til at beregne det samlede beløb
+        int totalAmount = 0;
         for(Order orderline: orderLine) {
             totalAmount += orderline.getOrderlinePrice();
         }
 
-        ctx.sessionAttribute("totalAmount", totalAmount); // Send det samlede beløb som en attribut til HTML-skabelonen
+        ctx.sessionAttribute("totalAmount", totalAmount); // Sender det samlede beløb som en attribut til HTML-skabelonen
 
         System.out.println("Successfully added order: " + order);
 
@@ -103,27 +140,44 @@ public class ItemController {
 
 
     public static void payForOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-        ArrayList<Order> tempOrderLine = ctx.sessionAttribute("orders");
+        User currentUser = ctx.sessionAttribute("currentUser");
+        int orderprice = ctx.sessionAttribute("totalAmount");
+        System.out.println("orderPrice: "+orderprice);
+        System.out.println("Balance: "+currentUser.getBalance());
+        if(currentUser.getBalance() >= orderprice) {
+            ArrayList<Order> tempOrderLine = ctx.sessionAttribute("orders");
 
-        int generatedOrderId = ItemMapper.insertOrder(tempOrderLine.get(0).getUserId(),connectionPool);
-        List<Topping> toppingList = ItemMapper.showToppings(connectionPool);
-        List<Bottom> bottomList = ItemMapper.showBottoms(connectionPool);
+            int generatedOrderId = ItemMapper.insertOrder(tempOrderLine.get(0).getUserId(), connectionPool);
+            List<Topping> toppingList = ItemMapper.showToppings(connectionPool);
+            List<Bottom> bottomList = ItemMapper.showBottoms(connectionPool);
 
-        for (Order order:tempOrderLine) {
-            int toppingId = 0;
-            for (Topping topping: toppingList) {
-                if(order.getTopping().equals(topping.getTopping())) toppingId = topping.getToppingId();
+            for (Order order : tempOrderLine) {
+                int toppingId = 0;
+                for (Topping topping : toppingList) {
+                    if (order.getTopping().equals(topping.getTopping())) toppingId = topping.getToppingId();
+                }
+                int bottomId = 0;
+                for (Bottom bottom : bottomList) {
+                    if (order.getBottom().equals(bottom.getBottom())) bottomId = bottom.getBottomId();
+                }
+
+                ItemMapper.payForOrder(generatedOrderId, toppingId, bottomId, order.getQuantity(), order.getOrderlinePrice(), connectionPool);
+
             }
-            int bottomId = 0;
-            for (Bottom bottom: bottomList) {
-                if(order.getBottom().equals(bottom.getBottom())) bottomId = bottom.getBottomId();
-            }
-
-            ItemMapper.payForOrder(generatedOrderId, toppingId, bottomId, order.getQuantity(), order.getOrderlinePrice(), connectionPool);
-            ctx.attribute("message", "Tak for din ordre. Din ordre har fået ordrenummer "+generatedOrderId+". Du hører fra os når din ordre er færdig!");
+            tempOrderLine.clear();
+            int newBalance = currentUser.getBalance()-orderprice;
+            currentUser.setBalance(newBalance);
+            UserMapper.updateBalance(currentUser.getUserId(), newBalance, connectionPool);
+            ctx.attribute("message", "Tak for din ordre. Din ordre har fået ordrenummer " + generatedOrderId + ". Du hører fra os når din ordre er parat til afhentning!");
             ctx.attribute("ordercreated", true);
+            ctx.attribute("totalAmount", 0);
+            showTopping(ctx, ConnectionPool.getInstance());
+            showBottom(ctx, ConnectionPool.getInstance());
             ctx.render("index.html");
+        } else {
+            ctx.attribute("message", "Din saldo lyder på "+currentUser.getBalance()+" kr. hvilket ikke er nok til at betale for ordren! Fjern nogle varer fra din kurv eller indbetal penge på din konto!");
+            ctx.attribute("notenoughtmoney", true);
+            ctx.render("checkoutpage.html");
         }
     }
-
 }

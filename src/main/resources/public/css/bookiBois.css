@@ -10,7 +10,6 @@ body {
     align-items: center;
     background-color: lightgray;
     padding-bottom: 30px;
-
 }
 
 .page {
@@ -42,7 +41,7 @@ header a img {
     width: 70%;
     background-color: blueviolet;
 }
-/* Style the top navigation bar */
+
 .topnav {
     display: flex;
     justify-content: space-between;
@@ -52,7 +51,6 @@ header a img {
     background-color: #f9f9f9;
 }
 
-/* Style the topnav links */
 .topnav a {
     color: grey;
     text-align: center;
@@ -80,28 +78,24 @@ header a img {
 .topnav a.left {
     float: left;
     margin-right: 10px;
-    padding-left: 20px;
+    padding-left: 40px;
 }
 
-/* Change color on hover */
 .topnav a:hover {
     color: black;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
 }
 
 .topnav form {
-    margin: 0; /* Fjern ydre margin */
-    padding: 0; /* Fjern indvendig polstring */
+    margin-right: 20px;
+    padding: 0;
     background-color: #f9f9f9;
 }
-
 
 .topnav img {
     background-color: #f9f9f9;
 }
 
-
-form {
+.form-table {
     margin-top: 10px;
     padding: 40px;
     width: 100%;
@@ -110,20 +104,16 @@ form {
     background-color: #f9f9f9;
     border-radius: 8px;
     text-align: left;
-
 }
-
 
 h1 {
     color: black;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 66px;
     background-color: #f9f9f9;
-
 }
 
 h2 {
-
     padding-bottom: 10px;
     color: black;
     font-family: Arial, Helvetica, sans-serif;
@@ -131,10 +121,18 @@ h2 {
     background-color: #f9f9f9;
 }
 
+h3 {
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2.0rem;
+    background-color: #f9f9f9;
+}
+
 .button-container {
     text-align: right;
-    padding-right: 30px;
+    padding-right: 35px;
     padding-bottom: 50px;
+    margin-top: 20px;
 }
 
 .book-button {
@@ -144,7 +142,7 @@ h2 {
     border: none;
     cursor: pointer;
     font-size: 20px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.4s ease;
 }
 
 .book-button:hover {
@@ -152,29 +150,28 @@ h2 {
 }
 
 .dropdown-container {
-    display: flex; /* Brug Flexbox */
-    flex-wrap: wrap; /* Tillad linjeskift, hvis indholdet ikke kan passe på én linje */
-    justify-content: space-between; /* Placer elementerne med lige afstand imellem dem */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 /* Styling for hver dropdown-menu */
 select {
-    flex: 1 1 30%; /* Indstil flex-værdierne for hver dropdown-menu */
-    margin-right: 30px; /* Tilføj lidt højremargin for at adskille dropdown-menuerne */
+    flex: 1 1 30%;
+    margin-right: 30px;
 }
 
 /* Juster bredden af den tredje dropdown-menu */
 #antal {
-    flex: 15%; /* Gør den tredje dropdown-menu halvt så bred som de to andre */
+    flex: 15%;
 }
 
-/* Styling for knapcontaineren */
-.button-container {
-    text-align: right; /* Højrestil indholdet */
-    margin-top: 20px; /* Tilføj lidt topmargin for at adskille knappen fra dropdown-menuerne */
+.button-container-checkout {
+    padding-right: 7px;
+    text-align: right;
+    margin-top: 20px;
 }
 
-/* Style for labels */
 label {
     font-size: 20px;
     margin-bottom: 5px;
@@ -182,7 +179,6 @@ label {
     background-color: #f9f9f9;
 }
 
-/* Style for input fields */
 input[type="text"],
 input[type="date"],
 select {
@@ -195,15 +191,12 @@ select {
     font-weight: bold;
 }
 
-/* Style for checkboxes */
 input[type="checkbox"] {
     margin-right: 5px;
     vertical-align: middle;
     background-color: #f9f9f9;
 }
 
-
-/* Style for buttons */
 button.edit-buttons {
     background-color: #4CAF50;
     color: white;
@@ -214,28 +207,27 @@ button.edit-buttons {
     margin-top: 10px;
 }
 
-/* Hover effect for buttons */
 button.edit-buttons:hover {
     background-color: #45a049;
 }
 
-/* Style for submit button */
 input[type="submit"] {
-    background-color: #008CBA;
+    background-color: #007bff;
     color: white;
-    padding: 10px 20px;
+    padding: 8px 25px 8px 25px;
     border: none;
-    border-radius: 8px;
+    border-radius: 5px;
     cursor: pointer;
-    font-size: 26px;
+    font-size: 22px;
+    cursor: pointer;
+    transition: background-color 0.4s;
 }
 
-/* Hover effect for submit button */
 input[type="submit"]:hover {
-    background-color: #0077A3;
+    background-color: #0056b3;
+    border-color: #0056b3;
 }
 
-/* Style for messages */
 div p {
     margin-top: 10px;
     color: red;
@@ -246,7 +238,6 @@ div {
     background-color: #f9f9f9;
 }
 
-/* Clearfix */
 .clearfix::after {
     content: "";
     display: table;
@@ -256,31 +247,165 @@ div {
 img {
     max-width: 95%;
 }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    font-size: 18px;
+}
+
+th {
+    background-color: #f2f2f2;
+    font-size: 18px;
+}
+
+.table-right {
+    text-align: right;
+    padding-right: 55px;
+}
+
+.table-left {
+    text-align: left;
+    padding-left: 35px;
+}
+
+.table-center {
+    text-align: center;
+}
+
+.bold-text {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f2f2f2;
+}
+
+/* Style for the modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0);
+}
+
+/* Style for modal content */
+.modal-content {
+    position: relative;
+    z-index: 1;
+    background-color: #f9f9f9;
+    margin: 15% auto;
+    padding: 35px 20px 20px 20px;
+    box-shadow: 5px 5px 5px 5px rgba(0.5, 0.5, 0.5, 0.5);
+    border-radius: 10px;
+    width: 18%;
+    height: 15%;
+}
+
+#messageText {
+    color: black;
+    font-size: 20px;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+.close {
+    color: #aaa;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 28px;
+    font-weight: bold;
+    background-color: #f9f9f9;
+    z-index: 100;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+button.delete-button {
+    background-color: #ff6347;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.4s, color 0.4s;
+}
+
+button.delete-button:hover {
+    background-color: #dc143c;
+}
 
 
-/* Responsive styles */
 @media (max-width: 830px) {
-    /* Adjust the padding and text size for smaller screens like iPhones */
     .page {
-        /* padding: 10px; */
+        padding: 10px;
+        min-height: 400px;
+    }
+
+    .topnav a.right {
+        margin-left: 0px;
+    }
+
+    .topnav a.left {
+        margin-right: 0px;
+        padding-left: 20px;
+    }
+
+    .topnav a {
+        font-size: 18px;
+    }
+
+    .basket {
+        width: 30px;
+        height: 30px;
+        padding-right: 5px;
     }
 
     h1 {
-        font-size: 2.8rem; /* Smaller font size for smaller screens */
+        font-size: 2.8rem;
     }
 
     h2 {
-        font-size: 1.4rem; /* Smaller font size for smaller screens */
+        font-size: 1.4rem;
+    }
+
+    h3 {
+        font-size: 1.3rem;
+        padding-left: 3px;
     }
 
     input[type="submit"] {
-        background-color: #008CBA;
+        background-color: #007bff;
         color: white;
-        padding: 8px 16px;
+        padding: 8px 14px 8px 14px;
         border: none;
         border-radius: 8px;
         cursor: pointer;
-        font-size: 22px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.4s;
     }
 
     .button-container {
@@ -289,33 +414,98 @@ img {
         padding-bottom: 50px;
     }
 
-    .edit-button {
-        font-size: 20px; /* Smaller edit button for smaller screens */
+    button.delete-button {
+        font-size: 14px;
+        padding: 6px 12px;
     }
 
-    /* Make sure images don't exceed the width of the screen */
+    .edit-button {
+        font-size: 20px;
+    }
+
     img {
         max-width: 95%;
     }
+
     .dropdown-container {
-        flex-direction: column; /* Skift til lodret layout på mindre skærme */
+        flex-direction: column;
     }
 
     select {
-        flex: 1 1 100%; /* Fyld hele bredden af deres forælder på mindre skærme */
-        margin-right: 0; /* Fjern højremargin på mindre skærme */
-        margin-bottom: 10px; /* Tilføj lidt bottommargin for at adskille dropdown-menuerne på mindre skærme */
+        flex: 1 1 100%;
+        margin-right: 0;
+        margin-bottom: 10px;
     }
 
     #antal {
-        flex-basis: 100%; /* Gør den tredje dropdown-menu fuld bredde på mindre skærme */
+        flex-basis: 100%;
     }
 
+    .form-table {
+        margin-top: 10px;
+        padding: 15px;
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+        max-height: 100%;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        text-align: left;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+        font-size: 15px;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        font-size: 15px;
+    }
+
+    .table-right {
+        text-align: center;
+        padding-right: 2px;
+    }
+
+    .table-left {
+        text-align: center;
+        padding-left: 2px;
+    }
+
+    .table-center {
+        text-align: center;
+    }
+
+    .bold-text {
+        font-weight: bold;
+        font-size: 15px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    tr:hover {
+        background-color: #f2f2f2;
+    }
 
 }
 
 @media (max-width: 610px) {
-    /* Further adjustments for very small screens like older iPhones */
+    .page {
+        padding: 10px;
+        min-height: 400px;
+    }
+
     h1 {
         font-size: 2.3rem;
     }
@@ -333,7 +523,25 @@ img {
         padding: 14px 16px;
         text-decoration: none;
         background-color: #f9f9f9;
-        transition: background-color 0.3s, color 0.3s;
+        transition: background-color 0.4s, color 0.4s;
+    }
+
+    .basket {
+        width: 25px;
+        height: 25px;
+        padding-right: 5px;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+        font-size: 13px;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        font-size: 13px;
     }
 
     .button-container {
@@ -342,74 +550,96 @@ img {
         padding-bottom: 50px;
     }
 
+    button.delete-button {
+        font-size: 13px;
+        padding: 6px 12px;
+    }
+
     .book-button, .edit-button {
         padding: 8px 16px;
         font-size: 0.9rem;
     }
 
     .edit-button {
-        top: 5px; /* Position even closer on small screens */
+        top: 5px;
         right: 5px;
         font-size: 18px;
     }
     .dropdown-container {
-        flex-direction: column; /* Skift til lodret layout på mindre skærme */
+        flex-direction: column;
     }
 
     select {
-        flex: 1 1 100%; /* Fyld hele bredden af deres forælder på mindre skærme */
-        margin-right: 0; /* Fjern højremargin på mindre skærme */
-        margin-bottom: 10px; /* Tilføj lidt bottommargin for at adskille dropdown-menuerne på mindre skærme */
+        flex: 1 1 100%;
+        margin-right: 0;
+        margin-bottom: 10px;
     }
 
     #antal {
-        flex-basis: 100%; /* Gør den tredje dropdown-menu fuld bredde på mindre skærme */
+        flex-basis: 100%;
     }
 }
 
-/* Style for the modal */
-.modal {
-    display: none; /* Skjul modalen som standard */
-    position: fixed; /* Positioner modalen fast på siden */
-    z-index: 1; /* Sørg for at modalen er foran alt andet indhold */
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0); /* Semi-transparent baggrundsfarve */
+@media (max-width: 490px) {
+    .page {
+        padding: 10px;
+        min-height: 400px;
+    }
+
+    h1 {
+        font-size: 1.7rem;
+    }
+
+    h2 {
+        font-size: 0.78rem;
+    }
+
+    .topnav a {
+        float: left;
+        display: flex;
+        color: grey;
+        text-align: center;
+        font-size: 15px;
+        padding: 14px 16px;
+        text-decoration: none;
+        background-color: #f9f9f9;
+        transition: background-color 0.4s, color 0.4s;
+    }
+
+    .button-container {
+        text-align: right;
+        padding-right: 15px;
+        padding-bottom: 50px;
+    }
+
+    button.delete-button {
+        font-size: 13px;
+        padding: 5px 10px;
+    }
+
+    .book-button, .edit-button {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+
+    .edit-button {
+        top: 5px;
+        right: 5px;
+        font-size: 18px;
+    }
+    .dropdown-container {
+        flex-direction: column;
+    }
+
+    select {
+        flex: 1 1 100%;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    #antal {
+        flex-basis: 100%;
+    }
+
 }
 
-/* Style for modal content */
-.modal-content {
-    background-color: #f9f9f9;
-    margin: 15% auto; /* Center modalen vertikalt og horisontalt */
-    padding: 20px;
-    box-shadow: 5px 5px 5px 5px rgba(0.5, 0.5, 0.5, 0.5);
-    border-radius: 5px;
-    width: 18%;
-    height: 15%;
-}
-
-#messageText {
-    color: black;
-    font-size: 20px;
-    background-color: #f9f9f9;
-    text-align: center;
-    /* Tilføj yderligere styling efter behov */
-}
-
-/* Style for close button */
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    background-color: #f9f9f9;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}

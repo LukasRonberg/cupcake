@@ -1,6 +1,8 @@
 package app.entities;
 
 public class Order {
+    private static int lastOrderId = 0;
+    private int orderId;
     private int userId;
     //private int orderId;
     private String email;
@@ -12,9 +14,9 @@ public class Order {
     private int quantity;
     private int orderlinePrice;
 
-    public Order(int userId/*,int orderId*/, String email, String name, String mobile, int balance, String topping, String bottom, int quantity, int orderlinePrice) {
+    public Order(int userId, String email, String name, String mobile, int balance, String topping, String bottom, int quantity, int orderlinePrice) {
+        this.orderId = generateNextOrderId();
         this.userId = userId;
-        //this.orderId = orderId;
         this.email = email;
         this.name = name;
         this.mobile = mobile;
@@ -24,12 +26,23 @@ public class Order {
         this.quantity = quantity;
         this.orderlinePrice = orderlinePrice;
     }
+
+    private static synchronized int generateNextOrderId() {
+        return ++lastOrderId;
+    }
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
     public int getUserId() {
         return userId;
     }
-    /*public int getOrderId() {
-        return orderId;
-    }*/
+
     public String getEmail() {
         return email;
     }

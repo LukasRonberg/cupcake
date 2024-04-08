@@ -23,27 +23,27 @@
         <a th:if="${session.currentUser != null}" class="right" th:text="${session.currentUser.email}"></a>
 
         <form method="get">
-            <button type="submit" class="basket" formaction="/showcupcakes">
+            <button th:if="${basketnotempty}" type="submit" class="basket" formaction="/showcupcakes">
                 <img src="../public/images/shopping-bag.png" th:src="@{/images/shopping-bag.png}" alt="Shopping Bag" />
             </button>
         </form>
     </div>
 
 
-    <form id="myForm" action="" method="post">
+    <form class="form-table" id="myForm" action="" method="post">
         <h1>Velkommen ombord</h1>
         <h2>Øens bedste cupcakes. Vælg og bestil her:</h2>
 
         <div class="dropdown-container">
             <select name="bund" id="bund" required>
                 <option value="" disabled selected>Vælg bund</option>
-                <option th:each="bottom : ${bottomList}" th:value="${bottom.bottomId}" th:text="${bottom.bottom} + ' - ' + ${bottom.price} + '$'">
+                <option th:each="bottom : ${bottomList}" th:value="${bottom.bottomId}" th:text="${bottom.bottom} + ' - ' + ${bottom.price} + ' kr.'">
 
                 </option>
             </select>
             <select name="topping" id="topping" required>
                 <option value="" disabled selected>Vælg topping</option>
-                <option th:each="topping : ${toppingList}" th:value="${topping.toppingId}" th:text="${topping.topping} + ' - ' + ${topping.price} + '$'">
+                <option th:each="topping : ${toppingList}" th:value="${topping.toppingId}" th:text="${topping.topping} + ' - ' + ${topping.price} + ' kr.'">
 
                 </option>
 
