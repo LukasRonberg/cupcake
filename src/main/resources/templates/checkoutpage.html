@@ -24,15 +24,22 @@
     </header>
 
     <div class="topnav">
-        <a th:if="${session.currentUser == null}" href="login.html" class="left" th:href="@{/login/}">Login</a>
-        <a th:if="${session.currentUser != null}" href="index.html" class="left" th:href="@{/logout/}">Logout</a>
-        <a th:if="${session.currentUser != null}" class="right" th:text="${session.currentUser.email}"></a>
-
-        <form method="get">
-            <button type="submit" class="basket" formaction="/showcupcakes">
-                <img src="../public/images/shopping-bag.png" th:src="@{/images/shopping-bag.png}" alt="Shopping Bag" />
-            </button>
-        </form>
+        <div class="left">
+            <a th:if="${session.currentUser == null}" href="login.html" th:href="@{/login/}">Login</a>
+            <a th:if="${session.currentUser != null}" href="index.html" th:href="@{/logout/}">Logout</a>
+        </div>
+        <div class="basket-right">
+            <form method="get">
+                <label th:text="${session.orderCount}"></label>
+                <button type="submit" class="basket" formaction="/showcupcakes">
+                    <img src="../public/images/shopping-bag.png" th:src="@{/images/shopping-bag.png}"
+                         alt="Shopping Bag"/>
+                </button>
+            </form>
+        </div>
+        <div class="right">
+            <a th:if="${session.currentUser != null}" th:text="${session.currentUser.email}"></a>
+        </div>
     </div>
 
     <form class="form-table" id="myForm" action="" method="post">
@@ -70,7 +77,7 @@
 
 
         <div class="button-container-checkout">
-            <input class="shopping" type="submit" value="Fortsæt shopping" formaction="/">
+            <input class="shopping" type="submit" value="Fortsæt shopping" formaction="/ordermore">
             <input class="betal" type="submit" value="Betal" formaction="/payorder">
         </div>
 
