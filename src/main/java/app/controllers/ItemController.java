@@ -31,10 +31,9 @@ public class ItemController {
             app.get("/showcupcakes", ctx -> {
                 ctx.render("checkoutpage.html");
             });
-            app.get("/ordermore", ctx -> {
+            app.post("/ordermore", ctx -> {
                 showTopping(ctx,ConnectionPool.getInstance());
                 showBottom(ctx, ConnectionPool.getInstance());
-                ctx.attribute("basketnotempty", true);
                 ctx.render("index.html");
             });
 
