@@ -45,7 +45,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="order : ${session.orders}">
+                <tr th:each="order : ${session.orders}" th:if="${session.currentUser.userId == order.userId}">
                     <td class="table-left" th:text="${order.topping}">topping</td>
                     <td class="table-left" th:text="${order.bottom}">bottom</td>
                     <td class="table-left" th:text="${order.quantity}">quantity</td>
