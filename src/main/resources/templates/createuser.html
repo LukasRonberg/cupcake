@@ -50,7 +50,7 @@
     // Funktion for at vise meddelelsen
     function showMessage(message) {
         var modal = document.getElementById("hiddenDiv");
-        var messageText = document.getElementById("messageText");
+
         messageText.textContent = message; // Sæt meddelelsesindholdet
         modal.style.display = "block"; // Vis modalen
     }
@@ -58,8 +58,11 @@
     // Funktion for at lukke modalen og omdirigere til index.html
     function closeModal() {
         var modal = document.getElementById("hiddenDiv");
+
         modal.style.display = "none"; // Skjul modalen
-        window.location.href = "./index.html"; // Omdiriger til index.html
+
+        window.location.href = "./createuser.html"; // Omdiriger til index.html
+
     }
 </script>
 
