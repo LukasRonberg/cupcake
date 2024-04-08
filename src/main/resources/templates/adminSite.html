@@ -152,25 +152,10 @@
 </head>
 <body>
 <div class="container">
-    <header>
-        <form method="get">
-            <button type="submit" formaction="/">
-                <img alt="logo" src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}"/>
-            </button>
-        </form>
-    </header>
-
     <div class="topnav">
-        <form method="get">
-            <button type="submit" class="basket" formaction="/showcupcakes">
-                <img src="../public/images/shopping-bag.png" th:src="@{/images/shopping-bag.png}" alt="Shopping Bag" />
-            </button>
-        </form>
         <a th:if="${session.currentUser == null}" href="login.html" class="right" th:href="@{/login/}">Login</a>
         <a th:if="${session.currentUser != null}" href="index.html" class="right" th:href="@{/logout/}">Logout</a>
         <a th:if="${session.currentUser != null}" class="right" th:text="${session.currentUser.email}"></a>
-
-
     </div>
 
 
@@ -230,7 +215,6 @@
                 <th>Email</th>
                 <th>Name</th>
                 <th>Mobile</th>
-                <!--th>Balance</th-->
                 <th>Topping</th>
                 <th>Bottom</th>
                 <th>Quantity</th>
@@ -242,7 +226,6 @@
                 <td th:text="${order.email}">Email</td>
                 <td th:text="${order.name}">Name</td>
                 <td th:text="'+45 ' + ${order.mobile}">Mobile</td>
-                <!--td th:text="${order.balance}">Balance</td-->
                 <td th:text="${order.topping}">Topping</td>
                 <td th:text="${order.bottom}">Bottom</td>
                 <td th:text="${order.quantity}">Quantity</td>
