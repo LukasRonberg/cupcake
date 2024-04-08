@@ -10,7 +10,6 @@ body {
     align-items: center;
     background-color: lightgray;
     padding-bottom: 30px;
-
 }
 
 .page {
@@ -42,7 +41,7 @@ header a img {
     width: 70%;
     background-color: blueviolet;
 }
-/* Style the top navigation bar */
+
 .topnav {
     display: flex;
     justify-content: space-between;
@@ -52,7 +51,6 @@ header a img {
     background-color: #f9f9f9;
 }
 
-/* Style the topnav links */
 .topnav a {
     color: grey;
     text-align: center;
@@ -83,15 +81,13 @@ header a img {
     padding-left: 40px;
 }
 
-/* Change color on hover */
 .topnav a:hover {
     color: black;
-
 }
 
 .topnav form {
-    margin-right: 20px; /* Fjern ydre margin */
-    padding: 0; /* Fjern indvendig polstring */
+    margin-right: 20px;
+    padding: 0;
     background-color: #f9f9f9;
 }
 
@@ -110,17 +106,14 @@ header a img {
     text-align: left;
 }
 
-
 h1 {
     color: black;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 66px;
     background-color: #f9f9f9;
-
 }
 
 h2 {
-
     padding-bottom: 10px;
     color: black;
     font-family: Arial, Helvetica, sans-serif;
@@ -131,7 +124,7 @@ h2 {
 h3 {
     color: black;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 2.0rem; /* Smaller font size for smaller screens */
+    font-size: 2.0rem;
     background-color: #f9f9f9;
 }
 
@@ -157,30 +150,28 @@ h3 {
 }
 
 .dropdown-container {
-    display: flex; /* Brug Flexbox */
-    flex-wrap: wrap; /* Tillad linjeskift, hvis indholdet ikke kan passe på én linje */
-    justify-content: space-between; /* Placer elementerne med lige afstand imellem dem */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 /* Styling for hver dropdown-menu */
 select {
-    flex: 1 1 30%; /* Indstil flex-værdierne for hver dropdown-menu */
-    margin-right: 30px; /* Tilføj lidt højremargin for at adskille dropdown-menuerne */
+    flex: 1 1 30%;
+    margin-right: 30px;
 }
 
 /* Juster bredden af den tredje dropdown-menu */
 #antal {
-    flex: 15%; /* Gør den tredje dropdown-menu halvt så bred som de to andre */
+    flex: 15%;
 }
 
-/* Styling for knapcontaineren */
 .button-container-checkout {
     padding-right: 7px;
-    text-align: right; /* Højrestil indholdet */
-    margin-top: 20px; /* Tilføj lidt topmargin for at adskille knappen fra dropdown-menuerne */
+    text-align: right;
+    margin-top: 20px;
 }
 
-/* Style for labels */
 label {
     font-size: 20px;
     margin-bottom: 5px;
@@ -188,7 +179,6 @@ label {
     background-color: #f9f9f9;
 }
 
-/* Style for input fields */
 input[type="text"],
 input[type="date"],
 select {
@@ -201,15 +191,12 @@ select {
     font-weight: bold;
 }
 
-/* Style for checkboxes */
 input[type="checkbox"] {
     margin-right: 5px;
     vertical-align: middle;
     background-color: #f9f9f9;
 }
 
-
-/* Style for buttons */
 button.edit-buttons {
     background-color: #4CAF50;
     color: white;
@@ -220,31 +207,27 @@ button.edit-buttons {
     margin-top: 10px;
 }
 
-/* Hover effect for buttons */
 button.edit-buttons:hover {
     background-color: #45a049;
 }
 
-/* Style for submit button */
 input[type="submit"] {
-    background-color: #007bff; /* Blå farve for linket */
+    background-color: #007bff;
     color: white;
     padding: 8px 25px 8px 25px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 22px;
-    cursor: pointer; /* Gør musemarkøren til en hånd, når der er hover */
-    transition: background-color 0.4s; /* Glat overgangseffekt for baggrundsfarven */
+    cursor: pointer;
+    transition: background-color 0.4s;
 }
 
-/* Hover effect for submit button */
 input[type="submit"]:hover {
-    background-color: #0056b3; /* Mørkere blå farve ved hover */;
-    border-color: #0056b3; /* Mørkere blå farve ved hover */
+    background-color: #0056b3;
+    border-color: #0056b3;
 }
 
-/* Style for messages */
 div p {
     margin-top: 10px;
     color: red;
@@ -255,7 +238,6 @@ div {
     background-color: #f9f9f9;
 }
 
-/* Clearfix */
 .clearfix::after {
     content: "";
     display: table;
@@ -274,12 +256,13 @@ table {
 th, td {
     border: 1px solid #ddd;
     padding: 8px;
-    text-align: center; /* Centrer tekstindholdet for alle celler */
+    text-align: center;
+    font-size: 18px;
 }
 
 th {
     background-color: #f2f2f2;
-    font-size: 18px; /* Ændrer størrelsen af tabeloverskrifterne til 18px */
+    font-size: 18px;
 }
 
 .table-right {
@@ -294,12 +277,11 @@ th {
 
 .table-center {
     text-align: center;
-
 }
 
 .bold-text {
-    font-weight: bold; /* Gør teksten fed */
-    font-size: 18px; /* Ændrer størrelsen af tabeloverskrifterne til 18px */
+    font-weight: bold;
+    font-size: 18px;
 }
 
 tr:nth-child(even) {
@@ -310,25 +292,24 @@ tr:hover {
     background-color: #f2f2f2;
 }
 
-
 /* Style for the modal */
 .modal {
-    display: none; /* Skjul modalen som standard */
-    position: fixed; /* Positioner modalen fast på siden */
-    z-index: 100; /* Sørg for at modalen er foran alt andet indhold */
+    display: none;
+    position: fixed;
+    z-index: 100;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0); /* Semi-transparent baggrundsfarve */
+    background-color: rgba(0,0,0,0);
 }
 
 /* Style for modal content */
 .modal-content {
-    position: relative; /* Positioner modalen fast på siden */
-    z-index: 1; /* Sørg for at modalen er foran alt andet indhold */
+    position: relative;
+    z-index: 1;
     background-color: #f9f9f9;
-    margin: 15% auto; /* Center modalen vertikalt og horisontalt */
+    margin: 15% auto;
     padding: 35px 20px 20px 20px;
     box-shadow: 5px 5px 5px 5px rgba(0.5, 0.5, 0.5, 0.5);
     border-radius: 10px;
@@ -343,16 +324,15 @@ tr:hover {
     text-align: center;
 }
 
-/* Style for close button */
 .close {
     color: #aaa;
-    position: absolute; /* Position absolut inden i modalindholdet */
-    top: 5px; /* Afstand fra toppen af modalindholdet */
-    right: 10px; /* Afstand fra højre side af modalindholdet */
+    position: absolute;
+    top: 5px;
+    right: 10px;
     font-size: 28px;
     font-weight: bold;
     background-color: #f9f9f9;
-    z-index: 100; /* Sørg for at luk-knappen vises foran modalindholdet */
+    z-index: 100;
 }
 
 .close:hover,
@@ -363,29 +343,26 @@ tr:hover {
 }
 
 button.delete-button {
-    background-color: #ff6347; /* Rød baggrundsfarve */
-    color: #fff; /* Hvid tekstfarve */
-    border: none; /* Fjern knapens kant */
-    padding: 8px 16px; /* Lidt polstring for at give knappen plads */
-    border-radius: 4px; /* Afrundede hjørner */
-    cursor: pointer; /* Gør musemarkøren til en hånd, når der er hover */
-    transition: background-color 0.3s, color 0.3s; /* Glat overgangseffekt for farveændringer */
+    background-color: #ff6347;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.4s, color 0.4s;
 }
 
 button.delete-button:hover {
-    background-color: #dc143c; /* Mørkere rød baggrundsfarve ved hover */
+    background-color: #dc143c;
 }
 
 
-
-/* Responsive styles */
 @media (max-width: 830px) {
-    /* Adjust the padding and text size for smaller screens like iPhones */
     .page {
         padding: 10px;
         min-height: 400px;
     }
-
 
     .topnav a.right {
         margin-left: 0px;
@@ -396,6 +373,10 @@ button.delete-button:hover {
         padding-left: 20px;
     }
 
+    .topnav a {
+        font-size: 18px;
+    }
+
     .basket {
         width: 30px;
         height: 30px;
@@ -403,28 +384,28 @@ button.delete-button:hover {
     }
 
     h1 {
-        font-size: 2.8rem; /* Smaller font size for smaller screens */
+        font-size: 2.8rem;
     }
 
     h2 {
-        font-size: 1.4rem; /* Smaller font size for smaller screens */
+        font-size: 1.4rem;
     }
 
     h3 {
-        font-size: 1.3rem; /* Smaller font size for smaller screens */
+        font-size: 1.3rem;
         padding-left: 3px;
     }
 
     input[type="submit"] {
-        background-color: #007bff; /* Blå farve for linket */
+        background-color: #007bff;
         color: white;
         padding: 8px 14px 8px 14px;
         border: none;
         border-radius: 8px;
         cursor: pointer;
         font-size: 16px;
-        cursor: pointer; /* Gør musemarkøren til en hånd, når der er hover */
-        transition: background-color 0.4s; /* Glat overgangseffekt for baggrundsfarven */
+        cursor: pointer;
+        transition: background-color 0.4s;
     }
 
     .button-container {
@@ -433,26 +414,31 @@ button.delete-button:hover {
         padding-bottom: 50px;
     }
 
-    .edit-button {
-        font-size: 20px; /* Smaller edit button for smaller screens */
+    button.delete-button {
+        font-size: 14px;
+        padding: 6px 12px;
     }
 
-    /* Make sure images don't exceed the width of the screen */
+    .edit-button {
+        font-size: 20px;
+    }
+
     img {
         max-width: 95%;
     }
+
     .dropdown-container {
-        flex-direction: column; /* Skift til lodret layout på mindre skærme */
+        flex-direction: column;
     }
 
     select {
-        flex: 1 1 100%; /* Fyld hele bredden af deres forælder på mindre skærme */
-        margin-right: 0; /* Fjern højremargin på mindre skærme */
-        margin-bottom: 10px; /* Tilføj lidt bottommargin for at adskille dropdown-menuerne på mindre skærme */
+        flex: 1 1 100%;
+        margin-right: 0;
+        margin-bottom: 10px;
     }
 
     #antal {
-        flex-basis: 100%; /* Gør den tredje dropdown-menu fuld bredde på mindre skærme */
+        flex-basis: 100%;
     }
 
     .form-table {
@@ -476,13 +462,13 @@ button.delete-button:hover {
     th, td {
         border: 1px solid #ddd;
         padding: 8px;
-        text-align: center; /* Centrer tekstindholdet for alle celler */
-        font-size: 13px;
+        text-align: center;
+        font-size: 15px;
     }
 
     th {
         background-color: #f2f2f2;
-        font-size: 15px; /* Ændrer størrelsen af tabeloverskrifterne til 16px */
+        font-size: 15px;
     }
 
     .table-right {
@@ -497,12 +483,11 @@ button.delete-button:hover {
 
     .table-center {
         text-align: center;
-
     }
 
     .bold-text {
-        font-weight: bold; /* Gør teksten fed */
-        font-size: 15px; /* Ændrer størrelsen af tabeloverskrifterne til 15px */
+        font-weight: bold;
+        font-size: 15px;
     }
 
     tr:nth-child(even) {
@@ -513,7 +498,6 @@ button.delete-button:hover {
         background-color: #f2f2f2;
     }
 
-
 }
 
 @media (max-width: 610px) {
@@ -522,7 +506,6 @@ button.delete-button:hover {
         min-height: 400px;
     }
 
-    /* Further adjustments for very small screens like older iPhones */
     h1 {
         font-size: 2.3rem;
     }
@@ -540,7 +523,7 @@ button.delete-button:hover {
         padding: 14px 16px;
         text-decoration: none;
         background-color: #f9f9f9;
-        transition: background-color 0.3s, color 0.3s;
+        transition: background-color 0.4s, color 0.4s;
     }
 
     .basket {
@@ -549,10 +532,27 @@ button.delete-button:hover {
         padding-right: 5px;
     }
 
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+        font-size: 13px;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        font-size: 13px;
+    }
+
     .button-container {
         text-align: right;
         padding-right: 15px;
         padding-bottom: 50px;
+    }
+
+    button.delete-button {
+        font-size: 13px;
+        padding: 6px 12px;
     }
 
     .book-button, .edit-button {
@@ -561,27 +561,24 @@ button.delete-button:hover {
     }
 
     .edit-button {
-        top: 5px; /* Position even closer on small screens */
+        top: 5px;
         right: 5px;
         font-size: 18px;
     }
     .dropdown-container {
-        flex-direction: column; /* Skift til lodret layout på mindre skærme */
+        flex-direction: column;
     }
 
     select {
-        flex: 1 1 100%; /* Fyld hele bredden af deres forælder på mindre skærme */
-        margin-right: 0; /* Fjern højremargin på mindre skærme */
-        margin-bottom: 10px; /* Tilføj lidt bottommargin for at adskille dropdown-menuerne på mindre skærme */
+        flex: 1 1 100%;
+        margin-right: 0;
+        margin-bottom: 10px;
     }
 
     #antal {
-        flex-basis: 100%; /* Gør den tredje dropdown-menu fuld bredde på mindre skærme */
+        flex-basis: 100%;
     }
-
-
 }
-
 
 @media (max-width: 490px) {
     .page {
@@ -606,7 +603,7 @@ button.delete-button:hover {
         padding: 14px 16px;
         text-decoration: none;
         background-color: #f9f9f9;
-        transition: background-color 0.3s, color 0.3s;
+        transition: background-color 0.4s, color 0.4s;
     }
 
     .button-container {
@@ -615,30 +612,34 @@ button.delete-button:hover {
         padding-bottom: 50px;
     }
 
+    button.delete-button {
+        font-size: 13px;
+        padding: 5px 10px;
+    }
+
     .book-button, .edit-button {
         padding: 8px 16px;
         font-size: 0.9rem;
     }
 
     .edit-button {
-        top: 5px; /* Position even closer on small screens */
+        top: 5px;
         right: 5px;
         font-size: 18px;
     }
     .dropdown-container {
-        flex-direction: column; /* Skift til lodret layout på mindre skærme */
+        flex-direction: column;
     }
 
     select {
-        flex: 1 1 100%; /* Fyld hele bredden af deres forælder på mindre skærme */
-        margin-right: 0; /* Fjern højremargin på mindre skærme */
-        margin-bottom: 10px; /* Tilføj lidt bottommargin for at adskille dropdown-menuerne på mindre skærme */
+        flex: 1 1 100%;
+        margin-right: 0;
+        margin-bottom: 10px;
     }
 
     #antal {
-        flex-basis: 100%; /* Gør den tredje dropdown-menu fuld bredde på mindre skærme */
+        flex-basis: 100%;
     }
-
 
 }
 

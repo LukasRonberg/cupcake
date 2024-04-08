@@ -117,12 +117,12 @@ public class UserMapper
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected != 1)
             {
-                throw new DatabaseException("Fejl i opdatering af en task");
+                throw new DatabaseException("Fejl i opdatering af en kundekonto");
             }
         }
         catch (SQLException e)
         {
-            throw new DatabaseException("Fejl i opdatering af en task", e.getMessage());
+            throw new DatabaseException("Fejl i opdatering af en kundekonto", e.getMessage());
         }
     }
 }
