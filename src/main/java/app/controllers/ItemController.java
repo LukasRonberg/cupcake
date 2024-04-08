@@ -18,6 +18,7 @@ import java.util.Objects;
 
 public class ItemController {
     static ArrayList<Order> orderLine = new ArrayList<>();
+
         public static void addRoutes(Javalin app)
         {
             app.get("/", ctx -> {
@@ -44,28 +45,42 @@ public class ItemController {
             app.post("deleteorderline", ctx -> deleteorderline(ctx, ConnectionPool.getInstance()));
         }
 
+
+   
+
+    private static void showItemsInCheckout(Context ctx){
+        ctx.sessionAttribute("orders", orderLine);
+    }
     private static void deleteorderline(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-        ArrayList<Order> orderlines = ctx.sessionAttribute("orders");
+        //ArrayList<Order> orderlines = ctx.sessionAttribute("orders");
         int orderId = Integer.parseInt(ctx.formParam("orderId"));
 
-        for (Order order : orderlines) {
+        for (Order order : orderLine) {
             if (order.getOrderId() == orderId) {
-                orderlines.remove(order);
+                orderLine.remove(order);
                 break;
             }
         }
 
-        ctx.sessionAttribute("orders", orderlines);
+        ctx.sessionAttribute("orders", orderLine);
+        User currentUser = ctx.sessionAttribute("currentUser");
 
+        int orderCount = 0;
         int totalAmount = 0;
-        for(Order orderline: orderLine) {
-            totalAmount += orderline.getOrderlinePrice();
+        for (Order orderline : orderLine) {
+            if (orderline.getUserId() == currentUser.getUserId()) {
+                totalAmount += orderline.getOrderlinePrice();
+                orderCount++;
+            }
         }
 
+        ctx.sessionAttribute("orderCount", orderCount);
         ctx.sessionAttribute("totalAmount", totalAmount);
-        if(orderlines.isEmpty()) {
+
+
+        if (orderLine.isEmpty()) {
             ctx.sessionAttribute("basketnotempty", false);
-            showTopping(ctx,ConnectionPool.getInstance());
+            showTopping(ctx, ConnectionPool.getInstance());
             showBottom(ctx, ConnectionPool.getInstance());
             ctx.render("index.html");
         } else {
@@ -73,7 +88,7 @@ public class ItemController {
         }
     }
 
-        private static void createOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+    private static void createOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
         User currentUser = ctx.sessionAttribute("currentUser");
         if (currentUser == null) {
@@ -98,24 +113,29 @@ public class ItemController {
 
         int orderlinePrice = calculateOrderLinePrice(topping, bottom, quantity);
 
-        Order order = new Order(currentUser.getUserId(),email, name, mobile, balance, topping.getTopping(), bottom.getBottom(), quantity, orderlinePrice);
+        Order order = new Order(currentUser.getUserId(), email, name, mobile, balance, topping.getTopping(), bottom.getBottom(), quantity, orderlinePrice);
         orderLine.add(order);
 
         ctx.sessionAttribute("orders", orderLine);
 
+
         int totalAmount = 0;
-        for(Order orderline: orderLine) {
-            totalAmount += orderline.getOrderlinePrice();
+        int orderCount = 0;
+        for (Order orderline : orderLine) {
+            if (order.getUserId() == currentUser.getUserId()) {
+                totalAmount += orderline.getOrderlinePrice();
+                orderCount++;
+            }
         }
 
         ctx.sessionAttribute("totalAmount", totalAmount); // Sender det samlede beløb som en attribut til HTML-skabelonen
-
+        ctx.sessionAttribute("orderCount", orderCount);
         System.out.println("Successfully added order: " + order);
 
 
-            showTopping(ctx,ConnectionPool.getInstance());
-            showBottom(ctx, ConnectionPool.getInstance());
-            ctx.render("index.html");
+        showTopping(ctx, ConnectionPool.getInstance());
+        showBottom(ctx, ConnectionPool.getInstance());
+        ctx.render("index.html");
 
     }
 
@@ -125,25 +145,23 @@ public class ItemController {
     }
 
 
-
     public static void showBottom(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         List<Bottom> bottomList = ItemMapper.showBottoms(connectionPool);
-        ctx.attribute("bottomList",bottomList);
+        ctx.attribute("bottomList", bottomList);
     }
 
     public static void showTopping(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         List<Topping> toppingList = ItemMapper.showToppings(connectionPool);
-        ctx.attribute("toppingList",toppingList);
+        ctx.attribute("toppingList", toppingList);
     }
-
 
 
     public static void payForOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         User currentUser = ctx.sessionAttribute("currentUser");
         int orderprice = ctx.sessionAttribute("totalAmount");
-        System.out.println("orderPrice: "+orderprice);
-        System.out.println("Balance: "+currentUser.getBalance());
-        if(currentUser.getBalance() >= orderprice) {
+        System.out.println("orderPrice: " + orderprice);
+        System.out.println("Balance: " + currentUser.getBalance());
+        if (currentUser.getBalance() >= orderprice) {
             ArrayList<Order> tempOrderLine = ctx.sessionAttribute("orders");
 
             int generatedOrderId = ItemMapper.insertOrder(tempOrderLine.get(0).getUserId(), connectionPool);
@@ -164,7 +182,7 @@ public class ItemController {
 
             }
             tempOrderLine.clear();
-            int newBalance = currentUser.getBalance()-orderprice;
+            int newBalance = currentUser.getBalance() - orderprice;
             currentUser.setBalance(newBalance);
             UserMapper.updateBalance(currentUser.getUserId(), newBalance, connectionPool);
             ctx.attribute("message", "Tak for din ordre. Din ordre har fået ordrenummer " + generatedOrderId + ". Du hører fra os når din ordre er parat til afhentning!");
@@ -174,7 +192,7 @@ public class ItemController {
             showBottom(ctx, ConnectionPool.getInstance());
             ctx.render("index.html");
         } else {
-            ctx.attribute("message", "Din saldo lyder på "+currentUser.getBalance()+" kr. hvilket ikke er nok til at betale for ordren! Fjern nogle varer fra din kurv eller indbetal penge på din konto!");
+            ctx.attribute("message", "Din saldo lyder på " + currentUser.getBalance() + " kr. hvilket ikke er nok til at betale for ordren! Fjern nogle varer fra din kurv eller indbetal penge på din konto!");
             ctx.attribute("notenoughtmoney", true);
             ctx.render("checkoutpage.html");
         }

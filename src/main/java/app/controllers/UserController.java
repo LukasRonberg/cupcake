@@ -1,5 +1,6 @@
 package app.controllers;
 
+import app.entities.Order;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
@@ -7,23 +8,23 @@ import app.persistence.UserMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
-public class UserController
-{
-    public static void addRoutes(Javalin app)
-    {
+import java.util.ArrayList;
+
+public class UserController {
+    public static void addRoutes(Javalin app) {
         app.post("login", ctx -> {
-            ItemController.showBottom(ctx,ConnectionPool.getInstance());
-            ItemController.showTopping(ctx,ConnectionPool.getInstance());
+            ItemController.showBottom(ctx, ConnectionPool.getInstance());
+            ItemController.showTopping(ctx, ConnectionPool.getInstance());
             login(ctx, ConnectionPool.getInstance());
         });
         app.get("login", ctx -> {
-            ItemController.showBottom(ctx,ConnectionPool.getInstance());
-            ItemController.showTopping(ctx,ConnectionPool.getInstance());
+            ItemController.showBottom(ctx, ConnectionPool.getInstance());
+            ItemController.showTopping(ctx, ConnectionPool.getInstance());
             ctx.render("login.html");
         });
         app.get("index.html", ctx -> {
-            ItemController.showBottom(ctx,ConnectionPool.getInstance());
-            ItemController.showTopping(ctx,ConnectionPool.getInstance());
+            ItemController.showBottom(ctx, ConnectionPool.getInstance());
+            ItemController.showTopping(ctx, ConnectionPool.getInstance());
             ctx.render("index.html");
         });
         app.get("logout", ctx -> logout(ctx));
@@ -44,7 +45,7 @@ public class UserController
         ctx.attribute("createuser", true);
         ctx.attribute("usercreated", false);
 
-        if(!userexist) {
+        if (!userexist) {
             if (password1.equals(password2)) {
                 try {
                     UserMapper.createuser(email, password1, name, mobile, connectionPool);
@@ -62,22 +63,19 @@ public class UserController
                 ctx.attribute("createuser", true);
                 ctx.render("createuser.html");
             }
-        } else
-        {
+        } else {
             ctx.attribute("message", "Dit brugernavn findes allerede. Prøv igen, eller log ind");
             ctx.attribute("login", true);
             ctx.render("login.html");
         }
     }
 
-    private static void logout(Context ctx)
-    {
+    private static void logout(Context ctx) {
         ctx.req().getSession().invalidate();
         ctx.redirect("/");
     }
 
-    public static void login(Context ctx, ConnectionPool connectionPool)
-    {
+    public static void login(Context ctx, ConnectionPool connectionPool) {
         // Hent form parametre
         String email = ctx.formParam("email");
         String password = ctx.formParam("password");
@@ -86,21 +84,31 @@ public class UserController
         ctx.attribute("loginsuccess", false);
 
         // Check om bruger findes i DB med de angivne username + password
-        try
-        {
+        try {
             User user = UserMapper.login(email, password, connectionPool);
             ctx.sessionAttribute("currentUser", user);
             // Hvis ja, send videre til forsiden med login besked
             ctx.attribute("message", "Du er nu logget ind");
             ctx.attribute("loginsuccess", true);
-            if(user.isAdmin()){
+            if (user.isAdmin()) {
                 ctx.render("adminSite.html");
             } else {
+                int orderCount = 0;
+                //ArrayList<Order> orderList = ctx.sessionAttribute("orders");
+
+                if (ItemController.orderLine != null) {
+
+                    for (Order orderline : ItemController.orderLine) {
+                        if (orderline.getUserId() == user.getUserId()) {
+                            orderCount++;
+                        }
+                    }
+                }
+                ctx.sessionAttribute("orderCount", orderCount);
                 ctx.render("index.html");
+
             }
-        }
-        catch (DatabaseException e)
-        {
+        } catch (DatabaseException e) {
             // Hvis nej, send tilbage til login side med fejl besked
             ctx.attribute("message", "Forkert brugernavn eller password. Prøv igen eller opret brugeren!");
 
