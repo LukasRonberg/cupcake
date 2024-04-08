@@ -13,10 +13,10 @@
 <div class="page">
     <header >
         <div>
-            <a href="../index.html" th:href="@{/public}" >
+            <a href="../index.html" th:href="@{/}" >
                 <img alt="logo" src="../public/images/olskersscupcakelogo.png" th:src="@{/images/olskersscupcakelogo.png}"/>
             </a>
-            <a href="../index.html" th:href="@{/public}">
+            <a href="../index.html" th:href="@{/}">
                 <img alt="logo" src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}"/>
             </a>
         </div>
@@ -30,6 +30,7 @@
         <form method="get">
             <button type="submit" class="basket" formaction="/showcupcakes">
                 <img src="../public/images/shopping-bag.png" th:src="@{/images/shopping-bag.png}" alt="Shopping Bag" />
+                <label th:text="${session.orderCount}"></label>
             </button>
         </form>
     </div>

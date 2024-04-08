@@ -14,10 +14,10 @@
 
     <header>
         <div>
-            <a href="../index.html" th:href="@{/public}" >
+            <a href="../index.html" th:href="@{/}" >
                 <img alt="logo" src="../public/images/olskersscupcakelogo.png" th:src="@{/images/olskersscupcakelogo.png}"/>
             </a>
-            <a href="../index.html" th:href="@{/public}">
+            <a href="../index.html" th:href="@{/}">
                 <img alt="logo" src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}"/>
             </a>
         </div>
@@ -71,7 +71,7 @@
 
 
         <div class="button-container-checkout">
-            <input class="shopping" type="submit" value="Fortsæt shopping" formaction="/ordermore">
+            <input class="shopping" type="submit" value="Fortsæt shopping" formaction="/">
             <input class="betal" type="submit" value="Betal" formaction="/payorder">
         </div>
 
