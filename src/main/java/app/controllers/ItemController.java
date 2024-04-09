@@ -30,6 +30,7 @@ public class ItemController {
                 createOrder(ctx,ConnectionPool.getInstance());
             });
             app.get("/showcupcakes", ctx -> {
+                showItemsInCheckout(ctx);
                 ctx.render("checkoutpage.html");
             });
             app.post("/ordermore", ctx -> {
