@@ -155,11 +155,11 @@ header div {
 
 .modal-content {
     background-color: #f9f9f9;
-    margin: 40% auto;
+    margin: 16% auto;
     padding: 20px;
     box-shadow: 5px 5px 5px 5px rgba(0.5, 0.5, 0.5, 0.5);
     border-radius: 8px;
-    width: 40%;
+    width: 25%;
     height: 14%;
 }
 
@@ -185,6 +185,13 @@ header div {
     cursor: pointer;
 }
 
+@media (max-width: 1000px) {
+    .modal-content {
+        margin: 35% auto;
+        width: 40%;
+        height: 14%;
+    }
+}
 
 
 
