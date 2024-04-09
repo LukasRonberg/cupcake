@@ -1,14 +1,18 @@
 package app.controllers;
 
+import app.entities.Bottom;
 import app.entities.Order;
+import app.entities.Topping;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
+import app.persistence.ItemMapper;
 import app.persistence.UserMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class UserController {
     public static void addRoutes(Javalin app) {
@@ -27,7 +31,7 @@ public class UserController {
             ItemController.showTopping(ctx, ConnectionPool.getInstance());
             ctx.render("index.html");
         });
-        app.get("logout", ctx -> logout(ctx));
+        app.get("logout", ctx -> logout(ctx, ConnectionPool.getInstance()));
         app.post("createuser", ctx -> createUser(ctx, ConnectionPool.getInstance()));
         app.get("createuser", ctx -> ctx.render("createuser.html"));
     }
@@ -70,9 +74,34 @@ public class UserController {
         }
     }
 
-    private static void logout(Context ctx) {
-        ctx.req().getSession().invalidate();
-        ctx.redirect("/");
+    private static void logout(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+
+            User currentUser = ctx.sessionAttribute("currentUser");
+
+            ArrayList<Order> tempOrderLine = ctx.sessionAttribute("orders");
+
+            List<Topping> toppingList = ItemMapper.showToppings(connectionPool);
+            List<Bottom> bottomList = ItemMapper.showBottoms(connectionPool);
+
+            if(tempOrderLine != null) {
+                ItemMapper.deleteUsersBasket(currentUser.getUserId(), connectionPool);
+                for (Order order : tempOrderLine) {
+                    int toppingId = 0;
+                    for (Topping topping : toppingList) {
+                        if (order.getTopping().equals(topping.getTopping())) toppingId = topping.getToppingId();
+                    }
+                    int bottomId = 0;
+                    for (Bottom bottom : bottomList) {
+                        if (order.getBottom().equals(bottom.getBottom())) bottomId = bottom.getBottomId();
+                    }
+
+                    ItemMapper.insertOrderline(currentUser.getUserId(), toppingId, bottomId, order.getQuantity(), order.getOrderlinePrice(), connectionPool);
+
+                }
+            }
+            tempOrderLine.clear();
+            ctx.req().getSession().invalidate();
+            ctx.redirect("/");
     }
 
     public static void login(Context ctx, ConnectionPool connectionPool) {
@@ -87,6 +116,13 @@ public class UserController {
         try {
             User user = UserMapper.login(email, password, connectionPool);
             ctx.sessionAttribute("currentUser", user);
+            List<Topping> toppingList = ItemMapper.showToppings(connectionPool);
+            List<Bottom> bottomList = ItemMapper.showBottoms(connectionPool);
+            List<Order> orderLines = ItemMapper.getBasket(user, bottomList, toppingList, connectionPool);
+            if(!orderLines.isEmpty()) {
+                ctx.sessionAttribute("orders", orderLines);
+            }
+
             // Hvis ja, send videre til forsiden med login besked
             ctx.attribute("message", "Du er nu logget ind");
             ctx.attribute("loginsuccess", true);
@@ -94,15 +130,14 @@ public class UserController {
                 ctx.render("adminSite.html");
             } else {
                 int orderCount = 0;
-
-                if (ItemController.orderLine != null) {
-
-                    for (Order orderline : ItemController.orderLine) {
-                        if (orderline.getUserId() == user.getUserId()) {
-                            orderCount++;
-                        }
+                int totalAmount = 0;
+                if (orderLines != null) {
+                    for (Order orderline : orderLines) {
+                        orderCount++;
+                        totalAmount += orderline.getOrderlinePrice();
                     }
                 }
+                ctx.sessionAttribute("totalAmount", totalAmount);
                 ctx.sessionAttribute("orderCount", orderCount);
                 ctx.render("index.html");
 

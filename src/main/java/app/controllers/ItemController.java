@@ -93,6 +93,11 @@ public class ItemController {
             ctx.render("login.html");
             return;
         }
+
+        if (ctx.sessionAttribute("orders") != null) {
+            orderLine = ctx.sessionAttribute("orders");
+        }
+
         String email = currentUser.getEmail();
         String name = currentUser.getName();
         String mobile = currentUser.getMobile();
@@ -174,12 +179,14 @@ public class ItemController {
 
             }
             tempOrderLine.clear();
+            ItemMapper.deleteUsersBasket(currentUser.getUserId(), connectionPool);
             int newBalance = currentUser.getBalance() - orderprice;
             currentUser.setBalance(newBalance);
             UserMapper.updateBalance(currentUser.getUserId(), newBalance, connectionPool);
             ctx.attribute("message", "Tak for din ordre. Din ordre har fået ordrenummer " + generatedOrderId + ". Du hører fra os når din ordre er parat til afhentning!");
             ctx.attribute("ordercreated", true);
-            ctx.attribute("totalAmount", 0);
+            ctx.sessionAttribute("totalAmount", 0);
+            ctx.sessionAttribute("orderCount", 0);
             showTopping(ctx, ConnectionPool.getInstance());
             showBottom(ctx, ConnectionPool.getInstance());
             ctx.render("index.html");
@@ -189,4 +196,5 @@ public class ItemController {
             ctx.render("checkoutpage.html");
         }
     }
+
 }
