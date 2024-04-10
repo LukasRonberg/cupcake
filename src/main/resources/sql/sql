@@ -10,7 +10,6 @@ CREATE TABLE IF NOT EXISTS public.basket
     quantity integer NOT NULL,
     orderlineprice integer NOT NULL,
     CONSTRAINT basket_pkey PRIMARY KEY (basket_id),
-    CONSTRAINT "UserConstrain" UNIQUE (user_id)
     );
 
 CREATE TABLE IF NOT EXISTS public.bottom
