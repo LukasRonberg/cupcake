@@ -56,3 +56,22 @@ CREATE TABLE IF NOT EXISTS public.users
     CONSTRAINT users_pkey PRIMARY KEY (user_id),
     CONSTRAINT users_email_key UNIQUE (email)
     );
+
+INSERT INTO bottom (bottom, price) VALUES
+    ('Chocolate', 5),
+    ('Vanilla', 5),
+    ('Nutmeg', 5),
+    ('Pistacio', 6),
+    ('Almond', 7);
+
+
+INSERT INTO topping (topping, price) VALUES
+    ('Chocolate', 5),
+    ('Blueberry', 5),
+    ('Rasberry', 5),
+    ('Crispy', 6),
+    ('Strawberry', 6),
+    ('Rum/Raisin', 7),
+    ('Orange', 8),
+    ('Lemon', 8),
+    ('Blue cheese', 9);
