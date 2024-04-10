@@ -132,8 +132,8 @@ public class ItemMapper {
 
 
     //Denne metode henter brugerens gamle kurv og returnerer orderLines-listen til login-metoden i UserController
-    public static List<Order> getBasket(User user, List<Bottom> bottomList, List<Topping> toppingList, ConnectionPool connectionPool) throws DatabaseException {
-        List<Order> orderLines = new ArrayList<>();
+    public static ArrayList<Order> getBasket(User user, List<Bottom> bottomList, List<Topping> toppingList, ConnectionPool connectionPool) throws DatabaseException {
+        ArrayList<Order> orderLines = new ArrayList<>();
 
         String sql = "SELECT * FROM basket WHERE user_id = ?";
 

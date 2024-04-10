@@ -122,8 +122,9 @@ public class UserController {
             ctx.sessionAttribute("currentUser", user);
             List<Topping> toppingList = ItemMapper.showToppings(connectionPool);
             List<Bottom> bottomList = ItemMapper.showBottoms(connectionPool);
-            List<Order> orderLines = ItemMapper.getBasket(user, bottomList, toppingList, connectionPool);
-            if(!orderLines.isEmpty()) {
+            ArrayList<Order> orderLines = ItemMapper.getBasket(user, bottomList, toppingList, connectionPool);
+
+            if(orderLines != null) {
                 ctx.sessionAttribute("orders", orderLines);
             }
 

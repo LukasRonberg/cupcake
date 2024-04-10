@@ -30,7 +30,6 @@ public class ItemController {
                 createOrder(ctx,ConnectionPool.getInstance());
             });
             app.get("/showcupcakes", ctx -> {
-                showItemsInCheckout(ctx);
                 ctx.render("checkoutpage.html");
             });
             app.post("/ordermore", ctx -> {
@@ -46,12 +45,6 @@ public class ItemController {
             app.post("deleteorderline", ctx -> deleteorderline(ctx, ConnectionPool.getInstance()));
         }
 
-
-   
-
-    private static void showItemsInCheckout(Context ctx){
-        ctx.sessionAttribute("orders", orderLine);
-    }
     private static void deleteorderline(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         List<Order> orderLines = ctx.sessionAttribute("orders");
         int orderId = Integer.parseInt(ctx.formParam("orderId"));
