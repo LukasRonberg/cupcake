@@ -22,4 +22,5 @@ public class Topping {
     public int getPrice() {
         return price;
     }
+
 }

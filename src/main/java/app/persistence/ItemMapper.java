@@ -1,7 +1,9 @@
 package app.persistence;
 
 import app.entities.Bottom;
+import app.entities.Order;
 import app.entities.Topping;
+import app.entities.User;
 import app.exceptions.DatabaseException;
 
 import java.sql.*;
@@ -108,6 +110,68 @@ public class ItemMapper {
         return topping;
     }
 
+
+    // Denne metode sletter brugerens gamle kurv
+    public static void deleteUsersBasket(int userId, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "DELETE FROM basket WHERE user_id = ?";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setInt(1, userId);
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected == 0) {
+                System.out.println("Brugeren har ikke noget i kurven at slette");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl: " + e.getMessage());
+        }
+    }
+
+
+    //Denne metode henter brugerens gamle kurv og returnerer orderLines-listen til login-metoden i UserController
+    public static List<Order> getBasket(User user, List<Bottom> bottomList, List<Topping> toppingList, ConnectionPool connectionPool) throws DatabaseException {
+        List<Order> orderLines = new ArrayList<>();
+
+        String sql = "SELECT * FROM basket WHERE user_id = ?";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setInt(1, user.getUserId());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int toppingId = rs.getInt("topping_id");
+                int bottomId = rs.getInt("bottom_id");
+                int orderlinePrice = rs.getInt("orderlineprice");
+                int quantity = rs.getInt("quantity");
+
+                String toppingName = "";
+                for (Topping topping : toppingList) {
+                    if (topping.getToppingId() == toppingId) {
+                        toppingName = topping.getTopping();
+                    }
+                }
+                String bottomName = "";
+                for (Bottom bottom : bottomList) {
+                    if (bottom.getBottomId() == (bottomId)) {
+                        bottomName = bottom.getBottom();
+                    }
+                }
+
+                Order order = new Order(user.getUserId(), user.getEmail(), user.getName(), user.getMobile(), user.getBalance(), toppingName, bottomName, quantity, orderlinePrice);
+                orderLines.add(order);
+            }
+
+        } catch (SQLException e) {
+            throw new DatabaseException("Error retrieving topping with id = " + e.getMessage());
+        }
+        return orderLines;
+    }
+
     public static int insertOrder(int userId, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "INSERT INTO orders (user_id) VALUES (?)";
 
@@ -162,4 +226,31 @@ public class ItemMapper {
         }
     }
 
+    // Denne metode indsætter hver enkelt ordreline fra brugerens kurv i tabellen basket
+    public static void insertOrderline(int userId, int toppingId, int bottomId, int quantity, int orderlineprice, ConnectionPool connectionPool) throws DatabaseException {
+
+        String sql = "insert into basket (user_id, topping_id, bottom_id, quantity, orderlineprice) values (?,?,?,?,?)";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        )
+        {
+            ps.setInt(1, userId);
+            ps.setInt(2, toppingId);
+            ps.setInt(3, bottomId);
+            ps.setInt(4, quantity);
+            ps.setInt(5, orderlineprice);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1)
+            {
+                throw new DatabaseException("Fejl ved indsættelse af ordrelinie i tabellen basket");
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new DatabaseException(e.getMessage());
+        }
+    }
 }

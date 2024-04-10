@@ -53,33 +53,34 @@ public class ItemController {
         ctx.sessionAttribute("orders", orderLine);
     }
     private static void deleteorderline(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-        //ArrayList<Order> orderlines = ctx.sessionAttribute("orders");
+        List<Order> orderLines = ctx.sessionAttribute("orders");
         int orderId = Integer.parseInt(ctx.formParam("orderId"));
-
-        for (Order order : orderLine) {
+        // Her fjerner jeg den ordrelinie som kunden ønsker at fjerne
+        for (Order order : orderLines) {
             if (order.getOrderId() == orderId) {
-                orderLine.remove(order);
+                orderLines.remove(order);
                 break;
             }
         }
-
-        ctx.sessionAttribute("orders", orderLine);
+        // Her lægger jeg den opdaterede orderline-liste ind i en sessionAtribut ved navn orders
+        ctx.sessionAttribute("orders", orderLines);
         User currentUser = ctx.sessionAttribute("currentUser");
-
+        // Her udregner jeg hvor mange ordrelinier der er og hvad den samlede pris er for dem
         int orderCount = 0;
         int totalAmount = 0;
-        for (Order orderline : orderLine) {
+        for (Order orderline : orderLines) {
             if (orderline.getUserId() == currentUser.getUserId()) {
                 totalAmount += orderline.getOrderlinePrice();
                 orderCount++;
             }
         }
-
+        // Her opdaterer jeg orderCount og totalAmount i deres respektive sessionatributter
         ctx.sessionAttribute("orderCount", orderCount);
         ctx.sessionAttribute("totalAmount", totalAmount);
 
-
-        if (orderLine.isEmpty()) {
+        // Hvis kunden sletter alle sine ordrelinier sender jeg ham tilbage til index.html. Er er stadig
+        // ordrelinier smider jeg ham tilbage til checkoutpage.html
+        if (orderLines.isEmpty()) {
             showTopping(ctx, ConnectionPool.getInstance());
             showBottom(ctx, ConnectionPool.getInstance());
             ctx.render("index.html");
@@ -94,6 +95,11 @@ public class ItemController {
             ctx.render("login.html");
             return;
         }
+
+        if (ctx.sessionAttribute("orders") != null) {
+            orderLine = ctx.sessionAttribute("orders");
+        }
+
         String email = currentUser.getEmail();
         String name = currentUser.getName();
         String mobile = currentUser.getMobile();
@@ -175,12 +181,14 @@ public class ItemController {
 
             }
             tempOrderLine.clear();
+            ItemMapper.deleteUsersBasket(currentUser.getUserId(), connectionPool);
             int newBalance = currentUser.getBalance() - orderprice;
             currentUser.setBalance(newBalance);
             UserMapper.updateBalance(currentUser.getUserId(), newBalance, connectionPool);
             ctx.attribute("message", "Tak for din ordre. Din ordre har fået ordrenummer " + generatedOrderId + ". Du hører fra os når din ordre er parat til afhentning!");
             ctx.attribute("ordercreated", true);
-            ctx.attribute("totalAmount", 0);
+            ctx.sessionAttribute("totalAmount", 0);
+            ctx.sessionAttribute("orderCount", 0);
             showTopping(ctx, ConnectionPool.getInstance());
             showBottom(ctx, ConnectionPool.getInstance());
             ctx.render("index.html");
@@ -190,4 +198,5 @@ public class ItemController {
             ctx.render("checkoutpage.html");
         }
     }
+
 }
