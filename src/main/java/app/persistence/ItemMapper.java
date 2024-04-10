@@ -111,6 +111,7 @@ public class ItemMapper {
     }
 
 
+    // Denne metode sletter brugerens gamle kurv
     public static void deleteUsersBasket(int userId, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "DELETE FROM basket WHERE user_id = ?";
 
@@ -130,6 +131,7 @@ public class ItemMapper {
     }
 
 
+    //Denne metode henter brugerens gamle kurv og returnerer orderLines-listen til login-metoden i UserController
     public static List<Order> getBasket(User user, List<Bottom> bottomList, List<Topping> toppingList, ConnectionPool connectionPool) throws DatabaseException {
         List<Order> orderLines = new ArrayList<>();
 
@@ -224,6 +226,7 @@ public class ItemMapper {
         }
     }
 
+    // Denne metode indsætter hver enkelt ordreline fra brugerens kurv i tabellen basket
     public static void insertOrderline(int userId, int toppingId, int bottomId, int quantity, int orderlineprice, ConnectionPool connectionPool) throws DatabaseException {
 
         String sql = "insert into basket (user_id, topping_id, bottom_id, quantity, orderlineprice) values (?,?,?,?,?)";
@@ -242,14 +245,12 @@ public class ItemMapper {
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected != 1)
             {
-                throw new DatabaseException("Fejl ved oprettelse af kurv");
+                throw new DatabaseException("Fejl ved indsættelse af ordrelinie i tabellen basket");
             }
         }
         catch (SQLException e)
         {
             throw new DatabaseException(e.getMessage());
         }
-
     }
-
 }

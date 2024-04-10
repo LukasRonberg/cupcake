@@ -75,17 +75,19 @@ public class UserController {
     }
 
     private static void logout(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-
+            // Her henter jeg currentUser fra sessionattributten så jeg kan kalde på brugerens userid
             User currentUser = ctx.sessionAttribute("currentUser");
-
+            // Her henter jeg brugerens ordrelinier
             ArrayList<Order> tempOrderLine = ctx.sessionAttribute("orders");
-
+            // Her henter jeg toppingList og bottomList
             List<Topping> toppingList = ItemMapper.showToppings(connectionPool);
             List<Bottom> bottomList = ItemMapper.showBottoms(connectionPool);
 
             if(tempOrderLine != null) {
+                // Her sletter jeg brugerens gamle kurv i tabellen basket
                 ItemMapper.deleteUsersBasket(currentUser.getUserId(), connectionPool);
                 for (Order order : tempOrderLine) {
+                    // Her henter jeg hver enkel ordrelinies toppingid og bottomid
                     int toppingId = 0;
                     for (Topping topping : toppingList) {
                         if (order.getTopping().equals(topping.getTopping())) toppingId = topping.getToppingId();
@@ -94,13 +96,15 @@ public class UserController {
                     for (Bottom bottom : bottomList) {
                         if (order.getBottom().equals(bottom.getBottom())) bottomId = bottom.getBottomId();
                     }
-
+                    // Her gemmer jeg hver enkelt ordrelinie i tabellen basket
                     ItemMapper.insertOrderline(currentUser.getUserId(), toppingId, bottomId, order.getQuantity(), order.getOrderlinePrice(), connectionPool);
-
                 }
             }
+            // Her sletter jeg tempOrderLine arraylisten
             tempOrderLine.clear();
+            // Her sletter jeg alle sessionAttributter
             ctx.req().getSession().invalidate();
+            // Her sender jeg brugeren tilbage til forsiden index.html
             ctx.redirect("/");
     }
 
@@ -109,8 +113,8 @@ public class UserController {
         String email = ctx.formParam("email");
         String password = ctx.formParam("password");
 
-        ctx.attribute("login", true);
-        ctx.attribute("loginsuccess", false);
+        // Denne attribut bruger jeg til mine javascript-bokse. Boksen skal kun vises hvis den er true
+        ctx.attribute("login", false);
 
         // Check om bruger findes i DB med de angivne username + password
         try {
@@ -123,12 +127,11 @@ public class UserController {
                 ctx.sessionAttribute("orders", orderLines);
             }
 
-            // Hvis ja, send videre til forsiden med login besked
-            ctx.attribute("message", "Du er nu logget ind");
-            ctx.attribute("loginsuccess", true);
+            // Hvis brugeren er admin, sendes han videre til adminsite.html
             if (user.isAdmin()) {
                 ctx.render("adminSite.html");
             } else {
+                // Her udregner jeg hvor mange ordrelinier der er og hvad den samlede pris er for dem
                 int orderCount = 0;
                 int totalAmount = 0;
                 if (orderLines != null) {
@@ -137,15 +140,17 @@ public class UserController {
                         totalAmount += orderline.getOrderlinePrice();
                     }
                 }
+                // Her opdaterer jeg orderCount og totalAmount i deres respektive sessionatributter
                 ctx.sessionAttribute("totalAmount", totalAmount);
                 ctx.sessionAttribute("orderCount", orderCount);
+                // Her sender jeg brugeren tilbage til index.html
                 ctx.render("index.html");
-
             }
         } catch (DatabaseException e) {
-            // Hvis nej, send tilbage til login side med fejl besked
+            // Her sætter jeg attributten til true hvilket gør at javascriptet vises
+            ctx.attribute("login", true);
+            // Hvis nej, sendes brugeren tilbage til login siden med fejl besked
             ctx.attribute("message", "Forkert brugernavn eller password. Prøv igen eller opret brugeren!");
-
             ctx.render("login.html");
         }
     }
