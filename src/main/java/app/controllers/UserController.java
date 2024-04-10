@@ -83,7 +83,7 @@ public class UserController {
             List<Topping> toppingList = ItemMapper.showToppings(connectionPool);
             List<Bottom> bottomList = ItemMapper.showBottoms(connectionPool);
 
-            if(tempOrderLine != null) {
+            if(!tempOrderLine.isEmpty()) {
                 // Her sletter jeg brugerens gamle kurv i tabellen basket
                 ItemMapper.deleteUsersBasket(currentUser.getUserId(), connectionPool);
                 for (Order order : tempOrderLine) {

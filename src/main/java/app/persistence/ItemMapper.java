@@ -123,7 +123,7 @@ public class ItemMapper {
             int rowsAffected = ps.executeUpdate();
 
             if (rowsAffected == 0) {
-                System.out.println("Brugeren har ikke noget i kurven at slette");
+                System.out.println("Brugeren har ikke mere tilbage i sin indkøbskurv");
             }
         } catch (SQLException e) {
             throw new DatabaseException("Fejl: " + e.getMessage());
