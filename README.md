@@ -1,5 +1,7 @@
 Kanban: https://github.com/users/LukasRonberg/projects/2/views/1?fbclid=IwAR1rER3_ERK2xQIimKmVrzOotrvLvwhZjvYBjnkfUBa9XugwW5WnBs79g2A_aem_ASvVyBjSLsWrml-OKJIogA7waxZCwcb-Q_qVl-LGnZk_5NeW5ozPEWD8s53v52idqPBW8ahhheTOWXWc3GNCQ8Ip
 
+Video gennemgang af hjemmesidens funktionalitet(11-04-2024):
+https://cphbusiness.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=6063263d-92fe-4e63-88d8-b14f0075fc91
 
 User stories (funktionelle krav)
 Det første kundemøde mundede ud i en række såkaldte user-stories. De beskriver på kort form hvilke brugere, som har hvilke behov og hvad de ønsker at opnå. Det kan godt være at der dukker flere user-stories op undervejs i processen, eller I vælger at stryge nogle af dem:
