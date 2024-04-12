@@ -236,14 +236,14 @@ button.edit-buttons:hover {
     border-radius: 8px;
     cursor: pointer;
     font-size: 22px;
-    cursor: pointer;
-    transition: background-color 0.4s;
+    transition: background-color 0.4s, transform 0.2s;
 }
 
 .betal:hover {
-    background-color: #218838;;
-    border-color: #0056b3;
+    background-color: #218838;
+    transform: scale(1.05);
 }
+
 
 .shopping {
     background-color: #007bff;
@@ -255,12 +255,12 @@ button.edit-buttons:hover {
     cursor: pointer;
     font-size: 22px;
     cursor: pointer;
-    transition: background-color 0.4s;
+    transition: background-color 0.4s, transform 0.2s;
 }
 
 .shopping:hover {
     background-color: #0056b3;
-    border-color: #0056b3;
+    transform: scale(1.05);
 }
 
 
@@ -333,10 +333,10 @@ tr:hover {
     display: none;
     position: fixed;
     z-index: 100;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1400px;
     background-color: rgba(0,0,0,0);
 }
 
@@ -386,11 +386,12 @@ button.delete-button {
     border-radius: 8px;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.4s, color 0.4s;
+    transition: background-color 0.4s, color 0.4s, transform 0.2s;
 }
 
 button.delete-button:hover {
     background-color: #dc143c;
+    transform: scale(1.05);
 }
 
 
@@ -453,7 +454,6 @@ button.delete-button:hover {
     .topnav img {
         background-color: #f9f9f9;
         align-items: center;
-
     }
 
     h1 {
@@ -567,6 +567,12 @@ button.delete-button:hover {
 
     tr:hover {
         background-color: #f2f2f2;
+    }
+
+    .modal {
+        top: 30%;
+        left: 50%;
+        width: 800px;
     }
 
     .modal-content {
@@ -694,6 +700,12 @@ button.delete-button:hover {
         flex-basis: 100%;
     }
 
+    .modal {
+        top: 25%;
+        left: 50%;
+        width: 600px;
+    }
+
     .modal-content {
         margin: 25% auto;
         width: 52%;
@@ -780,6 +792,13 @@ button.delete-button:hover {
 
     #antal {
         flex-basis: 100%;
+    }
+
+    .modal {
+        top: 40%;
+        left: 50%;
+        width: 500px;
+        height: 900px;
     }
 
     .modal-content {

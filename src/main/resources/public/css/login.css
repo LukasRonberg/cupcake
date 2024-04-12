@@ -100,12 +100,13 @@ header div {
     text-align: center;
     border-color: #007bff;
     cursor: pointer;
-    transition: background-color 0.4s;
+    transition: background-color 0.4s, transform 0.2s;
 }
 
 .generic-form-createuser a:hover {
     background-color: #0056b3;
     border-color: #0056b3;
+    transform: scale(1.05);
 }
 
 .generic-form button {
@@ -119,12 +120,13 @@ header div {
     background-color: #28a745;
     color: white;
     cursor: pointer;
-    transition: background-color 0.4s;
+    transition: background-color 0.4s, transform 0.2s;
 }
 
 .generic-form button:hover {
     background-color: #218838;
     border-color: #218838;
+    transform: scale(1.05);
 }
 
 .generic-form input[type=text], .generic-form input[type=password] {

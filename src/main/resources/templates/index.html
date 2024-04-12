@@ -25,7 +25,7 @@
 
     <div class="topnav">
         <div class="left">
-            <a th:if="${session.currentUser == null}" href="login.html" th:href="@{/login/}">Login</a>
+            <a th:if="${session.currentUser == null}" href="login.html" th:href="@{/loginfromindex/}">Login</a>
             <a th:if="${session.currentUser != null}" href="index.html" th:href="@{/logout/}">Logout</a>
         </div>
         <div class="basket-right">

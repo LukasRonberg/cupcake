@@ -4,7 +4,6 @@ public class Order {
     private static int lastOrderId = 0;
     private int orderId;
     private int userId;
-    //private int orderId;
     private String email;
     private String name;
     private String mobile;
@@ -21,6 +20,14 @@ public class Order {
         this.name = name;
         this.mobile = mobile;
         this.balance = balance;
+        this.topping = topping;
+        this.bottom = bottom;
+        this.quantity = quantity;
+        this.orderlinePrice = orderlinePrice;
+    }
+
+    public Order(String topping, String bottom, int quantity, int orderlinePrice) {
+        this.orderId = generateNextOrderId();
         this.topping = topping;
         this.bottom = bottom;
         this.quantity = quantity;

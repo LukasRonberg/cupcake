@@ -24,6 +24,13 @@ public class UserController {
         app.get("login", ctx -> {
             ItemController.showBottom(ctx, ConnectionPool.getInstance());
             ItemController.showTopping(ctx, ConnectionPool.getInstance());
+            ctx.sessionAttribute("fromcheckout", true);
+            ctx.render("login.html");
+        });
+        app.get("loginfromindex", ctx -> {
+            ItemController.showBottom(ctx, ConnectionPool.getInstance());
+            ItemController.showTopping(ctx, ConnectionPool.getInstance());
+            ctx.sessionAttribute("fromcheckout", false);
             ctx.render("login.html");
         });
         app.get("index.html", ctx -> {
@@ -83,7 +90,7 @@ public class UserController {
             List<Topping> toppingList = ItemMapper.showToppings(connectionPool);
             List<Bottom> bottomList = ItemMapper.showBottoms(connectionPool);
 
-            if(!tempOrderLine.isEmpty()) {
+            if(tempOrderLine != null) {
                 // Her sletter jeg brugerens gamle kurv i tabellen basket
                 ItemMapper.deleteUsersBasket(currentUser.getUserId(), connectionPool);
                 for (Order order : tempOrderLine) {
@@ -99,9 +106,10 @@ public class UserController {
                     // Her gemmer jeg hver enkelt ordrelinie i tabellen basket
                     ItemMapper.insertOrderline(currentUser.getUserId(), toppingId, bottomId, order.getQuantity(), order.getOrderlinePrice(), connectionPool);
                 }
+                // Her sletter jeg tempOrderLine arraylisten
+                tempOrderLine.clear();
             }
-            // Her sletter jeg tempOrderLine arraylisten
-            tempOrderLine.clear();
+
             // Her sletter jeg alle sessionAttributter
             ctx.req().getSession().invalidate();
             // Her sender jeg brugeren tilbage til forsiden index.html
@@ -122,10 +130,16 @@ public class UserController {
             ctx.sessionAttribute("currentUser", user);
             List<Topping> toppingList = ItemMapper.showToppings(connectionPool);
             List<Bottom> bottomList = ItemMapper.showBottoms(connectionPool);
-            ArrayList<Order> orderLines = ItemMapper.getBasket(user, bottomList, toppingList, connectionPool);
+            ArrayList<Order> oldOrderLines = ItemMapper.getBasket(user, bottomList, toppingList, connectionPool);
+            ArrayList<Order> orderLines = ctx.sessionAttribute("orders");
 
             if(orderLines != null) {
+                for (Order oldorderlines : oldOrderLines) {
+                    orderLines.add(oldorderlines);
+                }
                 ctx.sessionAttribute("orders", orderLines);
+            } else {
+                ctx.sessionAttribute("orders", oldOrderLines);
             }
 
             // Hvis brugeren er admin, sendes han videre til adminsite.html
@@ -135,8 +149,9 @@ public class UserController {
                 // Her udregner jeg hvor mange ordrelinier der er og hvad den samlede pris er for dem
                 int orderCount = 0;
                 int totalAmount = 0;
-                if (orderLines != null) {
-                    for (Order orderline : orderLines) {
+                ArrayList<Order> newOrderLines = ctx.sessionAttribute("orders");
+                if (newOrderLines != null) {
+                    for (Order orderline : newOrderLines) {
                         orderCount++;
                         totalAmount += orderline.getOrderlinePrice();
                     }
@@ -145,7 +160,18 @@ public class UserController {
                 ctx.sessionAttribute("totalAmount", totalAmount);
                 ctx.sessionAttribute("orderCount", orderCount);
                 // Her sender jeg brugeren tilbage til index.html
-                ctx.render("index.html");
+                System.out.println(""+ctx.sessionAttribute("fromcheckout"));
+                if(ctx.sessionAttribute("fromcheckout") != null) {
+                    if(ctx.sessionAttribute("fromcheckout")) {
+                        //ItemController.payForOrder(ctx,ConnectionPool.getInstance());
+                        ctx.render("checkoutpage.html");
+                    } else {
+                        ctx.render("index.html");
+                    }
+
+                } else {
+                    ctx.render("index.html");
+                }
             }
         } catch (DatabaseException e) {
             // Her sætter jeg attributten til true hvilket gør at javascriptet vises
