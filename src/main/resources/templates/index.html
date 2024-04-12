@@ -42,7 +42,6 @@
         </div>
     </div>
 
-
     <form class="form-table" id="myForm" action="" method="post">
         <h1>Velkommen ombord</h1>
         <h2>Øens bedste cupcakes. Vælg og bestil her:</h2>
@@ -52,16 +51,13 @@
                 <option value="" disabled selected>Vælg bund</option>
                 <option th:each="bottom : ${bottomList}" th:value="${bottom.bottomId}"
                         th:text="${bottom.bottom} + ' - ' + ${bottom.price} + ' kr.'">
-
                 </option>
             </select>
             <select name="topping" id="topping" required>
                 <option value="" disabled selected>Vælg topping</option>
                 <option th:each="topping : ${toppingList}" th:value="${topping.toppingId}"
                         th:text="${topping.topping} + ' - ' + ${topping.price} + ' kr.'">
-
                 </option>
-
             </select>
             <select name="antal" id="antal" required>
                 <!-- <option th:text="${antal}" th:value="${antal}">Vælg antal</option> -->
@@ -93,7 +89,7 @@
 </div>
 
 <script th:inline="javascript">
-
+    // Funktion til at vise modalen
     document.addEventListener("DOMContentLoaded", function () {
         var ordercreated = [[${ordercreated}]];
         if (ordercreated) {
@@ -103,42 +99,7 @@
             showMessage([[${message}]]);
         }
     });
-</script>
 
-
-<script>
-    var today = new Date();
-    var dd = today.getDate() + 1;
-    var mm = today.getMonth() + 1; //January is 0!
-    var yyyy = today.getFullYear();
-
-    if (dd < 10) {
-        dd = '0' + dd;
-    }
-
-    if (mm < 10) {
-        mm = '0' + mm;
-    }
-
-    today = yyyy + '-' + mm + '-' + dd;
-    var dateInput = document.getElementById('dato');
-
-    dateInput.setAttribute("min", today);
-
-    // Get reference to the date input field
-
-    var form = document.getElementById('myForm');
-
-    // Add event listener for change event
-    dateInput.addEventListener('change', function () {
-        // Set the form action dynamically
-        form.action = "/gettimeslots";
-        // Submit the form
-        form.submit();
-    });
-
-</script>
-<script>
     // Funktion for at vise meddelelsen
     function showMessage(message) {
         var modal = document.getElementById("hiddenDiv");
@@ -152,11 +113,6 @@
         var modal = document.getElementById("hiddenDiv");
         modal.style.display = "none"; // Skjul modalen
     }
-
-
 </script>
-
-
 </body>
-
 </html>

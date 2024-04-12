@@ -32,7 +32,6 @@
             </div>
         </div>
 
-
         <div id="hiddenDiv" class="modal" th:if="${login}" >
             <div class="modal-content">
                 <span class="close" onclick="closeModal()">&times;</span>
@@ -44,6 +43,7 @@
 
 
 <script th:inline="javascript">
+    // Funktion til at vise modalen
     document.addEventListener("DOMContentLoaded", function() {
         var login = [[${login}]];
         if (login) {
@@ -53,23 +53,24 @@
             showMessage([[${message}]]);
         }
     });
+
     // Funktion for at vise meddelelsen
     function showMessage(message) {
         var modal = document.getElementById("hiddenDiv");
         var messageText = document.getElementById("messageText");
-        messageText.textContent = message; // Sæt meddelelsesindholdet
-        modal.style.display = "block"; // Vis modalen
+        messageText.textContent = message;
+        modal.style.display = "block";
     }
+
     // Funktion for at lukke modalen
     function closeModal() {
         var modal = document.getElementById("hiddenDiv");
-        modal.style.display = "none"; // Skjul modalen
+        modal.style.display = "none";
         var loginsuccess = [[${loginsuccess}]];
         if (loginsuccess) {
             window.location.href = "index.html";
         }
     }
 </script>
-
 </body>
 </html>

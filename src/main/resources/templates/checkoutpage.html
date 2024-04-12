@@ -48,8 +48,8 @@
             <table>
                 <thead>
                 <tr>
-                    <th class="table-left">Topping</th>
                     <th class="table-left">Bund</th>
+                    <th class="table-left">Topping</th>
                     <th class="table-left">Antal</th>
                     <th class="table-center">Pris</th>
                     <th></th>
@@ -57,8 +57,8 @@
                 </thead>
                 <tbody>
                 <tr th:each="order : ${session.orders}">
-                    <td class="table-left" th:text="${order.topping}">topping</td>
-                    <td class="table-left" th:text="${order.bottom}">bottom</td>
+                    <td class="table-left" th:text="${order.bottom}">topping</td>
+                    <td class="table-left" th:text="${order.topping}">bottom</td>
                     <td class="table-left" th:text="${order.quantity}">quantity</td>
                     <td class="table-right"><span th:text="${order.orderlinePrice}"></span> kr.</td>
                     <td>
@@ -75,13 +75,10 @@
                 </tbody>
             </table>
 
-
         <div class="button-container-checkout">
             <input class="shopping" type="submit" value="Fortsæt shopping" formaction="/ordermore">
             <input class="betal" type="submit" value="Betal" formaction="/payorder">
         </div>
-
-
 
         <div id="hiddenDiv" class="modal" th:if="${notenoughtmoney}">
             <div class="modal-content">
@@ -93,7 +90,7 @@
 </div>
 
 <script th:inline="javascript">
-
+    // Funktion til at vise modalen
     document.addEventListener("DOMContentLoaded", function () {
         var notenoughtmoney = [[${notenoughtmoney}]];
         if (notenoughtmoney) {
@@ -103,20 +100,19 @@
             showMessage([[${message}]]);
         }
     });
-</script>
-<script>
+
     // Funktion for at vise meddelelsen
     function showMessage(message) {
         var modal = document.getElementById("hiddenDiv");
         var messageText = document.getElementById("messageText");
-        messageText.textContent = message; // Sæt meddelelsesindholdet
-        modal.style.display = "block"; // Vis modalen
+        messageText.textContent = message;
+        modal.style.display = "block";
     }
 
     // Funktion for at lukke modalen
     function closeModal() {
         var modal = document.getElementById("hiddenDiv");
-        modal.style.display = "none"; // Skjul modalen
+        modal.style.display = "none";
     }
 </script>
 </body>
