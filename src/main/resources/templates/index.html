@@ -38,7 +38,7 @@
             </form>
         </div>
         <div class="right">
-            <a th:if="${session.currentUser != null}" th:text="${session.currentUser.email}"></a>
+            <a href="../showorders.html" th:if="${session.currentUser != null}" th:text="${session.currentUser.email}"></a>
         </div>
     </div>
 

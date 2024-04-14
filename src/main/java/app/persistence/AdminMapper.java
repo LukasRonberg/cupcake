@@ -1,7 +1,7 @@
 package app.persistence;
 
 //import app.entities.User;
-import app.entities.Order;
+import app.entities.Orderline;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 
@@ -41,8 +41,8 @@ public class AdminMapper {
         return customerInfo;
     }
 
-    public static ArrayList<Order> showCustomerOrders(String userName, ConnectionPool connectionPool) throws DatabaseException {
-        ArrayList<Order> orderList = new ArrayList<>();
+    public static ArrayList<Orderline> showCustomerOrders(String userName, ConnectionPool connectionPool) throws DatabaseException {
+        ArrayList<Orderline> orderList = new ArrayList<>();
         String query = "SELECT u.user_id, u.email, u.name, u.mobile, u.balance, t.topping, b.bottom, ol.quantity, ol.price AS orderline_price " +
                 "FROM public.orders o " +
                 "JOIN public.users u ON o.user_id = u.user_id " +
@@ -70,7 +70,7 @@ public class AdminMapper {
                 int quantity = resultSet.getInt("quantity");
                 int orderlinePrice = resultSet.getInt("orderline_price");
 
-                Order newOrder = new Order(userId,email, name, mobile, balance, topping, bottom, quantity, orderlinePrice);
+                Orderline newOrder = new Orderline(userId,email, name, mobile, balance, topping, bottom, quantity, orderlinePrice);
 
                 orderList.add(newOrder);
             }
@@ -81,8 +81,8 @@ public class AdminMapper {
     }
 
 
-    public static ArrayList<Order> showAllOrders(ConnectionPool connectionPool) throws DatabaseException {
-        ArrayList<Order> orderList = new ArrayList<>();
+    public static ArrayList<Orderline> showAllOrders(ConnectionPool connectionPool) throws DatabaseException {
+        ArrayList<Orderline> orderList = new ArrayList<>();
         String query = "SELECT u.user_id,ol.order_id, u.email, u.name, u.mobile, u.balance, t.topping, b.bottom, ol.quantity, ol.price AS orderline_price " +
                 "FROM public.orders o " +
                 "JOIN public.users u ON o.user_id = u.user_id " +
@@ -108,7 +108,7 @@ public class AdminMapper {
                 int quantity = resultSet.getInt("quantity");
                 int orderlinePrice = resultSet.getInt("orderline_price");
 
-                Order newOrder = new Order(userId,/*orderId,*/ email, name, mobile, balance, topping, bottom, quantity, orderlinePrice);
+                Orderline newOrder = new Orderline(userId,/*orderId,*/ email, name, mobile, balance, topping, bottom, quantity, orderlinePrice);
 
                 orderList.add(newOrder);
             }

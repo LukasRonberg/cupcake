@@ -1,9 +1,6 @@
 package app.controllers;
 
-import app.entities.Bottom;
-import app.entities.Order;
-import app.entities.Topping;
-import app.entities.User;
+import app.entities.*;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.ItemMapper;
@@ -13,12 +10,14 @@ import io.javalin.http.Context;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ItemController {
-    static ArrayList<Order> orderLine = new ArrayList<>();
-
+    static ArrayList<Orderline> orderLine = new ArrayList<>();
+    static Date today = new Date();
+    static SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+    static String formattedDate = formatter.format(today);
         public static void addRoutes(Javalin app)
         {
             app.get("/", ctx -> {
@@ -32,6 +31,9 @@ public class ItemController {
             app.get("/showcupcakes", ctx -> {
                 ctx.render("checkoutpage.html");
             });
+            app.post("/showcupcakes", ctx -> {
+                ctx.render("checkoutpage.html");
+            });
             app.post("/ordermore", ctx -> {
                 showTopping(ctx,ConnectionPool.getInstance());
                 showBottom(ctx, ConnectionPool.getInstance());
@@ -43,14 +45,16 @@ public class ItemController {
                 //ctx.render("checkoutpage.html");
             });
             app.post("deleteorderline", ctx -> deleteorderline(ctx, ConnectionPool.getInstance()));
+            app.post("/deleteorder", ctx -> deleteorder(ctx, ConnectionPool.getInstance()));
+
         }
 
     private static void deleteorderline(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-        List<Order> orderLines = ctx.sessionAttribute("orders");
-        int orderId = Integer.parseInt(ctx.formParam("orderId"));
+        List<Orderline> orderLines = ctx.sessionAttribute("orders");
+        int orderlineId = Integer.parseInt(ctx.formParam("orderlineId"));
         // Her fjerner jeg den ordrelinie som kunden ønsker at fjerne
-        for (Order order : orderLines) {
-            if (order.getOrderId() == orderId) {
+        for (Orderline order : orderLines) {
+            if (order.getOrderId() == orderlineId) {
                 orderLines.remove(order);
                 break;
             }
@@ -61,11 +65,9 @@ public class ItemController {
         // Her udregner jeg hvor mange ordrelinier der er og hvad den samlede pris er for dem
         int orderCount = 0;
         int totalAmount = 0;
-        for (Order orderline : orderLines) {
-            if (orderline.getUserId() == currentUser.getUserId()) {
-                totalAmount += orderline.getOrderlinePrice();
-                orderCount++;
-            }
+        for (Orderline orderline : orderLines) {
+            totalAmount += orderline.getOrderlinePrice();
+            orderCount++;
         }
         // Her opdaterer jeg orderCount og totalAmount i deres respektive sessionatributter
         ctx.sessionAttribute("orderCount", orderCount);
@@ -80,6 +82,33 @@ public class ItemController {
         } else {
             ctx.render("checkoutpage.html");
         }
+    }
+
+    private static void deleteorder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        User currentUser = ctx.sessionAttribute("currentUser");
+        int orderId = Integer.parseInt(ctx.formParam("orderId"));
+        System.out.println(""+orderId);
+        int orderPrice = ItemMapper.getOrderPrice(orderId, connectionPool);
+        int newBalance = currentUser.getBalance()+orderPrice;
+        ItemMapper.deleteOrder(orderId, connectionPool);
+        ItemMapper.deleteOrderlines(orderId, connectionPool);
+        UserMapper.updateBalance(currentUser.getUserId(), newBalance, connectionPool);
+
+        List<Order> orderList = ItemMapper.getOrderList(currentUser.getUserId(), connectionPool);
+        ctx.sessionAttribute("orderlist", orderList);
+        boolean hasOpenOrders = false;
+        for (Order order : orderList) {
+            if (!order.getStatus()) {
+                hasOpenOrders = true;
+            }
+        }
+        ctx.sessionAttribute("openorders", hasOpenOrders);
+        currentUser.setBalance(newBalance);
+        ctx.sessionAttribute("currentUser", currentUser);
+        ctx.attribute("message", "Din ordre, med ordrenummer "+ orderId + " er nu slettet fra vores system og beløbet er tilbageført til deres konto!");
+        ctx.attribute("orderdeleted", true);
+        System.out.println("orderdeleted = "+ctx.attribute("orderdeleted"));
+        ctx.render("showorders.html");
     }
 
     private static void createOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
@@ -100,14 +129,14 @@ public class ItemController {
 
         int orderlinePrice = calculateOrderLinePrice(topping, bottom, quantity);
 
-        Order order = new Order(topping.getTopping(), bottom.getBottom(), quantity, orderlinePrice);
+        Orderline order = new Orderline(topping.getTopping(), bottom.getBottom(), quantity, orderlinePrice);
         orderLine.add(order);
 
         ctx.sessionAttribute("orders", orderLine);
 
         int totalAmount = 0;
         int orderCount = 0;
-        for (Order orderline : orderLine) {
+        for (Orderline orderline : orderLine) {
             totalAmount += orderline.getOrderlinePrice();
             orderCount++;
         }
@@ -148,23 +177,35 @@ public class ItemController {
 
         if (orderprice != 0) {
             if (currentUser.getBalance() >= orderprice) {
-                ArrayList<Order> tempOrderLine = ctx.sessionAttribute("orders");
-
-                int generatedOrderId = ItemMapper.insertOrder(tempOrderLine.get(0).getUserId(), connectionPool);
+                ArrayList<Orderline> tempOrderLine = ctx.sessionAttribute("orders");
+                int generatedOrderId = ItemMapper.insertOrder(currentUser.getUserId(),formattedDate, orderprice, connectionPool);
+                List<Order> orderList = ItemMapper.getOrderList(currentUser.getUserId(), connectionPool);
+                boolean hasFinishedOrders = false;
+                boolean hasOpenOrders = false;
+                for (Order order : orderList) {
+                    if (order.getStatus()) {
+                        hasFinishedOrders = true;
+                    } else {
+                        hasOpenOrders = true;
+                    }
+                }
+                ctx.sessionAttribute("finishedorders", hasFinishedOrders);
+                ctx.sessionAttribute("openorders", hasOpenOrders);
+                ctx.sessionAttribute("orderlist", orderList);
                 List<Topping> toppingList = ItemMapper.showToppings(connectionPool);
                 List<Bottom> bottomList = ItemMapper.showBottoms(connectionPool);
 
-                for (Order order : tempOrderLine) {
+                for (Orderline orderline : tempOrderLine) {
                     int toppingId = 0;
                     for (Topping topping : toppingList) {
-                        if (order.getTopping().equals(topping.getTopping())) toppingId = topping.getToppingId();
+                        if (orderline.getTopping().equals(topping.getTopping())) toppingId = topping.getToppingId();
                     }
                     int bottomId = 0;
                     for (Bottom bottom : bottomList) {
-                        if (order.getBottom().equals(bottom.getBottom())) bottomId = bottom.getBottomId();
+                        if (orderline.getBottom().equals(bottom.getBottom())) bottomId = bottom.getBottomId();
                     }
 
-                    ItemMapper.payForOrder(generatedOrderId, toppingId, bottomId, order.getQuantity(), order.getOrderlinePrice(), connectionPool);
+                    ItemMapper.payForOrder(generatedOrderId, toppingId, bottomId, orderline.getQuantity(), orderline.getOrderlinePrice(), connectionPool);
 
                 }
                 tempOrderLine.clear();

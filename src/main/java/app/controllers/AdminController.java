@@ -1,6 +1,6 @@
 package app.controllers;
 
-import app.entities.Order;
+import app.entities.Orderline;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.AdminMapper;
@@ -31,7 +31,7 @@ public class AdminController
 
     private static void getAllOrders(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         AdminMapper.showAllOrders(connectionPool);
-        ArrayList<Order> customerOrders = AdminMapper.showAllOrders(connectionPool);
+        ArrayList<Orderline> customerOrders = AdminMapper.showAllOrders(connectionPool);
         ctx.attribute("customerOrders", customerOrders);
 
         ctx.render("adminSite.html");
@@ -48,7 +48,7 @@ public class AdminController
     private static void showCustomerOrders(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         String username = ctx.formParam("username_input");
 
-        ArrayList<Order> customerOrders = AdminMapper.showCustomerOrders(username, connectionPool);
+        ArrayList<Orderline> customerOrders = AdminMapper.showCustomerOrders(username, connectionPool);
         ctx.attribute("customerOrders", customerOrders);
 
         ctx.render("adminSite.html");

@@ -1,9 +1,6 @@
 package app.persistence;
 
-import app.entities.Bottom;
-import app.entities.Order;
-import app.entities.Topping;
-import app.entities.User;
+import app.entities.*;
 import app.exceptions.DatabaseException;
 
 import java.sql.*;
@@ -110,6 +107,25 @@ public class ItemMapper {
         return topping;
     }
 
+    public static int getOrderPrice(int orderId, ConnectionPool connectionPool) throws DatabaseException {
+        int orderPrice = 0;
+        String sql = "SELECT * FROM orders WHERE order_id = ?";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setInt(1, orderId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                orderPrice = rs.getInt("orderprice");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Error retrieving orderprice with order_id = " + orderId, e.getMessage());
+        }
+        return orderPrice;
+    }
+
 
     // Denne metode sletter brugerens gamle kurv
     public static void deleteUsersBasket(int userId, ConnectionPool connectionPool) throws DatabaseException {
@@ -130,10 +146,46 @@ public class ItemMapper {
         }
     }
 
+    public static void deleteOrder(int orderId, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "DELETE FROM orders WHERE order_id = ?";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setInt(1, orderId);
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected == 0) {
+                System.out.println("Ordren kunne ikke findes i databasen");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl: " + e.getMessage());
+        }
+    }
+
+    public static void deleteOrderlines(int orderId, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "DELETE FROM orderline WHERE order_id = ?";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setInt(1, orderId);
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected == 0) {
+                System.out.println("Der var ingen ordrelinier knyttet til det ordre_id");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl: " + e.getMessage());
+        }
+    }
+
 
     //Denne metode henter brugerens gamle kurv og returnerer orderLines-listen til login-metoden i UserController
-    public static ArrayList<Order> getBasket(User user, List<Bottom> bottomList, List<Topping> toppingList, ConnectionPool connectionPool) throws DatabaseException {
-        ArrayList<Order> orderLines = new ArrayList<>();
+    public static ArrayList<Orderline> getBasket(User user, List<Bottom> bottomList, List<Topping> toppingList, ConnectionPool connectionPool) throws DatabaseException {
+        ArrayList<Orderline> orderLines = new ArrayList<>();
 
         String sql = "SELECT * FROM basket WHERE user_id = ?";
 
@@ -162,7 +214,7 @@ public class ItemMapper {
                     }
                 }
 
-                Order order = new Order(user.getUserId(), user.getEmail(), user.getName(), user.getMobile(), user.getBalance(), toppingName, bottomName, quantity, orderlinePrice);
+                Orderline order = new Orderline(user.getUserId(), user.getEmail(), user.getName(), user.getMobile(), user.getBalance(), toppingName, bottomName, quantity, orderlinePrice);
                 orderLines.add(order);
             }
 
@@ -172,14 +224,18 @@ public class ItemMapper {
         return orderLines;
     }
 
-    public static int insertOrder(int userId, ConnectionPool connectionPool) throws DatabaseException {
-        String sql = "INSERT INTO orders (user_id) VALUES (?)";
-
+    public static int insertOrder(int userId, String formattedDate, int orderPrice, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "INSERT INTO orders (user_id, orderdate, orderprice, status) VALUES (?,?,?,?)";
+        System.out.println("i order sætter jeg userId til "+userId);
         try (
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
             ps.setInt(1, userId);
+            ps.setString(2, formattedDate);
+            ps.setInt(3, orderPrice);
+            ps.setBoolean(4, false);
+
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected != 1) {
@@ -197,6 +253,33 @@ public class ItemMapper {
         } catch (SQLException e) {
             throw new DatabaseException(e.getMessage());
         }
+    }
+
+    public static List<Order> getOrderList(int userId, ConnectionPool connectionPool) throws DatabaseException {
+        List<Order> orderList = new ArrayList<>();
+        String sql = "select * from orders WHERE user_id = ?";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        )
+        {
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next())
+            {
+                int order_id = rs.getInt("order_id");
+                String orderDate = rs.getString("orderdate");
+                int orderPrice = rs.getInt("orderprice");
+                boolean status = rs.getBoolean("status");
+                orderList.add(new Order(order_id, userId, orderDate, orderPrice, status));
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new DatabaseException("Fejl!!!!", e.getMessage());
+        }
+        return orderList;
     }
 
     public static void payForOrder(int orderId, int toppingId, int bottomId, int quantity,int price, ConnectionPool connectionPool) throws DatabaseException
@@ -217,7 +300,7 @@ public class ItemMapper {
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected != 1)
             {
-                throw new DatabaseException("Fejl ved sendelse af betalling");
+                throw new DatabaseException("Fejl ved afsendelse af betalling");
             }
         }
         catch (SQLException e)

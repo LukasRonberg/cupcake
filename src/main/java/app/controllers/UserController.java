@@ -1,9 +1,6 @@
 package app.controllers;
 
-import app.entities.Bottom;
-import app.entities.Order;
-import app.entities.Topping;
-import app.entities.User;
+import app.entities.*;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.ItemMapper;
@@ -37,6 +34,9 @@ public class UserController {
             ItemController.showBottom(ctx, ConnectionPool.getInstance());
             ItemController.showTopping(ctx, ConnectionPool.getInstance());
             ctx.render("index.html");
+        });
+        app.get("showorders.html", ctx -> {
+            ctx.render("showorders.html");
         });
         app.get("logout", ctx -> logout(ctx, ConnectionPool.getInstance()));
         app.post("createuser", ctx -> createUser(ctx, ConnectionPool.getInstance()));
@@ -85,7 +85,7 @@ public class UserController {
             // Her henter jeg currentUser fra sessionattributten så jeg kan kalde på brugerens userid
             User currentUser = ctx.sessionAttribute("currentUser");
             // Her henter jeg brugerens ordrelinier
-            ArrayList<Order> tempOrderLine = ctx.sessionAttribute("orders");
+            ArrayList<Orderline> tempOrderLine = ctx.sessionAttribute("orders");
             // Her henter jeg toppingList og bottomList
             List<Topping> toppingList = ItemMapper.showToppings(connectionPool);
             List<Bottom> bottomList = ItemMapper.showBottoms(connectionPool);
@@ -93,7 +93,7 @@ public class UserController {
             if(tempOrderLine != null) {
                 // Her sletter jeg brugerens gamle kurv i tabellen basket
                 ItemMapper.deleteUsersBasket(currentUser.getUserId(), connectionPool);
-                for (Order order : tempOrderLine) {
+                for (Orderline order : tempOrderLine) {
                     // Her henter jeg hver enkel ordrelinies toppingid og bottomid
                     int toppingId = 0;
                     for (Topping topping : toppingList) {
@@ -128,13 +128,28 @@ public class UserController {
         try {
             User user = UserMapper.login(email, password, connectionPool);
             ctx.sessionAttribute("currentUser", user);
+            List<Order> orderList = ItemMapper.getOrderList(user.getUserId(), connectionPool);
+            ctx.sessionAttribute("orderlist", orderList);
+            boolean hasFinishedOrders = false;
+            boolean hasOpenOrders = false;
+            for (Order order : orderList) {
+                if (order.getStatus()) {
+                    hasFinishedOrders = true;
+                } else {
+                    hasOpenOrders = true;
+                }
+            }
+            ctx.sessionAttribute("finishedorders", hasFinishedOrders);
+            System.out.println(""+hasOpenOrders);
+            System.out.println(""+hasFinishedOrders);
+            ctx.sessionAttribute("openorders", hasOpenOrders);
             List<Topping> toppingList = ItemMapper.showToppings(connectionPool);
             List<Bottom> bottomList = ItemMapper.showBottoms(connectionPool);
-            ArrayList<Order> oldOrderLines = ItemMapper.getBasket(user, bottomList, toppingList, connectionPool);
-            ArrayList<Order> orderLines = ctx.sessionAttribute("orders");
+            ArrayList<Orderline> oldOrderLines = ItemMapper.getBasket(user, bottomList, toppingList, connectionPool);
+            ArrayList<Orderline> orderLines = ctx.sessionAttribute("orders");
 
             if(orderLines != null) {
-                for (Order oldorderlines : oldOrderLines) {
+                for (Orderline oldorderlines : oldOrderLines) {
                     orderLines.add(oldorderlines);
                 }
                 ctx.sessionAttribute("orders", orderLines);
@@ -149,9 +164,9 @@ public class UserController {
                 // Her udregner jeg hvor mange ordrelinier der er og hvad den samlede pris er for dem
                 int orderCount = 0;
                 int totalAmount = 0;
-                ArrayList<Order> newOrderLines = ctx.sessionAttribute("orders");
+                ArrayList<Orderline> newOrderLines = ctx.sessionAttribute("orders");
                 if (newOrderLines != null) {
-                    for (Order orderline : newOrderLines) {
+                    for (Orderline orderline : newOrderLines) {
                         orderCount++;
                         totalAmount += orderline.getOrderlinePrice();
                     }
