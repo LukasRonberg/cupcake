@@ -44,12 +44,12 @@ public class ItemController {
                 payForOrder(ctx,ConnectionPool.getInstance());
                 //ctx.render("checkoutpage.html");
             });
-            app.post("deleteorderline", ctx -> deleteorderline(ctx, ConnectionPool.getInstance()));
+            app.post("deleteorderline", ctx -> deleteorderline(ctx));
             app.post("/deleteorder", ctx -> deleteorder(ctx, ConnectionPool.getInstance()));
 
         }
 
-    private static void deleteorderline(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+    private static void deleteorderline(Context ctx) throws DatabaseException {
         List<Orderline> orderLines = ctx.sessionAttribute("orders");
         int orderlineId = Integer.parseInt(ctx.formParam("orderlineId"));
         // Her fjerner jeg den ordrelinie som kunden ønsker at fjerne
@@ -61,7 +61,6 @@ public class ItemController {
         }
         // Her lægger jeg den opdaterede orderline-liste ind i en sessionAtribut ved navn orders
         ctx.sessionAttribute("orders", orderLines);
-        User currentUser = ctx.sessionAttribute("currentUser");
         // Her udregner jeg hvor mange ordrelinier der er og hvad den samlede pris er for dem
         int orderCount = 0;
         int totalAmount = 0;
