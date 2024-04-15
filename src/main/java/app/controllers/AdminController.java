@@ -1,5 +1,6 @@
 package app.controllers;
 
+import app.entities.Order;
 import app.entities.Orderline;
 import app.entities.User;
 import app.exceptions.DatabaseException;
@@ -48,7 +49,7 @@ public class AdminController
     private static void showCustomerOrders(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         String username = ctx.formParam("username_input");
 
-        ArrayList<Orderline> customerOrders = AdminMapper.showCustomerOrders(username, connectionPool);
+        ArrayList<Order> customerOrders = AdminMapper.showCustomersOrders(username, connectionPool);
         ctx.attribute("customerOrders", customerOrders);
 
         ctx.render("adminSite.html");

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>BookingBois</title>
+    <title>Cupcake</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../public/css/bookiBois.css" th:href="@{/css/bookiBois.css}" rel="stylesheet"/>
@@ -43,9 +43,10 @@
     </div>
 
     <form class="form-table" id="myForm" action="" method="post">
+        <h3 th:if="${!session.hasorderlines}">Du har ingen varer i din kurv</h3>
 
-            <h3>Din Bestilling:</h3>
-            <table>
+        <h3 th:if="${session.hasorderlines}">Din Bestilling:</h3>
+            <table th:if="${session.hasorderlines}">
                 <thead>
                 <tr>
                     <th class="table-left">Bund</th>

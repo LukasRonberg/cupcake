@@ -213,20 +213,6 @@ input[type="checkbox"] {
     background-color: #f9f9f9;
 }
 
-button.edit-buttons {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-button.edit-buttons:hover {
-    background-color: #45a049;
-}
-
 .betal {
     background-color: #28a745;
     color: white;
@@ -243,14 +229,13 @@ button.edit-buttons:hover {
     transform: scale(1.05);
 }
 
-
 .shopping {
     background-color: #007bff;
     color: white;
     padding: 8px 25px 8px 25px;
     border: none;
     border-radius: 8px;
-    margin-right: 5px;
+    margin-right: 10px;
     cursor: pointer;
     font-size: 22px;
     cursor: pointer;
@@ -261,7 +246,6 @@ button.edit-buttons:hover {
     background-color: #0056b3;
     transform: scale(1.05);
 }
-
 
 div p {
     margin-top: 10px;
@@ -392,7 +376,6 @@ button.delete-button:hover {
     background-color: #dc143c;
     transform: scale(1.05);
 }
-
 
 @media (max-width: 830px) {
     .page {

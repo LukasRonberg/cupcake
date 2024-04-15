@@ -42,7 +42,6 @@ public class ItemController {
 
             app.post("/payorder", ctx -> {
                 payForOrder(ctx,ConnectionPool.getInstance());
-                //ctx.render("checkoutpage.html");
             });
             app.post("deleteorderline", ctx -> deleteorderline(ctx));
             app.post("/deleteorder", ctx -> deleteorder(ctx, ConnectionPool.getInstance()));
@@ -77,6 +76,7 @@ public class ItemController {
         if (orderLines.isEmpty()) {
             showTopping(ctx, ConnectionPool.getInstance());
             showBottom(ctx, ConnectionPool.getInstance());
+            ctx.sessionAttribute("hasorderlines", false);
             ctx.render("index.html");
         } else {
             ctx.render("checkoutpage.html");
@@ -132,6 +132,7 @@ public class ItemController {
         orderLine.add(order);
 
         ctx.sessionAttribute("orders", orderLine);
+        ctx.sessionAttribute("hasorderlines", true);
 
         int totalAmount = 0;
         int orderCount = 0;

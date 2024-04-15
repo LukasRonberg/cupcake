@@ -82,6 +82,26 @@ public class UserMapper
         }
     }
 
+    public static int getUserId(String username, ConnectionPool connectionPool) throws DatabaseException
+    {
+        int userId = 0;
+        String sql = "select * from public.\"users\" where name=?";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                userId = rs.getInt("user_id");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Error retrieving userId with username = " + username, e.getMessage());
+        }
+        return userId;
+    }
+
     public static boolean userexist(String email, ConnectionPool connectionPool) throws DatabaseException
     {
         String sql = "select * from public.\"users\" where email=?";

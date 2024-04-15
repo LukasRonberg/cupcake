@@ -1,6 +1,7 @@
 package app.persistence;
 
 //import app.entities.User;
+import app.entities.Order;
 import app.entities.Orderline;
 import app.entities.User;
 import app.exceptions.DatabaseException;
@@ -10,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class AdminMapper {
 
@@ -39,6 +41,34 @@ public class AdminMapper {
             throw new DatabaseException("DB fejl", e.getMessage());
         }
         return customerInfo;
+    }
+
+    public static ArrayList<Order> showCustomersOrders(String username, ConnectionPool connectionPool) throws DatabaseException {
+        ArrayList<Order> orderList = new ArrayList<>();
+        int userId = UserMapper.getUserId(username, connectionPool);
+        String sql = "select * from orders WHERE user_id = ?";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        )
+        {
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next())
+            {
+                int order_id = rs.getInt("order_id");
+                String orderDate = rs.getString("orderdate");
+                int orderPrice = rs.getInt("orderprice");
+                boolean status = rs.getBoolean("status");
+                orderList.add(new Order(order_id, userId, orderDate, orderPrice, status));
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new DatabaseException("Fejl!!!!", e.getMessage());
+        }
+        return orderList;
     }
 
     public static ArrayList<Orderline> showCustomerOrders(String userName, ConnectionPool connectionPool) throws DatabaseException {
@@ -79,7 +109,6 @@ public class AdminMapper {
             throw new RuntimeException(e);
         }
     }
-
 
     public static ArrayList<Orderline> showAllOrders(ConnectionPool connectionPool) throws DatabaseException {
         ArrayList<Orderline> orderList = new ArrayList<>();

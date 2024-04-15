@@ -1,0 +1,147 @@
+header {
+    background-color: blueviolet;
+}
+
+header a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: blueviolet;
+}
+
+header a img {
+    width: 70%;
+    background-color: blueviolet;
+}
+
+/* Style the top navigation bar */
+.topnav {
+    width: 100%;
+    background-color: white;
+}
+
+/* Style the topnav links */
+.topnav a {
+    float: left;
+    display: flex;
+    color: grey;
+    text-align: center;
+    font-size: 20px;
+    padding: 14px 16px;
+    text-decoration: none;
+    background-color: white;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.topnav a.right {
+    float: right;
+    align-items: center;
+    padding-top: 17px;
+    background-color: white;
+}
+
+.topnav a.left {
+    background-color: white;
+    padding-top: 17px;
+}
+
+/* Change color on hover */
+.topnav a:hover {
+
+    color: black;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+.topnav a.basket {
+    float: right;
+    background-color: #f9f9f9;
+    width: 60px; /* Fast bredde på billedet */
+    height: auto; /* Automatisk højde, så billedet bevare sin proportion */
+}
+
+.topnav img {
+    background-color: #f9f9f9;
+
+
+}
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+.container {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 36px;
+    text-transform: uppercase;
+}
+form {
+    text-align: center;
+    margin-bottom: 20px;
+}
+input[type="text"], input[type="submit"] {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 25px;
+    margin: 10px;
+    font-size: 16px;
+    transition: background-color 0.3s, color 0.3s;
+}
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: #fff;
+    cursor: pointer;
+}
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+input[type="text"].enter-amount, input[type="text"].enter-username {
+    padding: 12px 20px;
+    border: 2px solid #4CAF50; /* Green border */
+    border-radius: 25px;
+    margin: 10px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+    width: 200px; /* Adjust width */
+}
+input[type="text"].enter-amount:focus, input[type="text"].enter-username:focus {
+    border-color: #45a049; /* Green on focus */
+    outline: none; /* Remove outline */
+}
+.div {
+    padding: 20px;
+}
+table {
+    width: 100%;
+    max-width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+tr:hover {
+    background-color: #f0f0f0;
+}
+/* Truncate long text in table cells */
+.truncate-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

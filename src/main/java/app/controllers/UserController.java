@@ -140,8 +140,6 @@ public class UserController {
                 }
             }
             ctx.sessionAttribute("finishedorders", hasFinishedOrders);
-            System.out.println(""+hasOpenOrders);
-            System.out.println(""+hasFinishedOrders);
             ctx.sessionAttribute("openorders", hasOpenOrders);
             List<Topping> toppingList = ItemMapper.showToppings(connectionPool);
             List<Bottom> bottomList = ItemMapper.showBottoms(connectionPool);
@@ -169,16 +167,18 @@ public class UserController {
                     for (Orderline orderline : newOrderLines) {
                         orderCount++;
                         totalAmount += orderline.getOrderlinePrice();
+                        ctx.sessionAttribute("hasorderlines", true);
                     }
+                } else {
+                    ctx.sessionAttribute("hasorderlines", false);
                 }
                 // Her opdaterer jeg orderCount og totalAmount i deres respektive sessionatributter
                 ctx.sessionAttribute("totalAmount", totalAmount);
+                System.out.println(""+ctx.sessionAttribute("totalAmount"));
                 ctx.sessionAttribute("orderCount", orderCount);
                 // Her sender jeg brugeren tilbage til index.html
-                System.out.println(""+ctx.sessionAttribute("fromcheckout"));
                 if(ctx.sessionAttribute("fromcheckout") != null) {
                     if(ctx.sessionAttribute("fromcheckout")) {
-                        //ItemController.payForOrder(ctx,ConnectionPool.getInstance());
                         ctx.render("checkoutpage.html");
                     } else {
                         ctx.render("index.html");

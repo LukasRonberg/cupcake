@@ -11,8 +11,9 @@
 <div class="login-page">
     <header>
         <div>
-            <a href="../index.html" th:href="@{/}" >
-                <img alt="logo" src="../public/images/olskersscupcakelogo.png" th:src="@{/images/olskersscupcakelogo.png}"/>
+            <a href="../index.html" th:href="@{/}">
+                <img alt="logo" src="../public/images/olskersscupcakelogo.png"
+                     th:src="@{/images/olskersscupcakelogo.png}"/>
             </a>
             <a href="../index.html" th:href="@{/}">
                 <img alt="logo" src="../public/images/cupcakelogo.png" th:src="@{/images/cupcakelogo.png}"/>
@@ -32,7 +33,7 @@
             </div>
         </div>
 
-        <div id="hiddenDiv" class="modal" th:if="${login}" >
+        <div id="hiddenDiv" class="modal" th:if="${login}">
             <div class="modal-content">
                 <span class="close" onclick="closeModal()">&times;</span>
                 <p id="messageText" th:text="${message}"></p>
@@ -44,7 +45,7 @@
 
 <script th:inline="javascript">
     // Funktion til at vise modalen
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         var login = [[${login}]];
         if (login) {
             // Hvis noget er created, vis det skjulte div-element
