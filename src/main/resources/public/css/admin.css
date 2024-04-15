@@ -61,8 +61,6 @@ header a img {
 
 .topnav img {
     background-color: #f9f9f9;
-
-
 }
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -127,9 +125,13 @@ table {
     border-collapse: collapse;
     margin-top: 20px;
 }
+
+.table-container {
+    padding: 40px;
+}
 th, td {
     padding: 15px;
-    text-align: left;
+    text-align: center;
     border-bottom: 1px solid #ddd;
 }
 th {
@@ -144,4 +146,36 @@ tr:hover {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+button.delete-button {
+    background-color: #ff6347;
+    color: #fff;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.4s, color 0.4s, transform 0.2s;
+}
+
+button.delete-button:hover {
+    background-color: #dc143c;
+    transform: scale(1.05);
+}
+
+button.produced-button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.4s, color 0.4s, transform 0.2s;
+}
+
+button.produced-button:hover {
+    background-color: #218838;
+    transform: scale(1.05);
 }

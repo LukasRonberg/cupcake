@@ -64,23 +64,50 @@
     </form>
 
     <!-- Table to display customer orders -->
-    <div th:if="${customerOrders}">
-        <h2>Customer Orders:</h2>
+    <div class="table-container" th:if="${customerOrders}">
+        <h2>Customers Open Orders:</h2>
         <table>
             <thead>
             <tr>
-                <th>OrderId</th>
-                <th>OrderDate</th>
-                <th>OrderPrice</th>
-                <th>Status</th>
+                <th>Ordreid</th>
+                <th>Ordredato</th>
+                <th>Pris</th>
+                <th>Handling</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="order : ${customerOrders}">
+            <tr th:each="order : ${customerOrders}" th:if="${!order.status}">
                 <td th:text="${order.orderId}">OrderId</td>
                 <td th:text="${order.orderDate}">OrderDate</td>
-                <td th:text="${order.orderPrice}" class="truncate-text">OrderPrice</td> <!-- Apply truncation here -->
-                <td th:text="${order.status}">Status</td>
+                <td th:text="${order.orderPrice}" class="truncate-text">OrderPrice</td>
+                <td>
+                    <button type="submit" name="orderId" th:value="${order.orderId}" formaction="/deleteorder"
+                            class="delete-button">Slet
+                    </button>
+                    <button type="submit" name="orderId" th:value="${order.orderId}" formaction="/deleteorder"
+                            class="produced-button">Produceret
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-container" th:if="${customerOrders}">
+        <h2>Customers Closed Orders:</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Ordreid</th>
+                <th>Ordredato</th>
+                <th>Pris</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order : ${customerOrders}" th:if="${order.status}">
+                <td th:text="${order.orderId}">OrderId</td>
+                <td th:text="${order.orderDate}">OrderDate</td>
+                <td th:text="${order.orderPrice}" class="truncate-text">OrderPrice</td>
             </tr>
             </tbody>
         </table>
