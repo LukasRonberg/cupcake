@@ -380,7 +380,7 @@ button.delete-button:hover {
 @media (max-width: 830px) {
     .page {
         padding: 10px;
-        min-height: 400px;
+        min-height: 285px;
     }
 
     .topnav {
